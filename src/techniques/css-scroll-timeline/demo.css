@@ -1,0 +1,16 @@
+/* CSS 스크롤 타임라인 데모: 박스 스크롤 진행도 → 막대 너비 (JS 없음) */
+/* 막대가 박스의 형제라 공통 부모에서 타임라인 이름을 열어 줌 */
+.css-scroll-root {
+  timeline-scope: --demo-box;
+}
+.css-scroll-box {
+  scroll-timeline: --demo-box block;
+}
+.css-scroll-bar {
+  animation: css-scroll-grow linear both;
+  animation-timeline: --demo-box;
+}
+@keyframes css-scroll-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}

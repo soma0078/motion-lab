@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/*
+ * Neobrutalism 팔레트 (react-playground 와 같은 값).
+ * 배경은 플랫 컬러, 테두리는 검정 2px, 그림자는 블러 없는 오프셋.
+ */
+:root {
+  --nb-bg: #fff4e0;
+  --nb-surface: #ffffff;
+  --nb-ink: #000000;
+  --nb-yellow: #ffdc58;
+  --nb-blue: #88aaee;
+  --nb-green: #a3e636;
+  --nb-purple: #a388ee;
+  --nb-orange: #ff7a5c;
+  --nb-muted: #4b4b4b;
+  --nb-line: #d8d2c6;
+
+  font-family: 'Public Sans', system-ui, -apple-system, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+  color-scheme: light;
+  color: var(--nb-ink);
+  background-color: var(--nb-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+@theme inline {
+  --color-nb-bg: var(--nb-bg);
+  --color-nb-surface: var(--nb-surface);
+  --color-nb-ink: var(--nb-ink);
+  --color-nb-yellow: var(--nb-yellow);
+  --color-nb-blue: var(--nb-blue);
+  --color-nb-green: var(--nb-green);
+  --color-nb-purple: var(--nb-purple);
+  --color-nb-orange: var(--nb-orange);
+  --color-nb-muted: var(--nb-muted);
+  --color-nb-line: var(--nb-line);
+
+  --shadow-nb: 4px 4px 0px 0px var(--nb-ink);
+  --shadow-nb-sm: 2px 2px 0px 0px var(--nb-ink);
+  --shadow-nb-lg: 8px 8px 0px 0px var(--nb-ink);
+}
+
+body {
+  margin: 0;
+  background-color: var(--nb-bg);
+}
+
+@layer utilities {
+  .nb-grid {
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.08) 2px, transparent 2px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 2px, transparent 2px);
+    background-size: 32px 32px;
+  }
+}
+
