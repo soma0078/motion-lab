@@ -8,12 +8,10 @@ export default {
   order: 30,
   param: '35%',
   motion: [
-    'useMotionValue + useSpring(src, { stiffness, damping })',
-    'v14: useFollowValue(src, transition) · spring 외 tween 도 (타입 정의 기준)'
+    'useMotionValue + useSpring(src, { stiffness, damping })'
   ],
   gsap: [
-    'const xTo = gsap.quickTo(el, \'x\', { duration: 0.4, ease: \'power3\' })',
-    'mousemove 에서 xTo(v) · y 도 하나 더'
+    'const xTo = gsap.quickTo(el, \'x\', { duration: 0.4, ease: \'power3\' })'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-use-spring', gsap: 'https://gsap.com/docs/v3/GSAP/gsap.quickTo()' },

@@ -19,7 +19,8 @@ const FIT_LABEL: Record<Fit, { text: string; className: string }> = {
   motion: { text: 'Motion 추천', className: 'bg-nb-yellow' },
   gsap: { text: 'GSAP 추천', className: 'bg-nb-green' },
   both: { text: '둘 다 무난', className: 'bg-white' },
-  native: { text: '브라우저 기본', className: 'bg-nb-purple' }
+  native: { text: '브라우저 기본', className: 'bg-nb-purple' },
+  rn: { text: 'React Native', className: 'bg-nb-blue' }
 }
 
 const sectionId = (index: number) => `section-${index + 1}`
@@ -51,10 +52,12 @@ export default function App() {
             모션 기법 사전
           </h1>
           <p className="mt-4 max-w-xl text-base font-bold break-keep sm:text-lg">
-            원하는 움직임을 표준 용어와 숫자로 바꿔보세요. 그대로 복사해서 AI에게 붙여 넣을 수 있는 지시문이 돼요.
+            원하는 움직임을 표준 용어와 숫자로 바꿔보세요. 
+         <br/>
+            그대로 복사해서 AI에게 붙여 넣을 수 있는 지시문이 돼요.
           </p>
           <p className="text-nb-muted mt-2 max-w-xl text-sm font-medium break-keep">
-            "부드럽게", "세련되게" 같은 표현은 사람마다, 실행할 때마다 다르게 해석되기 쉬워요. 표준 용어와 숫자로 말하면 누가 언제 적용해도 똑같은 움직임을 만들 수 있답니다.
+            "부드럽게", "세련되게" 같은 표현은 사람마다, 실행할 때마다 다르게 해석되기 쉬워요. <br/>표준 용어와 숫자로 말하면 누가 언제 적용해도 똑같은 움직임을 만들 수 있습니다.
           </p>
 
           {/* 카테고리 바로가기 */}
@@ -210,8 +213,9 @@ function TechniqueCard({
 
       {/* 라이브러리별 핵심 API */}
       <dl className="mt-3 grid gap-1.5 text-[11px]">
-        <ApiRow lib="Motion" lines={technique.motion} className="bg-nb-yellow" />
-        <ApiRow lib="GSAP" lines={technique.gsap} className="bg-nb-green" />
+        {technique.rn && <ApiRow lib="RN" lines={technique.rn} className="bg-nb-blue" />}
+        {technique.motion && <ApiRow lib="Motion" lines={technique.motion} className="bg-nb-yellow" />}
+        {technique.gsap && <ApiRow lib="GSAP" lines={technique.gsap} className="bg-nb-green" />}
         {technique.native && <ApiRow lib="CSS·Web" lines={technique.native} className="bg-nb-purple" />}
       </dl>
 
@@ -332,7 +336,7 @@ function ParamPanel({
 /** 지금 수치로 AI 지시문을 만들어 클립보드에 복사 */
 function CopyButtons({ technique, values }: { technique: Technique; values: ParamValues }) {
   const [copied, setCopied] = useState<Lib | null>(null)
-  const libs: Lib[] = technique.native ? ['motion', 'gsap', 'native'] : ['motion', 'gsap']
+  const libs = (['rn', 'motion', 'gsap', 'native'] as const).filter((lib) => technique[lib])
 
   const copy = async (lib: Lib) => {
     try {
@@ -362,7 +366,7 @@ function CopyButtons({ technique, values }: { technique: Technique; values: Para
   )
 }
 
-const DOC_LABEL = { motion: 'motion.dev', gsap: 'gsap.com', native: 'MDN' } as const
+const DOC_LABEL = { rn: 'RN 문서', motion: 'motion.dev', gsap: 'gsap.com', native: 'MDN' } as const
 
 /** 대조할 때 본 공식 문서. 더 깊은 옵션 · 예외는 여기서 */
 function DocLinks({ docs }: { docs: Technique['docs'] }) {
@@ -394,10 +398,10 @@ function ApiRow({ lib, lines, className }: { lib: string; lines: string[]; class
   return (
     <div className="flex items-start gap-2">
       <dt className={cn('w-14 shrink-0 border-2 border-black text-center font-extrabold', className)}>{lib}</dt>
-      <dd className="min-w-0 pt-0.5 font-mono leading-snug break-words">
+      <dd className="min-w-0 pt-0.5 font-mono leading-normal break-words">
         <p>{primary}</p>
         {extra.map((line) => (
-          <p key={line} className="text-nb-muted mt-0.5">
+          <p key={line} className="text-nb-muted mt-1">
             {line}
           </p>
         ))}

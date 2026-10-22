@@ -11,8 +11,7 @@ export default {
     'whileHover · onHoverStart / onHoverEnd'
   ],
   gsap: [
-    'const { contextSafe } = useGSAP({ scope })',
-    'onMouseEnter={contextSafe(() => gsap.to(…))}'
+    'const { contextSafe } = useGSAP({ scope })'
   ],
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-gestures', gsap: 'https://gsap.com/resources/React/' }

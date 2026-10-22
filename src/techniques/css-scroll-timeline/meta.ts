@@ -15,8 +15,6 @@ export default {
   ],
   native: [
     'animation-timeline: scroll() · view()',
-    'view() 에 animation-range: entry 0% cover 40% (요소가 화면에 들어오는 구간)',
-    '형제 요소면 공통 부모에 timeline-scope',
     '지원 Chrome 115 · Safari 26 · Firefox 159 → @supports (animation-timeline: scroll()) 로 가드'
   ],
   fit: 'native',

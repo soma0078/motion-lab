@@ -8,12 +8,10 @@ export default {
   order: 10,
   param: 'once',
   motion: [
-    'whileInView + viewport={{ once: true }}',
-    '여러 개면 variants + delayChildren: stagger()'
+    'whileInView + viewport={{ once: true }}'
   ],
   gsap: [
-    'scrollTrigger: { toggleActions: \'play none none reverse\' }',
-    '여러 개면 ScrollTrigger.batch(\'.card\', { onEnter })'
+    'scrollTrigger: { toggleActions: \'play none none reverse\' }'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' }

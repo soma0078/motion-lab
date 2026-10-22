@@ -12,8 +12,7 @@ export default {
     'AnimateNumber 는 Motion+ 유료'
   ],
   gsap: [
-    'const o = { v: 0 }; gsap.to(o, { v: 1000, onUpdate: () => el.textContent = Math.round(o.v).toLocaleString() })',
-    '정수만: gsap.to(el, { innerText: 1000, snap: { innerText: 1 } }) (공식 예제 아님)'
+    'const o = { v: 0 }; gsap.to(o, { v: 1000, onUpdate: () => el.textContent = Math.round(o.v).toLocaleString() })'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animate-number', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/Snap' },

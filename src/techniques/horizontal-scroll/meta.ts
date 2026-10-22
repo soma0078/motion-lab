@@ -8,12 +8,10 @@ export default {
   order: 40,
   param: '0 → -75%',
   motion: [
-    'useScroll({ target, offset: [\'start start\', \'end end\'] }) + useTransform(…, [\'0%\', \'-75%\'])',
-    '300vh 바깥 > sticky 100vh overflow-hidden > motion.div style={{ x }}'
+    'useScroll({ target, offset: [\'start start\', \'end end\'] }) + useTransform(…, [\'0%\', \'-75%\'])'
   ],
   gsap: [
-    'pin + scrub 트윈 x: -(w - innerWidth), ease: \'none\'',
-    '안쪽 트리거는 containerAnimation: tween (pin · snap 불가)'
+    'pin + scrub 트윈 x: -(w - innerWidth), ease: \'none\''
   ],
   fit: 'gsap',
   docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' }

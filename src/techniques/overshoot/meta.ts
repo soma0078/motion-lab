@@ -8,8 +8,7 @@ export default {
   order: 30,
   param: 'backOut',
   motion: [
-    'ease: \'backOut\'',
-    'type: \'spring\', bounce: 0.4'
+    'ease: \'backOut\''
   ],
   gsap: [
     'ease: \'back.out(1.7)\''

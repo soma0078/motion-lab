@@ -8,12 +8,10 @@ export default {
   order: 20,
   param: 'in 0.4 · out 0.25',
   motion: [
-    '<AnimatePresence> + 자식 key + exit',
-    '첫 렌더 생략 initial={false} · useIsPresent / usePresence'
+    '<AnimatePresence> + 자식 key + exit'
   ],
   gsap: [
-    'useGSAP 는 언마운트 시 revert 만 → 퇴장 트윈 onComplete 에서 setState',
-    '리스트: Flip.from(state, { onEnter, onLeave, absolute: true })'
+    'useGSAP 는 언마운트 시 revert 만 → 퇴장 트윈 onComplete 에서 setState'
   ],
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-animate-presence', gsap: 'https://gsap.com/resources/React/' },

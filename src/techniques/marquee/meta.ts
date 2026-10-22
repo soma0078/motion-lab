@@ -12,8 +12,7 @@ export default {
     'Ticker 컴포넌트는 Motion+ 유료'
   ],
   gsap: [
-    '콘텐츠 2벌 + xPercent: -50, repeat: -1, ease: \'none\'',
-    '반응형 · 드래그: horizontalLoop(items, { speed, draggable }) 헬퍼'
+    '콘텐츠 2벌 + xPercent: -50, repeat: -1, ease: \'none\''
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-transitions', gsap: 'https://gsap.com/docs/v3/HelperFunctions/helpers/seamlessLoop' }

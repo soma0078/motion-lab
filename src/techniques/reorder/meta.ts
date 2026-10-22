@@ -8,8 +8,7 @@ export default {
   order: 50,
   param: 'layout',
   motion: [
-    '<Reorder.Group values onReorder> + <Reorder.Item value>',
-    'axis 자동 감지 · 가장자리로 끌면 컨테이너 자동 스크롤'
+    '<Reorder.Group values onReorder> + <Reorder.Item value>'
   ],
   gsap: [
     'Draggable + 놓을 때 Flip 으로 자리 이동'

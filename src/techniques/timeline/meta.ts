@@ -8,12 +8,10 @@ export default {
   order: 60,
   param: 'at 0 · 0.35',
   motion: [
-    'useAnimate() → animate([[a, …], [b, …, { at: \'<\' }]])',
-    'at: 숫자 · \'+0.5\' · \'-0.2\' · \'<+0.2\' · 라벨'
+    'useAnimate() → animate([[a, …], [b, …, { at: \'<\' }]])'
   ],
   gsap: [
-    'gsap.timeline({ defaults }) + 위치 \'<\' · \'>\' · \'-=0.2\' · \'<0.1\'',
-    'tl.addLabel(\'in\') → \'in+=0.2\''
+    'gsap.timeline({ defaults }) + 위치 \'<\' · \'>\' · \'-=0.2\' · \'<0.1\''
   ],
   fit: 'gsap',
   docs: { motion: 'https://motion.dev/docs/animate', gsap: 'https://gsap.com/docs/v3/GSAP/Timeline/' }

@@ -8,12 +8,10 @@ export default {
   order: 30,
   param: '0.7s',
   motion: [
-    '<AnimatePresence> 기본 mode=\'sync\' + absolute 겹치기',
-    '순차 mode=\'wait\' · 주변 리플로 mode=\'popLayout\''
+    '<AnimatePresence> 기본 mode=\'sync\' + absolute 겹치기'
   ],
   gsap: [
-    'tl.to(a, { autoAlpha: 0 }).to(b, { autoAlpha: 1 }, \'<\')',
-    '요소 교체: data-flip-id + Flip.from(state, { fade: true })'
+    'tl.to(a, { autoAlpha: 0 }).to(b, { autoAlpha: 1 }, \'<\')'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animate-presence', gsap: 'https://gsap.com/docs/v3/Plugins/Flip/' }

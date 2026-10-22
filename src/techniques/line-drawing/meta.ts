@@ -8,12 +8,10 @@ export default {
   order: 20,
   param: 'pathLength',
   motion: [
-    'pathLength: 0 → 1',
-    'pathOffset · pathSpacing (0~1)'
+    'pathLength: 0 → 1'
   ],
   gsap: [
-    'gsap.from(path, { drawSVG: 0 }) (DrawSVGPlugin)',
-    'stroke 지정돼 있어야 보임'
+    'gsap.from(path, { drawSVG: 0 }) (DrawSVGPlugin)'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/' }

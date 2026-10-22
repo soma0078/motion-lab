@@ -18,10 +18,7 @@
 시작 · 끝의 가감속 곡선. — 둘 다 무난
 
 - **Motion**: `ease: [0.25, 1, 0.5, 1]`
-  - 이름: 'easeOut' · 'circOut' · 키프레임별 ease: [...]
 - **GSAP**: `ease: 'power3.out'`
-  - power1 quad · 2 cubic · 3 quart · 4 quint (= strong)
-  - CustomEase.create('id', 'M0,0 C…')
 - **기본 수치**: 길이 1.4s (0.4~2.4)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-transitions) · [gsap.com](https://gsap.com/docs/v3/Eases)
 
@@ -37,7 +34,6 @@
 - **Motion**: `type: 'spring', stiffness, damping, mass`
   - 또는 visualDuration: 0.4, bounce: 0.25 (stiffness 주면 무시)
 - **GSAP**: `진짜 스프링 없음 → 'elastic.out(1, 0.3)' 근사`
-  - CustomBounce · CustomWiggle
 - **기본 수치**: stiffness 220 (50~600) · damping 8 (2~40)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-transitions) · [gsap.com](https://gsap.com/docs/v3/Eases/CustomBounce)
 
@@ -51,7 +47,6 @@
 목표 지점을 살짝 넘었다가 돌아옴. — 둘 다 무난
 
 - **Motion**: `ease: 'backOut'`
-  - type: 'spring', bounce: 0.4
 - **GSAP**: `ease: 'back.out(1.7)'`
 - **기본 수치**: 넘는 정도 0.55 (0~1)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-transitions) · [gsap.com](https://gsap.com/docs/v3/Eases)
@@ -66,9 +61,7 @@
 시간 위 지점별로 정한 값. 사이는 보간. — 둘 다 무난
 
 - **Motion**: `x: [0, 80, 40]`
-  - transition: { times: [0, 0.6, 1] }
 - **GSAP**: `keyframes: [{ x: 80 }, { x: 40 }]`
-  - 배열형 { x: [0, 80, 40], easeEach } · %형 { '50%': { x: 80 } }
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animation) · [gsap.com](https://gsap.com/resources/keyframes/)
 
 ```
@@ -81,10 +74,8 @@
 여러 요소의 시작을 일정 간격으로 어긋나게. — 둘 다 무난
 
 - **Motion**: `컴포넌트: 부모 variant transition: { delayChildren: stagger(0.08) }`
-  - animate() 에서는 delay: stagger(0.08) · 역순 { from: 'last' }
   - staggerChildren 은 deprecated
 - **GSAP**: `stagger: 0.08`
-  - stagger: { each: 0.08, from: 'center', grid: 'auto' } · each 와 amount 중 하나
 - **기본 수치**: 간격 0.08s (0.02~0.3) · 각 길이 0.5s (0.2~1.2)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/stagger) · [gsap.com](https://gsap.com/resources/getting-started/Staggers)
 
@@ -98,9 +89,7 @@
 여러 모션을 한 줄에 놓고 겹침 · 순서를 정해 통째로 재생 · 되감기. — GSAP 추천
 
 - **Motion**: `useAnimate() → animate([[a, …], [b, …, { at: '<' }]])`
-  - at: 숫자 · '+0.5' · '-0.2' · '<+0.2' · 라벨
 - **GSAP**: `gsap.timeline({ defaults }) + 위치 '<' · '>' · '-=0.2' · '<0.1'`
-  - tl.addLabel('in') → 'in+=0.2'
 - **공식 문서**: [motion.dev](https://motion.dev/docs/animate) · [gsap.com](https://gsap.com/docs/v3/GSAP/Timeline/)
 
 ```
@@ -130,9 +119,7 @@
 요소가 나타날 때 · 사라질 때의 모션. — Motion 추천
 
 - **Motion**: `<AnimatePresence> + 자식 key + exit`
-  - 첫 렌더 생략 initial={false} · useIsPresent / usePresence
 - **GSAP**: `useGSAP 는 언마운트 시 revert 만 → 퇴장 트윈 onComplete 에서 setState`
-  - 리스트: Flip.from(state, { onEnter, onLeave, absolute: true })
 - **기본 수치**: 진입 0.4s (0.1~1) · 퇴장 0.25s (0.1~1)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animate-presence) · [gsap.com](https://gsap.com/resources/React/)
 
@@ -146,9 +133,7 @@
 앞 요소가 사라지는 동안 뒤 요소가 겹쳐 나타남. — 둘 다 무난
 
 - **Motion**: `<AnimatePresence> 기본 mode='sync' + absolute 겹치기`
-  - 순차 mode='wait' · 주변 리플로 mode='popLayout'
 - **GSAP**: `tl.to(a, { autoAlpha: 0 }).to(b, { autoAlpha: 1 }, '<')`
-  - 요소 교체: data-flip-id + Flip.from(state, { fade: true })
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animate-presence) · [gsap.com](https://gsap.com/docs/v3/Plugins/Flip/)
 
 ```
@@ -161,9 +146,7 @@
 틀 밖을 가린 채 열어 드러냄. — 둘 다 무난
 
 - **Motion**: `overflow-hidden 틀 + y: '110%' → 0`
-  - clipPath: 'inset(0 100% 0 0)' → 'inset(0 0% 0 0)'
 - **GSAP**: `SplitText.create(el, { type: 'lines', mask: 'lines', autoSplit: true, onSplit })`
-  - onSplit 에서 트윈을 return (리스플릿 때 진행도 유지)
 - **기본 수치**: 길이 0.9s (0.4~1.6) · 줄 간격 0.12s (0~0.4)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animation) · [gsap.com](https://gsap.com/docs/v3/Plugins/SplitText/)
 
@@ -179,8 +162,6 @@
 - **Motion**: `직접 span 분리 + delayChildren: stagger()`
   - splitText 는 Motion+ 유료 (motion-plus)
 - **GSAP**: `SplitText.create(el, { type: 'words,chars' })`
-  - chars 만 쓰면 줄바꿈 어색 → words 함께 · smartWrap
-  - aria: 'auto' 기본 · 끝나면 revert()
 - **기본 수치**: 글자 간격 0.06s (0.02~0.2)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-split-text) · [gsap.com](https://gsap.com/docs/v3/Plugins/SplitText/)
 
@@ -210,7 +191,6 @@
 - **Motion**: `animate(motionValue, 1000) + useTransform(Math.round)`
   - AnimateNumber 는 Motion+ 유료
 - **GSAP**: `const o = { v: 0 }; gsap.to(o, { v: 1000, onUpdate: () => el.textContent = Math.round(o.v).toLocaleString() })`
-  - 정수만: gsap.to(el, { innerText: 1000, snap: { innerText: 1 } }) (공식 예제 아님)
 - **기본 수치**: 길이 1.6s (0.4~3)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animate-number) · [gsap.com](https://gsap.com/docs/v3/GSAP/CorePlugins/Snap)
 
@@ -224,9 +204,7 @@
 같은 요소가 화면 · 상태가 바뀌어도 위치 · 크기를 이어 움직임. — Motion 추천
 
 - **Motion**: `layout · layoutId`
-  - 따로 렌더되는 형제 <LayoutGroup> · 스크롤 안 layoutScroll · 비율 바뀌면 layout='position'
 - **GSAP**: `Flip.getState() → 상태 변경 → Flip.from(state, { absolute, targets })`
-  - React: 렌더 후(useLayoutEffect) 호출 · data-flip-id
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-layout-animations) · [gsap.com](https://gsap.com/docs/v3/Plugins/Flip/)
 
 ```
@@ -239,7 +217,6 @@
 라우트가 바뀔 때 이전 화면이 나가고 새 화면이 들어옴. — Motion 추천
 
 - **Motion**: `<AnimatePresence mode='wait'> + 라우트 key`
-  - 공유 요소는 layoutId
 - **GSAP**: `퇴장 트윈 onComplete 에서 navigate · 또는 Flip`
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animate-presence) · [gsap.com](https://gsap.com/resources/React/)
 
@@ -253,9 +230,7 @@
 틀이 열리며 이미지가 드러나고, 안쪽 이미지는 확대에서 제자리로. — 둘 다 무난
 
 - **Motion**: `틀 clipPath: 'inset(100% 0% 0% 0%)' → 'inset(0% 0% 0% 0%)'`
-  - 안쪽 img scale: 1.3 → 1 (더 길게)
 - **GSAP**: `tl.from(frame, { clipPath: 'inset(100% 0% 0% 0%)' }).from(img, { scale: 1.3 }, '<')`
-  - 모양 · 점 개수 · 단위가 같아야 보간 (0 대신 0%)
 - **기본 수치**: 시작 배율 1.3× (1~1.8) · 길이 0.9s (0.4~2)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animation) · [gsap.com](https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/)
 
@@ -269,10 +244,7 @@
 흐림 · 흑백 · 색이 서서히 바뀜. — 둘 다 무난
 
 - **Motion**: `filter: 'blur(10px)' → 'blur(0px)' · backgroundColor 보간`
-  - CSS 변수 '--x' 도 보간
 - **GSAP**: `filter: 'blur(10px)' · backgroundColor`
-  - CSS 변수 트윈 '--angle': '360deg'
-  - 그라디언트 각도는 @property --angle { syntax: '<angle>' } 등록해야 부드러움
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animation) · [gsap.com](https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/)
 
 ```
@@ -285,11 +257,8 @@
 화면 상태가 바뀔 때 브라우저가 이전 · 다음 스냅샷을 이어 붙여 전환. — 브라우저 기본으로 충분
 
 - **Motion**: `animateView(() => update()) (무료 motion 패키지)`
-  - React 안에서는 layoutId 로도 같은 효과
 - **GSAP**: `JS 대안: Flip`
 - **CSS·Web**: `React 19.3: <ViewTransition> + startTransition (startViewTransition 직접 호출 금지)`
-  - React 밖: document.startViewTransition(() => update())
-  - CSS view-transition-name: hero · ::view-transition-old/new(hero)
   - 지원 Chrome 111 · Safari 18 · Firefox 144
 - **공식 문서**: [motion.dev](https://motion.dev/docs/animate-view) · [gsap.com](https://gsap.com/docs/v3/Plugins/Flip/) · [MDN](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API)
 
@@ -307,9 +276,7 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 모양 자체가 다른 모양으로 변함. — GSAP 추천
 
 - **Motion**: `d 네이티브 보간 (명령 수 · 종류 같을 때만)`
-  - 많이 다르면 Flubber · borderRadius 는 style 로 지정
 - **GSAP**: `MorphSVGPlugin (점 개수 · 종류 달라도 됨)`
-  - circle/rect 는 convertToPath() · 꼬이면 shapeIndex
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-svg-animation) · [gsap.com](https://gsap.com/docs/v3/Plugins/MorphSVGPlugin/)
 
 ```
@@ -322,9 +289,7 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 선이 그려지듯 나타남. — 둘 다 무난
 
 - **Motion**: `pathLength: 0 → 1`
-  - pathOffset · pathSpacing (0~1)
 - **GSAP**: `gsap.from(path, { drawSVG: 0 }) (DrawSVGPlugin)`
-  - stroke 지정돼 있어야 보임
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-svg-animation) · [gsap.com](https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/)
 
 ```
@@ -338,7 +303,6 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 
 - **Motion**: `CSS offset-path + offsetDistance: '0%' → '100%'`
 - **GSAP**: `motionPath: { path, align: path, alignOrigin: [0.5, 0.5], autoRotate: true }`
-  - start · end (0~1) 로 구간 지정 · MotionPathPlugin
 - **공식 문서**: [gsap.com](https://gsap.com/docs/v3/Plugins/MotionPathPlugin/) · [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/offset-path)
 
 ```
@@ -352,7 +316,6 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 
 - **Motion**: `<motion.textPath startOffset={mv}> (SVG textPath)`
 - **GSAP**: `gsap.to(textPath, { attr: { startOffset: '100%' } })`
-  - 시작값도 % 로 (AttrPlugin 은 단위 변환 안 함)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-svg-animation) · [gsap.com](https://gsap.com/docs/v3/GSAP/CorePlugins/Attributes/)
 
 ```
@@ -369,9 +332,7 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 요소가 화면에 들어오면 자기 시간으로 끝까지 재생. — 둘 다 무난
 
 - **Motion**: `whileInView + viewport={{ once: true }}`
-  - 여러 개면 variants + delayChildren: stagger()
 - **GSAP**: `scrollTrigger: { toggleActions: 'play none none reverse' }`
-  - 여러 개면 ScrollTrigger.batch('.card', { onEnter })
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-scroll-animations) · [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)
 
 ```
@@ -384,9 +345,7 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 스크롤 진행도에 애니메이션을 직접 묶음. — GSAP 추천
 
 - **Motion**: `useScroll({ target, offset: ['start end', 'end start'] }) + useTransform`
-  - 부드럽게: useSpring(scrollYProgress)
 - **GSAP**: `scrollTrigger: { scrub: true }`
-  - 부드럽게: scrub: 1 (초 단위로 따라잡음)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-scroll-animations) · [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)
 
 ```
@@ -400,7 +359,6 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 
 - **Motion**: `긴 wrapper + CSS position: sticky + useScroll({ target })`
 - **GSAP**: `scrollTrigger: { pin: true, end: '+=1500', scrub: true }`
-  - pin 만 쓰면 고정만 됨 · pinSpacing
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-scroll-animations) · [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)
 
 ```
@@ -413,9 +371,7 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 세로로 스크롤하면 섹션이 옆으로 흘러감. — GSAP 추천
 
 - **Motion**: `useScroll({ target, offset: ['start start', 'end end'] }) + useTransform(…, ['0%', '-75%'])`
-  - 300vh 바깥 > sticky 100vh overflow-hidden > motion.div style={{ x }}
 - **GSAP**: `pin + scrub 트윈 x: -(w - innerWidth), ease: 'none'`
-  - 안쪽 트리거는 containerAnimation: tween (pin · snap 불가)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-scroll-animations) · [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)
 
 ```
@@ -429,7 +385,6 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 
 - **Motion**: `useTransform(scrollYProgress, [0, 1], [0, -200]) · 레이어마다 범위 다르게`
 - **GSAP**: `scrub + 레이어별 yPercent`
-  - ScrollSmoother { effects: true } + data-speed · data-lag
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-scroll-animations) · [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollSmoother/)
 
 ```
@@ -443,7 +398,6 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 
 - **Motion**: `CSS scroll-snap-type (라이브러리 불필요)`
 - **GSAP**: `scrollTrigger: { snap: 1 / (n - 1) }`
-  - snap: { snapTo: 'labels', duration: { min: 0.2, max: 0.6 } }
 - **공식 문서**: [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) · [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type)
 
 ```
@@ -469,9 +423,7 @@ View Transitions(view transitions API): 화면 상태가 바뀔 때 브라우저
 스크롤 · 드래그 속도에 따라 기울기 · 흐림이 변함. — Motion 추천
 
 - **Motion**: `useVelocity(scrollY) → useTransform(v, [-400, 400], [-10, 10]) → useSpring`
-  - style={{ skewY }} · 속도는 px/s 라 수천까지 튐 → 범위 밖은 clamp
 - **GSAP**: `ScrollTrigger onUpdate: self => skewTo(self.getVelocity() / -300)`
-  - const skewTo = gsap.quickTo(el, 'skewY')
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-use-velocity) · [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollTrigger/getVelocity())
 
 ```
@@ -486,8 +438,6 @@ JS 없이 CSS 만으로 스크롤 진행도에 애니메이션을 묶음. — �
 - **Motion**: `스크롤 연동은 가능하면 브라우저 ScrollTimeline 으로 실행 (안 되면 JS)`
 - **GSAP**: `ScrollTrigger (JS 계산)`
 - **CSS·Web**: `animation-timeline: scroll() · view()`
-  - view() 에 animation-range: entry 0% cover 40% (요소가 화면에 들어오는 구간)
-  - 형제 요소면 공통 부모에 timeline-scope
   - 지원 Chrome 115 · Safari 26 · Firefox 159 → @supports (animation-timeline: scroll()) 로 가드
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-scroll-animations) · [gsap.com](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) · [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations)
 
@@ -506,7 +456,6 @@ CSS 스크롤 타임라인(scroll-driven animations): JS 없이 CSS 만으로 �
 
 - **Motion**: `whileHover · onHoverStart / onHoverEnd`
 - **GSAP**: `const { contextSafe } = useGSAP({ scope })`
-  - onMouseEnter={contextSafe(() => gsap.to(…))}
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-gestures) · [gsap.com](https://gsap.com/resources/React/)
 
 ```
@@ -519,7 +468,6 @@ CSS 스크롤 타임라인(scroll-driven animations): JS 없이 CSS 만으로 �
 버튼 · 토글 같은 작은 조작에 붙는 짧은 피드백. — Motion 추천
 
 - **Motion**: `whileTap + spring (키보드 Enter 도 동작)`
-  - whileFocus
 - **GSAP**: `onClick → contextSafe(짧은 timeline)`
 - **기본 수치**: stiffness 500 (100~900) · damping 30 (5~50)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-gestures) · [gsap.com](https://gsap.com/docs/v3/GSAP/Timeline/)
@@ -534,9 +482,7 @@ CSS 스크롤 타임라인(scroll-driven animations): JS 없이 CSS 만으로 �
 커서 쪽으로 끌려옴. — 둘 다 무난
 
 - **Motion**: `useMotionValue + useSpring(src, { stiffness, damping })`
-  - v14: useFollowValue(src, transition) · spring 외 tween 도 (타입 정의 기준)
 - **GSAP**: `const xTo = gsap.quickTo(el, 'x', { duration: 0.4, ease: 'power3' })`
-  - mousemove 에서 xTo(v) · y 도 하나 더
 - **기본 수치**: 범위 90px (40~140) · 끌림 0.35 (0.1~0.8) · stiffness 220 (50~500) · damping 12 (4~40)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-use-spring) · [gsap.com](https://gsap.com/docs/v3/GSAP/gsap.quickTo())
 
@@ -550,9 +496,7 @@ CSS 스크롤 타임라인(scroll-driven animations): JS 없이 CSS 만으로 �
 끝을 넘겨 끌면 저항하다 놓으면 되돌아옴. — Motion 추천
 
 - **Motion**: `drag + dragConstraints + dragElastic (0~1)`
-  - dragTransition: { bounceStiffness, bounceDamping } · whileDrag
 - **GSAP**: `Draggable.create(el, { bounds, edgeResistance: 0.65, inertia: true })`
-  - inertia 는 InertiaPlugin 필요
 - **기본 수치**: 따라옴 0.35 (0.05~1) · 복귀 damping 14 (5~40)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-drag) · [gsap.com](https://gsap.com/docs/v3/Plugins/Draggable/)
 
@@ -566,7 +510,6 @@ CSS 스크롤 타임라인(scroll-driven animations): JS 없이 CSS 만으로 �
 항목을 끌어 순서를 바꾸면 나머지가 자리를 비켜 줌. — Motion 추천
 
 - **Motion**: `<Reorder.Group values onReorder> + <Reorder.Item value>`
-  - axis 자동 감지 · 가장자리로 끌면 컨테이너 자동 스크롤
 - **GSAP**: `Draggable + 놓을 때 Flip 으로 자리 이동`
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-reorder) · [gsap.com](https://gsap.com/docs/v3/Plugins/Draggable/)
 
@@ -580,9 +523,7 @@ CSS 스크롤 타임라인(scroll-driven animations): JS 없이 CSS 만으로 �
 perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 무난
 
 - **Motion**: `style={{ rotateX, rotateY, transformPerspective: 500 }}`
-  - 플립 rotateY: 180 + backfaceVisibility: 'hidden'
 - **GSAP**: `gsap.to(el, { rotationY: 180 }) (rotateY 별칭도 동작)`
-  - 공통 소실점 gsap.set(parent, { perspective: 500 }) · 개별 transformPerspective
 - **기본 수치**: 최대 기울기 18° (5~35) · perspective 500px (200~1200)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-animation) · [gsap.com](https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/)
 
@@ -598,7 +539,6 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 - **Motion**: `useMotionValue(clientX) + useSpring · pointer-events: none`
   - Cursor 컴포넌트는 Motion+ 유료
 - **GSAP**: `gsap.quickTo(cursor, 'x', { duration: 0.6, ease: 'power3' }) + mousemove`
-  - 가운데 맞춤 xPercent: -50 · yPercent: -50
 - **기본 수치**: stiffness 300 (50~800) · damping 28 (5~50)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-use-spring) · [gsap.com](https://gsap.com/docs/v3/GSAP/gsap.quickTo())
 
@@ -612,15 +552,175 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 던지면 속도를 이어받아 미끄러지다 감속해 멈춤. — 둘 다 무난
 
 - **Motion**: `drag 기본 관성 (끄기 dragMomentum={false}) · dragTransition: { power, timeConstant }`
-  - animate(x, 0, { type: 'inertia', velocity, min, max }) · 기본 power 0.8 · timeConstant 700
 - **GSAP**: `gsap.registerPlugin(Draggable, InertiaPlugin) → Draggable.create(el, { inertia: true, snap })`
-  - 트윈: InertiaPlugin.track(el, 'x') 후 inertia: { x: 'auto' }
 - **기본 수치**: power 0.8 (0.2~1.5) · timeConstant 350ms (100~900)
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-drag) · [gsap.com](https://gsap.com/docs/v3/Plugins/InertiaPlugin/)
 
 ```
 관성(inertia (fling)): 던지면 속도를 이어받아 미끄러지다 감속해 멈추게 (power 0.8, timeConstant 350ms). 벽에 닿으면 튕겨 돌아옴.
 구현: Motion — drag dragTransition={{ power: 0.8, timeConstant: 350 }}
+```
+
+## 앱 · 제스처
+
+손가락으로 끌고 밀고 누르는 앱의 움직임이에요. React Native(Reanimated · Gesture Handler) 기준이고, 데모는 웹에서 같은 움직임을 비슷하게 보여드려요
+
+### 스와이프 액션 (swipe action)
+
+목록 행을 옆으로 밀면 삭제 · 보관 같은 버튼이 드러남. 기준을 넘겨 놓으면 열린 채 멈춤. — React Native 기법
+
+- **React Native**: `<Swipeable renderRightActions={renderDelete} rightThreshold={40} />`
+- **기본 수치**: 열림 기준 40px (20~70)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-gesture-handler/docs/2.x/components/reanimated_swipeable)
+
+```
+스와이프 액션(swipe action): 목록 행을 왼쪽으로 40px 이상 밀고 놓으면 오른쪽 삭제 버튼이 열린 채 멈추고, 그보다 덜 밀고 놓으면 닫히게.
+구현: React Native — <Swipeable renderRightActions={renderDelete} rightThreshold={40} overshootRight={false} />
+```
+
+### 바텀시트 스냅 (bottom sheet snap)
+
+아래에서 올라온 시트를 끌다 놓으면 가장 가까운 높이(peek · half · full)로 붙음. — React Native 기법
+
+- **React Native**: `<BottomSheet snapPoints={['25%', '50%', '90%']} enableDynamicSizing={false} />`
+  - animationConfigs={useBottomSheetSpringConfigs({ damping: 80, stiffness: 500 })}
+- **기본 수치**: damping 80 (20~120) · stiffness 500 (100~800)
+- **공식 문서**: [RN](https://gorhom.dev/react-native-bottom-sheet/props)
+
+```
+바텀시트 스냅(bottom sheet snap): 바텀시트를 25% · 50% · 90% 높이에 스냅시키고, 끌다 놓으면 가장 가까운 지점에 스프링(damping 80, stiffness 500, 넘치지 않게)으로 붙게.
+구현: React Native — <BottomSheet snapPoints={['25%', '50%', '90%']} enableDynamicSizing={false} animationConfigs={useBottomSheetSpringConfigs({ damping: 80, stiffness: 500, overshootClamping: true })} />
+```
+
+### 당겨서 새로고침 (pull to refresh)
+
+목록 맨 위에서 아래로 당겼다 놓으면 인디케이터가 돌며 새로고침 시작. 끝나면 제자리로 돌아옴. — React Native 기법
+
+- **React Native**: `<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />`
+- **기본 수치**: 인디케이터 위치 0px (0~30)
+- **공식 문서**: [RN](https://reactnative.dev/docs/refreshcontrol)
+
+```
+당겨서 새로고침(pull to refresh): 목록 맨 위에서 아래로 당겼다 놓으면 인디케이터가 돌며 새로고침이 시작되고, 끝나면 목록이 제자리로 돌아오게. 인디케이터는 위에서 0px 아래에 두고.
+구현: React Native — <RefreshControl refreshing={refreshing} onRefresh={onRefresh} progressViewOffset={0} />
+```
+
+### 인터럽트 가능한 전환 (interruptible)
+
+움직이는 도중에 다시 눌러도 멈췄다 처음부터 가지 않고, 지금 위치에서 방향을 바꿈. — React Native 기법
+
+- **React Native**: `x.value = withSpring(target, { damping: 22, stiffness: 250 })`
+- **기본 수치**: stiffness 250 (100~600) · damping 22 (10~50)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring/)
+
+```
+인터럽트 가능한 전환(interruptible): 전환 도중에 다시 눌러도 멈췄다 처음부터 가지 않고, 지금 위치에서 새 목표로 스프링(stiffness 250, damping 22)으로 방향을 바꾸게.
+구현: React Native — x.value = withSpring(target, { stiffness: 250, damping: 22 })  // 진행 중에도 같은 코드로 재호출
+```
+
+### 누르기 피드백 (press feedback)
+
+누르는 동안 살짝 줄어들었다가 놓으면 스프링으로 돌아와, 눌렸다는 걸 손끝으로 알려 줌. — React Native 기법
+
+- **React Native**: `<Pressable onPressIn={() => (s.value = withSpring(0.96))} onPressOut={() => (s.value = withSpring(1))} />`
+- **기본 수치**: 눌렸을 때 0.96 (0.85~0.99)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring/)
+
+```
+누르기 피드백(press feedback): 누르는 동안 0.96배로 줄어들고, 놓으면 스프링(stiffness 400, damping 12)으로 1배로 돌아오게.
+구현: React Native — onPressIn={() => (s.value = withSpring(0.96))} onPressOut={() => (s.value = withSpring(1, { stiffness: 400, damping: 12 }))}
+```
+
+### 롱프레스 메뉴 (long press menu)
+
+길게 누르면 요소가 떠오르고 옆에 메뉴가 열림. 누르는 시간이 기준을 넘어야 반응. — React Native 기법
+
+- **React Native**: `Gesture.LongPress().minDuration(500).onStart(openMenu)`
+- **기본 수치**: 누르는 시간 500ms (300~800)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-gesture-handler/docs/2.x/gestures/long-press-gesture)
+
+```
+롱프레스 메뉴(long press menu): 카드를 500ms 이상 누르고 있으면 카드가 1.05배로 떠오르고 옆에 메뉴가 열리게.
+구현: React Native — Gesture.LongPress().minDuration(500).onStart(() => openMenu())
+```
+
+### 컨테이너 트랜스폼 (container transform)
+
+카드가 그대로 늘어나 상세 화면이 됨. 목록과 상세가 같은 요소로 이어져 보임. — React Native 기법
+
+- **React Native**: `<Animated.View sharedTransitionTag="card-1" sharedTransitionStyle={SharedTransition.duration(550)} />`
+- **기본 수치**: 시간 550ms (300~900)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-reanimated/docs/shared-element-transitions/overview/)
+
+```
+컨테이너 트랜스폼(container transform): 카드를 누르면 550ms 동안 카드가 화면 크기로 늘어나며 상세 화면이 되고, 뒤로 가면 다시 카드로 줄어들게.
+구현: React Native — <Animated.View sharedTransitionTag={`card-${id}`} sharedTransitionStyle={SharedTransition.duration(550)} />  // 실험적 · native stack
+```
+
+### 공유 축 (shared axis)
+
+나가는 화면은 한 방향으로 밀리며 사라지고, 들어오는 화면은 같은 축에서 나타남. 순서 있는 단계에 씀. — React Native 기법
+
+- **React Native**: `<Animated.View key={step} entering={FadeInRight.duration(300)} exiting={FadeOutLeft.duration(300)} />`
+- **기본 수치**: 시간 300ms (150~500)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations/)
+
+```
+공유 축(shared axis): 다음 단계로 넘어갈 때 현재 화면은 왼쪽으로 밀리며 300ms 동안 사라지고, 새 화면은 오른쪽에서 같은 시간에 들어오게. 뒤로 가면 반대로.
+구현: React Native — <Animated.View key={step} entering={FadeInRight.duration(300)} exiting={FadeOutLeft.duration(300)} />
+```
+
+### 페이드 스루 (fade through)
+
+서로 관련 없는 화면(탭 전환 등)을 겹치지 않게 전환. 나가는 쪽이 먼저 사라진 뒤 들어오는 쪽이 살짝 커지며 나타남. — React Native 기법
+
+- **React Native**: `<Animated.View key={tab} entering={FadeIn.duration(210).delay(90)} exiting={FadeOut.duration(90)} />`
+- **기본 수치**: 나감 90ms (60~200) · 들어옴 210ms (120~400)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations/)
+
+```
+페이드 스루(fade through): 탭을 바꿀 때 현재 화면은 90ms 동안 사라지고, 그다음 새 화면이 210ms 동안 0.92배에서 1배로 커지며 나타나게. 두 화면이 겹치지 않게.
+구현: React Native — <Animated.View key={tab} entering={FadeIn.duration(210).delay(90)} exiting={FadeOut.duration(90)} />
+```
+
+### 푸시 · 팝 (push / pop)
+
+새 화면이 옆에서 밀려 들어오고(push) 이전 화면은 살짝 밀려남. 뒤로 가면(pop) 반대로 빠짐. — React Native 기법
+
+- **React Native**: `<Stack.Screen options={{ animation: 'slide_from_right' }} />`
+- **기본 수치**: 시간 350ms (200~600)
+- **공식 문서**: [RN](https://reactnavigation.org/docs/native-stack-navigator)
+
+```
+푸시 · 팝(push / pop): 새 화면이 오른쪽에서 350ms 동안 밀려 들어오고 이전 화면은 왼쪽으로 조금 밀려나며, 뒤로 가면 반대로 빠지게.
+구현: React Native — <Stack.Screen options={{ animation: 'simple_push', animationDuration: 350 }} />  // iOS 에서만 시간 적용
+```
+
+### 햅틱 동기화 (haptic sync)
+
+눈금 · 스냅 · 확정 같은 지점에서 움직임과 같은 순간에 진동을 줌. 보이는 것과 느껴지는 것이 맞아야 자연스러움. — React Native 기법
+
+- **React Native**: `Haptics.selectionAsync()`
+- **기본 수치**: 눈금 수 5 (3~9)
+- **공식 문서**: [RN](https://docs.expo.dev/versions/latest/sdk/haptics/)
+
+```
+햅틱 동기화(haptic sync): 슬라이더를 끌 때 눈금 5개를 지날 때마다 눈금이 튀고 같은 순간에 가벼운 햅틱(selection)이 나게.
+구현: React Native — // 눈금 5개 · 값이 눈금을 넘는 순간 한 번
+Haptics.selectionAsync()
+```
+
+### 스켈레톤 로딩 (skeleton)
+
+데이터가 오기 전에 들어갈 자리를 회색 블록으로 먼저 보여 주고, 천천히 깜빡여 로딩 중임을 알림. — React Native 기법
+
+- **React Native**: `o.value = withRepeat(withTiming(1, { duration: 800 }), -1, true)`
+- **기본 수치**: 한 번 800ms (400~1600)
+- **공식 문서**: [RN](https://docs.swmansion.com/react-native-reanimated/docs/animations/withRepeat/)
+
+```
+스켈레톤 로딩(skeleton): 데이터가 오기 전에 자리를 회색 블록으로 채우고, 투명도가 0.4에서 1 사이를 800ms마다 오가며 깜빡이게.
+구현: React Native — o.value = withRepeat(withTiming(1, { duration: 800 }), -1, true)  // o 초기값 0.4
 ```
 
 ## 반복
@@ -634,7 +734,6 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 - **Motion**: `콘텐츠 2벌 + x: ['0%', '-50%'], repeat: Infinity, ease: 'linear'`
   - Ticker 컴포넌트는 Motion+ 유료
 - **GSAP**: `콘텐츠 2벌 + xPercent: -50, repeat: -1, ease: 'none'`
-  - 반응형 · 드래그: horizontalLoop(items, { speed, draggable }) 헬퍼
 - **공식 문서**: [motion.dev](https://motion.dev/docs/react-transitions) · [gsap.com](https://gsap.com/docs/v3/HelperFunctions/helpers/seamlessLoop)
 
 ```

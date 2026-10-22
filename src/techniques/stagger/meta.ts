@@ -9,12 +9,10 @@ export default {
   param: '0.08s',
   motion: [
     '컴포넌트: 부모 variant transition: { delayChildren: stagger(0.08) }',
-    'animate() 에서는 delay: stagger(0.08) · 역순 { from: \'last\' }',
     'staggerChildren 은 deprecated'
   ],
   gsap: [
-    'stagger: 0.08',
-    'stagger: { each: 0.08, from: \'center\', grid: \'auto\' } · each 와 amount 중 하나'
+    'stagger: 0.08'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/stagger', gsap: 'https://gsap.com/resources/getting-started/Staggers' },

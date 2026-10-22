@@ -8,12 +8,10 @@ export default {
   order: 80,
   param: 'useVelocity',
   motion: [
-    'useVelocity(scrollY) → useTransform(v, [-400, 400], [-10, 10]) → useSpring',
-    'style={{ skewY }} · 속도는 px/s 라 수천까지 튐 → 범위 밖은 clamp'
+    'useVelocity(scrollY) → useTransform(v, [-400, 400], [-10, 10]) → useSpring'
   ],
   gsap: [
-    'ScrollTrigger onUpdate: self => skewTo(self.getVelocity() / -300)',
-    'const skewTo = gsap.quickTo(el, \'skewY\')'
+    'ScrollTrigger onUpdate: self => skewTo(self.getVelocity() / -300)'
   ],
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-use-velocity', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/getVelocity()' }

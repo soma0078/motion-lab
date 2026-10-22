@@ -8,12 +8,10 @@ export default {
   order: 20,
   param: 'scroll → 0~1',
   motion: [
-    'useScroll({ target, offset: [\'start end\', \'end start\'] }) + useTransform',
-    '부드럽게: useSpring(scrollYProgress)'
+    'useScroll({ target, offset: [\'start end\', \'end start\'] }) + useTransform'
   ],
   gsap: [
-    'scrollTrigger: { scrub: true }',
-    '부드럽게: scrub: 1 (초 단위로 따라잡음)'
+    'scrollTrigger: { scrub: true }'
   ],
   fit: 'gsap',
   docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' }

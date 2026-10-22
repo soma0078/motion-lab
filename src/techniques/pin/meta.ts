@@ -11,8 +11,7 @@ export default {
     '긴 wrapper + CSS position: sticky + useScroll({ target })'
   ],
   gsap: [
-    'scrollTrigger: { pin: true, end: \'+=1500\', scrub: true }',
-    'pin 만 쓰면 고정만 됨 · pinSpacing'
+    'scrollTrigger: { pin: true, end: \'+=1500\', scrub: true }'
   ],
   fit: 'gsap',
   docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' }

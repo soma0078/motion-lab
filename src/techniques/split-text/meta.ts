@@ -12,9 +12,7 @@ export default {
     'splitText 는 Motion+ 유료 (motion-plus)'
   ],
   gsap: [
-    'SplitText.create(el, { type: \'words,chars\' })',
-    'chars 만 쓰면 줄바꿈 어색 → words 함께 · smartWrap',
-    'aria: \'auto\' 기본 · 끝나면 revert()'
+    'SplitText.create(el, { type: \'words,chars\' })'
   ],
   fit: 'gsap',
   docs: { motion: 'https://motion.dev/docs/react-split-text', gsap: 'https://gsap.com/docs/v3/Plugins/SplitText/' },

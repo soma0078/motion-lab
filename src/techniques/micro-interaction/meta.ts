@@ -8,8 +8,7 @@ export default {
   order: 20,
   param: '500 / 30',
   motion: [
-    'whileTap + spring (키보드 Enter 도 동작)',
-    'whileFocus'
+    'whileTap + spring (키보드 Enter 도 동작)'
   ],
   gsap: [
     'onClick → contextSafe(짧은 timeline)'

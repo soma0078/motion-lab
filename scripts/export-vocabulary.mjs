@@ -18,7 +18,7 @@ for (const slug of readdirSync(dir)) {
   if (existsSync(meta)) techniques.push({ slug, ...(await load(meta)).default })
 }
 
-const FIT = { motion: 'Motion 추천', gsap: 'GSAP 추천', both: '둘 다 무난', native: '브라우저 기본으로 충분' }
+const FIT = { motion: 'Motion 추천', gsap: 'GSAP 추천', both: '둘 다 무난', native: '브라우저 기본으로 충분', rn: 'React Native 기법' }
 const list = (label, lines) => (lines?.length ? [`- **${label}**: \`${lines[0]}\``, ...lines.slice(1).map((l) => `  - ${l}`)] : [])
 
 const out = [
@@ -41,13 +41,13 @@ for (const section of SECTIONS) {
   out.push(`## ${section.heading}`, '', section.lead, '')
   for (const t of items) {
     out.push(`### ${t.name} (${t.english})`, '', `${t.meaning}. — ${FIT[t.fit]}`, '')
-    out.push(...list('Motion', t.motion), ...list('GSAP', t.gsap), ...list('CSS·Web', t.native))
+    out.push(...list('React Native', t.rn), ...list('Motion', t.motion), ...list('GSAP', t.gsap), ...list('CSS·Web', t.native))
     if (t.params) {
       out.push(`- **기본 수치**: ${t.params.map((p) => `${p.label} ${p.default}${p.unit ?? ''} (${p.min}~${p.max})`).join(' · ')}`)
     }
-    const docs = Object.entries(t.docs ?? {}).map(([key, url]) => `[${{ motion: 'motion.dev', gsap: 'gsap.com', native: 'MDN' }[key]}](${url})`)
+    const docs = Object.entries(t.docs ?? {}).map(([key, url]) => `[${{ motion: 'motion.dev', gsap: 'gsap.com', native: 'MDN', rn: 'RN' }[key]}](${url})`)
     if (docs.length) out.push(`- **공식 문서**: ${docs.join(' · ')}`)
-    out.push('', '```', buildPrompt(t, t.fit === 'gsap' ? 'gsap' : t.fit === 'native' ? 'native' : 'motion', defaultValues(t)), '```', '')
+    out.push('', '```', buildPrompt(t, t.fit === 'gsap' || t.fit === 'native' || t.fit === 'rn' ? t.fit : 'motion', defaultValues(t)), '```', '')
   }
 }
 

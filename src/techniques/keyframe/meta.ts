@@ -8,12 +8,10 @@ export default {
   order: 40,
   param: '4 keys',
   motion: [
-    'x: [0, 80, 40]',
-    'transition: { times: [0, 0.6, 1] }'
+    'x: [0, 80, 40]'
   ],
   gsap: [
-    'keyframes: [{ x: 80 }, { x: 40 }]',
-    '배열형 { x: [0, 80, 40], easeEach } · %형 { \'50%\': { x: 80 } }'
+    'keyframes: [{ x: 80 }, { x: 40 }]'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/resources/keyframes/' }

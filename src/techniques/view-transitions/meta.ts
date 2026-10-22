@@ -8,16 +8,13 @@ export default {
   order: 120,
   param: 'old → new',
   motion: [
-    'animateView(() => update()) (무료 motion 패키지)',
-    'React 안에서는 layoutId 로도 같은 효과'
+    'animateView(() => update()) (무료 motion 패키지)'
   ],
   gsap: [
     'JS 대안: Flip'
   ],
   native: [
     'React 19.3: <ViewTransition> + startTransition (startViewTransition 직접 호출 금지)',
-    'React 밖: document.startViewTransition(() => update())',
-    'CSS view-transition-name: hero · ::view-transition-old/new(hero)',
     '지원 Chrome 111 · Safari 18 · Firefox 144'
   ],
   fit: 'native',

@@ -12,8 +12,7 @@ export default {
     'Cursor 컴포넌트는 Motion+ 유료'
   ],
   gsap: [
-    'gsap.quickTo(cursor, \'x\', { duration: 0.6, ease: \'power3\' }) + mousemove',
-    '가운데 맞춤 xPercent: -50 · yPercent: -50'
+    'gsap.quickTo(cursor, \'x\', { duration: 0.6, ease: \'power3\' }) + mousemove'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-use-spring', gsap: 'https://gsap.com/docs/v3/GSAP/gsap.quickTo()' },

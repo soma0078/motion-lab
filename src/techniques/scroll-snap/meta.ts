@@ -11,8 +11,7 @@ export default {
     'CSS scroll-snap-type (라이브러리 불필요)'
   ],
   gsap: [
-    'scrollTrigger: { snap: 1 / (n - 1) }',
-    'snap: { snapTo: \'labels\', duration: { min: 0.2, max: 0.6 } }'
+    'scrollTrigger: { snap: 1 / (n - 1) }'
   ],
   fit: 'both',
   docs: { gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/', native: 'https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type' }

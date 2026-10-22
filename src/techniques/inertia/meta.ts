@@ -8,12 +8,10 @@ export default {
   order: 80,
   param: 'power 0.8 · 350ms',
   motion: [
-    'drag 기본 관성 (끄기 dragMomentum={false}) · dragTransition: { power, timeConstant }',
-    'animate(x, 0, { type: \'inertia\', velocity, min, max }) · 기본 power 0.8 · timeConstant 700'
+    'drag 기본 관성 (끄기 dragMomentum={false}) · dragTransition: { power, timeConstant }'
   ],
   gsap: [
-    'gsap.registerPlugin(Draggable, InertiaPlugin) → Draggable.create(el, { inertia: true, snap })',
-    '트윈: InertiaPlugin.track(el, \'x\') 후 inertia: { x: \'auto\' }'
+    'gsap.registerPlugin(Draggable, InertiaPlugin) → Draggable.create(el, { inertia: true, snap })'
   ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-drag', gsap: 'https://gsap.com/docs/v3/Plugins/InertiaPlugin/' },

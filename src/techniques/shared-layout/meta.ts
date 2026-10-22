@@ -8,12 +8,10 @@ export default {
   order: 80,
   param: 'layoutId',
   motion: [
-    'layout · layoutId',
-    '따로 렌더되는 형제 <LayoutGroup> · 스크롤 안 layoutScroll · 비율 바뀌면 layout=\'position\''
+    'layout · layoutId'
   ],
   gsap: [
-    'Flip.getState() → 상태 변경 → Flip.from(state, { absolute, targets })',
-    'React: 렌더 후(useLayoutEffect) 호출 · data-flip-id'
+    'Flip.getState() → 상태 변경 → Flip.from(state, { absolute, targets })'
   ],
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-layout-animations', gsap: 'https://gsap.com/docs/v3/Plugins/Flip/' }
