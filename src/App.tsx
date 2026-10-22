@@ -1,5 +1,5 @@
 import { Suspense, useLayoutEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Check, Copy, RotateCcw } from 'lucide-react'
+import { ArrowUp, ArrowUpRight, Check, Copy, RotateCcw } from 'lucide-react'
 
 import { TECHNIQUE_SECTIONS, type Technique } from './techniques/registry'
 import { buildPrompt, defaultValues, LIB_LABEL, type Lib } from './techniques/prompt'
@@ -156,8 +156,65 @@ export default function App() {
             ))}
           </ul>
         </section>
+
+        <Footer />
       </div>
     </div>
+  )
+}
+
+const REPO_URL = 'https://github.com/soma0078/motion-lab'
+
+/** CSS smooth 는 지연 로딩으로 레이아웃이 바뀌면 중간에 멈춰서, 프레임마다 직접 올린다 */
+function scrollToTop() {
+  const start = window.scrollY
+  if (start === 0) return
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    return
+  }
+
+  const duration = Math.min(900, 300 + start / 12)
+  const startedAt = performance.now()
+  let frame = 0
+  const stop = () => cancelAnimationFrame(frame)
+  // 사용자가 직접 스크롤하면 그쪽을 따름
+  window.addEventListener('wheel', stop, { once: true, passive: true })
+  window.addEventListener('touchstart', stop, { once: true, passive: true })
+
+  const step = (now: number) => {
+    const t = Math.min((now - startedAt) / duration, 1)
+    window.scrollTo({ top: start * (1 - t) ** 3, behavior: 'instant' })
+    if (t < 1) frame = requestAnimationFrame(step)
+  }
+  frame = requestAnimationFrame(step)
+}
+
+/** 왼쪽 저작권 · 가운데 저장소 링크 · 오른쪽 맨 위로 */
+function Footer() {
+  return (
+    <footer className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-t-2 border-black pt-6 text-xs font-semibold">
+      <p className="text-nb-muted">© 2026 soma0078</p>
+      <a
+        href={REPO_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1.5 font-extrabold underline decoration-2 underline-offset-2 hover:decoration-nb-orange"
+      >
+        <svg viewBox="0 0 16 16" aria-hidden="true" className="size-4 fill-current">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+        </svg>
+        motion-lab
+      </a>
+      <button
+        type="button"
+        onClick={scrollToTop}
+        className="shadow-nb-sm flex items-center gap-1 justify-self-end rounded-[5px] border-2 border-black bg-white px-2.5 py-1 text-[11px] font-extrabold transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
+      >
+        <ArrowUp className="size-3.5" strokeWidth={3} />
+        맨 위로
+      </button>
+    </footer>
   )
 }
 
