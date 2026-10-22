@@ -335,16 +335,32 @@ function ParamPanel({
 
 /** 지금 수치로 AI 지시문을 만들어 클립보드에 복사 */
 function CopyButtons({ technique, values }: { technique: Technique; values: ParamValues }) {
-  const [copied, setCopied] = useState<Lib | null>(null)
+  const [copied, setCopied] = useState<{ lib: Lib; count: number | null } | null>(null)
   const libs = (['rn', 'motion', 'gsap', 'native'] as const).filter((lib) => technique[lib])
 
   const copy = async (lib: Lib) => {
     try {
       await navigator.clipboard.writeText(buildPrompt(technique, lib, values))
-      setCopied(lib)
-      setTimeout(() => setCopied((prev) => (prev === lib ? null : prev)), 1200)
     } catch {
       // 클립보드 권한이 없으면 조용히 무시
+      return
+    }
+    setCopied({ lib, count: null })
+    setTimeout(() => setCopied((prev) => (prev?.lib === lib ? null : prev)), 2000)
+
+    // 횟수는 기록이 되는 대로 덧붙임. 서버가 없거나 실패해도 "복사됨"은 그대로
+    try {
+      const response = await fetch('/api/copy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: technique.slug })
+      })
+      const { count } = await response.json()
+      if (response.ok && typeof count === 'number') {
+        setCopied((prev) => (prev?.lib === lib ? { lib, count } : prev))
+      }
+    } catch {
+      // 횟수 기록 실패는 사용자에게 알리지 않음
     }
   }
 
@@ -358,8 +374,12 @@ function CopyButtons({ technique, values }: { technique: Technique; values: Para
           title={buildPrompt(technique, lib, values)}
           className="shadow-nb-sm flex items-center gap-1.5 rounded-[5px] border-2 border-black bg-white px-2.5 py-1 text-[11px] font-extrabold transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
         >
-          {copied === lib ? <Check className="size-3.5" strokeWidth={3} /> : <Copy className="size-3.5" strokeWidth={3} />}
-          {copied === lib ? '복사됨' : `${LIB_LABEL[lib]}으로 복사`}
+          {copied?.lib === lib ? <Check className="size-3.5" strokeWidth={3} /> : <Copy className="size-3.5" strokeWidth={3} />}
+          {copied?.lib === lib
+            ? copied.count === null
+              ? '복사됨'
+              : `복사됨 · ${copied.count.toLocaleString()}번째`
+            : `${LIB_LABEL[lib]}으로 복사`}
         </button>
       ))}
     </div>
