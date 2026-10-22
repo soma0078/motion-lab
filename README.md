@@ -1,6 +1,6 @@
 # Motion Lab
 
-모션 기법 사전. 원하는 움직임을 표준 용어와 숫자로 바꿔, AI에게 바로 붙여 넣을 지시문으로 가져갈 수 있습니다.
+모션 기법 사전. 원하는 움직임을 표준 용어와 숫자로 바꿔, AI에게 바로 붙여 넣을 지시문으로 가져갈 수 있습니다. 웹(Motion · GSAP · CSS)과 앱(React Native) 기준을 함께 다룹니다.
 
 ![Motion Lab](docs/preview.png)
 
@@ -10,6 +10,7 @@
 
 - **기법 사전**: 모션 기법을 한글 표준 용어와 원어로 정리하고, 카드마다 실시간 데모를 보여 줍니다.
 - **도구 비교**: 같은 기법을 Motion · GSAP · CSS로 구현할 때의 핵심 API를 나란히 보여 주고, 어느 쪽이 맞는지, 유료 기능인지 표시합니다. 공식 문서와 대조했으며 링크를 달았습니다.
+- **앱 · 제스처 (React Native)**: 스와이프 액션, 바텀시트 스냅, 당겨서 새로고침, 인터럽트 가능한 전환, 누르기 피드백, 롱프레스 메뉴, 컨테이너 트랜스폼, 공유 축, 페이드 스루, 푸시 · 팝, 햅틱 동기화, 스켈레톤 로딩 12개를 React Native(Reanimated · Gesture Handler 등) 기준 API로 정리했습니다. 데모는 웹에서 같은 움직임을 비슷하게 보여 주고, 카드마다 "React Native로 복사" 버튼이 있습니다.
 - **수치 조절과 지시문 복사**: 슬라이더로 간격, 스프링 값 등을 조절하고, 현재 값이 담긴 지시문을 복사합니다.
 - **어휘집 내보내기**: 전체 기법을 `motion-vocabulary.md` 한 파일로 내보내 다른 프로젝트의 AI 컨텍스트로 쓸 수 있습니다.
 
@@ -50,7 +51,7 @@ React 19 · Vite · TypeScript · Tailwind CSS v4 · [motion](https://motion.dev
 ```
 src/techniques/
   <slug>/
-    meta.ts     용어 · 뜻 · 섹션 · Motion/GSAP/CSS API · 추천 · 공식 문서 · 수치 슬라이더
+    meta.ts     용어 · 뜻 · 섹션 · Motion/GSAP/CSS/React Native API · 추천 · 공식 문서 · 수치 슬라이더
     demo.tsx    카드 데모 (default export 컴포넌트 하나)
     demo.css    선택. 데모 전용 스타일
   _shared/      데모 공용 훅 · 부품
@@ -65,3 +66,5 @@ scripts/export-vocabulary.mjs   어휘집 생성
 ## Notes
 
 API 표기는 [motion.dev](https://motion.dev/docs), [gsap.com](https://gsap.com/docs/v3/), [MDN](https://developer.mozilla.org)의 공식 문서와 대조했습니다 (2026-10 기준, motion 14 · GSAP 3.15). 이후 버전에서는 달라질 수 있습니다.
+
+React Native 기법은 [Reanimated](https://docs.swmansion.com/react-native-reanimated/) 4.x, [Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/) 2.x, [React Navigation](https://reactnavigation.org/), [@gorhom/bottom-sheet](https://gorhom.dev/react-native-bottom-sheet/), [Expo Haptics](https://docs.expo.dev/versions/latest/sdk/haptics/) 문서와 대조했습니다 (2026-10). 코드는 문서 기준이며 실제 React Native 앱에서 실행해 확인한 것은 아닙니다.
