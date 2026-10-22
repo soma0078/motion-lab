@@ -42,6 +42,12 @@
   --shadow-nb-lg: 8px 8px 0px 0px var(--nb-ink);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   margin: 0;
   background-color: var(--nb-bg);

@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react'
+import { Suspense, useLayoutEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Check, Copy, RotateCcw } from 'lucide-react'
 
 import { TECHNIQUE_SECTIONS, type Technique } from './techniques/registry'
@@ -25,6 +25,20 @@ const FIT_LABEL: Record<Fit, { text: string; className: string }> = {
 const sectionId = (index: number) => `section-${index + 1}`
 
 export default function App() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([])
+
+  useLayoutEffect(() => {
+    const update = () => {
+      const link = linkRefs.current[activeIndex]
+      if (link) setTooltipPos({ x: link.offsetLeft + link.offsetWidth / 2, y: link.offsetTop })
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [activeIndex])
+
   return (
     <div className="pb-24">
       {/* 히어로 */}
@@ -37,18 +51,24 @@ export default function App() {
             모션 기법 사전
           </h1>
           <p className="mt-4 max-w-xl text-base font-bold break-keep sm:text-lg">
-            원하는 움직임을 이름과 수치로 바꿔, AI에게 바로 붙여 넣을 지시문으로 가져간다.
+            원하는 움직임을 표준 용어와 숫자로 바꿔보세요. 그대로 복사해서 AI에게 붙여 넣을 수 있는 지시문이 돼요.
           </p>
           <p className="text-nb-muted mt-2 max-w-xl text-sm font-medium break-keep">
-            "부드럽게", "세련되게"는 사람마다, 실행마다 다른 결과를 낸다. 표준 용어와 숫자로 말하면 한 번에 같은 연출이 나온다.
+            "부드럽게", "세련되게" 같은 표현은 사람마다, 실행할 때마다 다르게 해석되기 쉬워요. 표준 용어와 숫자로 말하면 누가 언제 적용해도 똑같은 움직임을 만들 수 있답니다.
           </p>
 
           {/* 카테고리 바로가기 */}
-          <nav className="mt-7 flex flex-wrap gap-2">
+          <nav className="relative mt-10 flex flex-wrap gap-2">
             {TECHNIQUE_SECTIONS.map((section, index) => (
               <a
                 key={section.heading}
+                ref={(el) => {
+                  linkRefs.current[index] = el
+                }}
                 href={`#${sectionId(index)}`}
+                title={`${section.heading} 섹션으로 이동`}
+                onMouseEnter={() => setActiveIndex(index)}
+                onFocus={() => setActiveIndex(index)}
                 className={cn(
                   'shadow-nb-sm rounded-[5px] border-2 border-black px-3 py-1.5 text-xs font-extrabold transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none',
                   ACCENT_BG[section.accent]
@@ -58,6 +78,21 @@ export default function App() {
                 <span className="ml-1.5 font-mono">{section.techniques.length}</span>
               </a>
             ))}
+
+            {tooltipPos && (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 left-0 transition-transform duration-150 ease-out"
+                style={{ transform: `translate(${tooltipPos.x}px, ${tooltipPos.y - 32}px)` }}
+              >
+                <span className="flex -translate-x-1/2 animate-bounce flex-col items-center">
+                  <span className="shadow-nb-sm rounded-[4px] border-2 border-black bg-white px-1.5 py-0.5 text-[9px] font-extrabold tracking-tight whitespace-nowrap text-black">
+                    눌러서 바로 이동해요
+                  </span>
+                  <span className="-mt-[3px] size-1.5 rotate-45 border-r-2 border-b-2 border-black bg-white" />
+                </span>
+              </span>
+            )}
           </nav>
         </div>
       </section>
@@ -188,20 +223,20 @@ function TechniqueCard({
 
 const TAKEAWAYS = [
   {
-    title: '움직임의 이름',
-    body: '머릿속 "그 스르륵 올라오는 거"가 무슨 기법인지 데모를 보고 찾는다. 이름을 알면 AI 지시도, 검색도, 디자이너와의 대화도 정확해진다.',
+    title: '기법 용어 찾기',
+    body: '머릿속에 있는 "그 스르륵 올라오는 거"가 어떤 기법인지 데모를 보면서 찾아보세요. 정확한 용어를 알면 AI에게 지시할 때도, 검색할 때도, 디자이너와 대화할 때도 훨씬 정확해져요.',
     accent: 'bg-nb-blue',
     example: ['마스크 리빌', '스태거', '오버슈트']
   },
   {
     title: '어떤 도구로 만들지',
-    body: '같은 기법을 Motion · GSAP · CSS로 각각 어떻게 하는지 나란히 본다. 공식 문서와 대조한 API, 어느 쪽이 맞는지, 유료 기능인지까지.',
+    body: '같은 기법을 Motion · GSAP · CSS로 각각 어떻게 구현하는지 나란히 비교해보세요. 공식 문서와 대조한 API는 물론, 어느 쪽이 맞는지, 유료 기능인지도 함께 확인할 수 있어요.',
     accent: 'bg-nb-green',
     example: ['Motion 추천', 'GSAP 추천', '브라우저 기본']
   },
   {
     title: '정확한 수치와 지시문',
-    body: '슬라이더로 느낌을 눈으로 맞추고 복사한다. "부드럽게 해줘"를 여러 번 왕복하던 걸 한 번에 끝낸다.',
+    body: '슬라이더를 움직이며 눈으로 느낌을 맞춰보고, 그대로 복사해보세요. "부드럽게 해줘"를 여러 번 주고받던 과정을 한 번에 끝낼 수 있어요.',
     accent: 'bg-nb-yellow',
     example: ['0.12s 간격', 'stiffness 220', 'damping 12']
   }
@@ -237,7 +272,7 @@ function Takeaways() {
 
       {/* 복사 결과 예시 */}
       <figure className="mt-5 max-w-3xl">
-        <figcaption className="text-nb-muted mb-2 text-xs font-bold">카드에서 "Motion으로 복사"를 누르면</figcaption>
+        <figcaption className="text-nb-muted mb-2 text-xs font-bold">카드에서 "Motion으로 복사"를 누르면 이렇게 나와요</figcaption>
         <pre className="overflow-x-auto rounded-[5px] border-2 border-black bg-black px-4 py-3 font-mono text-[12px] leading-relaxed whitespace-pre-wrap text-white">
           {`스태거(stagger): 스태거로 0.12s 간격을 두고, 하나씩 0.5s ease-out-quart로 아래에서 올라오게.
 구현: Motion — 부모 variant transition: { delayChildren: stagger(0.12) } · 자식 { duration: 0.5, ease: [0.25, 1, 0.5, 1] }`}
