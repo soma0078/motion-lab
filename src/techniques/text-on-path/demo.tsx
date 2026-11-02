@@ -16,8 +16,8 @@ export default function TextOnPath() {
   return (
     <div ref={scope} className="absolute inset-0 grid place-items-center pt-6">
       <svg viewBox="0 0 300 80" className="w-[260px] overflow-visible">
-        <path id="text-path-demo" d={TEXT_PATH} fill="none" stroke="var(--nb-line)" strokeWidth={2} />
-        <text className="fill-black text-[18px] font-extrabold">
+        <path id="text-path-demo" d={TEXT_PATH} fill="none" stroke="var(--line-strong)" strokeWidth={1.5} />
+        <text className="fill-ink text-[18px] font-extrabold">
           <motion.textPath href="#text-path-demo" startOffset={startOffset}>
             ON THE PATH →
           </motion.textPath>

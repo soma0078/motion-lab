@@ -3,9 +3,9 @@ import { useLoop, wait } from '../_shared'
 import { cn } from '../../lib/utils'
 
 const SNAP_CARDS = [
-  { label: '1', bg: 'bg-nb-blue' },
-  { label: '2', bg: 'bg-nb-yellow' },
-  { label: '3', bg: 'bg-nb-green' }
+  { label: '1', bg: 'paint-key' },
+  { label: '2', bg: 'paint-sub' },
+  { label: '3', bg: 'paint-tone' }
 ]
 
 export default function ScrollSnap() {
@@ -29,7 +29,7 @@ export default function ScrollSnap() {
             <div key={label} className="w-1/3 px-8">
               <div
                 className={cn(
-                  'grid h-full place-items-center border-2 border-black text-2xl font-extrabold',
+                  'grid h-full place-items-center border-[1.5px] border-ink text-2xl font-extrabold',
                   bg
                 )}
               >
@@ -39,8 +39,8 @@ export default function ScrollSnap() {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-3 left-1/2 flex h-2 w-12 -translate-x-1/2 border-2 border-black">
-        <div className="indicator h-full w-1/3 bg-black" />
+      <div className="absolute bottom-3 left-1/2 flex h-2 w-12 -translate-x-1/2 border-[1.5px] border-ink">
+        <div className="indicator h-full w-1/3 bg-current" />
       </div>
     </div>
   )

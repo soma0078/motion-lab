@@ -32,7 +32,7 @@ export default function MaskReveal({ params }: DemoProps) {
           <div
             className={cn(
               'line px-1 text-3xl leading-tight font-extrabold',
-              index === 1 && 'bg-nb-yellow'
+              index === 1 && 'paint-sub'
             )}
           >
             {word}

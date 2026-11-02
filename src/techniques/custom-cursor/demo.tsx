@@ -32,7 +32,7 @@ export default function CustomCursor({ params }: DemoProps) {
     <div ref={scope} className="absolute inset-0 overflow-hidden">
       <div className="absolute top-[58%] left-1/2 size-0">
         <div
-          className="absolute grid place-items-center border-2 border-black bg-white text-[10px] font-extrabold"
+          className="absolute grid place-items-center border-[1.5px] border-ink bg-surface text-[10px] font-extrabold"
           style={{
             left: CURSOR_TARGET.x - CURSOR_TARGET.w / 2,
             top: CURSOR_TARGET.y - CURSOR_TARGET.h / 2,
@@ -43,9 +43,9 @@ export default function CustomCursor({ params }: DemoProps) {
           LINK
         </div>
         {/* 실제 커서는 숨기고 점 + 원으로 대신. pointer-events: none */}
-        <motion.div className="pointer-events-none absolute -top-1 -left-1 size-2 rounded-full bg-black" style={{ x: pointerX, y: pointerY }} />
+        <motion.div className="pointer-events-none absolute -top-1 -left-1 size-2 rounded-full bg-current" style={{ x: pointerX, y: pointerY }} />
         <motion.div
-          className="border-nb-orange pointer-events-none absolute -top-4 -left-4 size-8 rounded-full border-2 mix-blend-multiply"
+          className="border-key pointer-events-none absolute -top-4 -left-4 size-8 rounded-full border-[1.5px] mix-blend-multiply"
           style={{ x: followX, y: followY, scale: ringScale }}
         />
       </div>

@@ -21,7 +21,7 @@ export default function PressFeedback({ params }: DemoProps) {
   return (
     <div ref={scope} className="absolute inset-0 flex items-center justify-center pt-5">
       <motion.div
-        className="bg-nb-yellow shadow-nb-sm relative flex h-11 w-40 items-center justify-center border-2 border-black text-sm font-extrabold"
+        className="paint-sub shadow-raised-sm relative flex h-11 w-40 items-center justify-center border-[1.5px] border-ink text-sm font-extrabold"
         style={{ scale }}
       >
         장바구니 담기

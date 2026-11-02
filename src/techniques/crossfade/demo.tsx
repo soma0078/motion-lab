@@ -20,8 +20,8 @@ export default function Crossfade() {
   return (
     <div ref={scope} className="absolute inset-0 grid place-items-center pt-6">
       <div className="relative h-20 w-36">
-        <MiniCard label="A" className="a bg-nb-blue" />
-        <MiniCard label="B" className="b bg-nb-yellow opacity-0" />
+        <MiniCard label="A" className="a paint-key" />
+        <MiniCard label="B" className="b paint-sub opacity-0" />
       </div>
     </div>
   )

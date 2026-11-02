@@ -3,7 +3,7 @@ import { Mouse } from 'lucide-react'
 import { useLoop, wait } from '../_shared'
 import { cn } from '../../lib/utils'
 
-const SWIPE_SECTIONS = ['bg-nb-blue', 'bg-nb-yellow', 'bg-nb-green']
+const SWIPE_SECTIONS = ['paint-key', 'paint-sub', 'paint-tone']
 
 export default function SectionSwipe() {
   const scope = useLoop(async (animate) => {
@@ -17,10 +17,10 @@ export default function SectionSwipe() {
 
   return (
     <div ref={scope} className="absolute inset-x-8 top-9 bottom-4 flex items-center gap-4">
-      <div className="h-full flex-1 overflow-hidden border-2 border-black">
+      <div className="h-full flex-1 overflow-hidden border-[1.5px] border-ink">
         <div className="stack h-full">
           {SWIPE_SECTIONS.map((bg, index) => (
-            <div key={bg} className={cn('grid h-full place-items-center border-b-2 border-black', bg)}>
+            <div key={bg} className={cn('grid h-full place-items-center border-b-[1.5px] border-ink', bg)}>
               <span className="font-mono text-sm font-extrabold">SECTION {index + 1}</span>
             </div>
           ))}

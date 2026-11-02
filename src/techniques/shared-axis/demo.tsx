@@ -16,14 +16,14 @@ export default function SharedAxis({ params }: DemoProps) {
   })
 
   return (
-    <div ref={scope} className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-2 border-black bg-white">
-      <div className="a bg-nb-yellow absolute inset-3 border-2 border-black p-3">
+    <div ref={scope} className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-[1.5px] border-ink bg-surface">
+      <div className="a paint-sub absolute inset-3 border-[1.5px] border-ink p-3">
         <p className="text-xs font-extrabold">1단계 · 이름</p>
-        <div className="mt-2 h-1.5 w-2/3 bg-black" />
+        <div className="mt-2 h-1.5 w-2/3 bg-current" />
       </div>
-      <div className="b bg-nb-blue absolute inset-3 border-2 border-black p-3 opacity-0">
+      <div className="b paint-key absolute inset-3 border-[1.5px] border-ink p-3 opacity-0">
         <p className="text-xs font-extrabold">2단계 · 주소</p>
-        <div className="mt-2 h-1.5 w-2/3 bg-black" />
+        <div className="mt-2 h-1.5 w-2/3 bg-current" />
       </div>
     </div>
   )

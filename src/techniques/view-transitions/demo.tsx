@@ -3,20 +3,20 @@ import { motion } from 'motion/react'
 import { EASE_OUT_QUART, useStep } from '../_shared'
 import { cn } from '../../lib/utils'
 
-const VT_ITEMS = ['bg-nb-blue', 'bg-nb-yellow', 'bg-nb-green']
+const VT_ITEMS = ['paint-key', 'paint-sub', 'paint-tone']
 
 export default function ViewTransitions() {
   const [ref, step] = useStep(1400, 2)
   const open = step === 1
 
   return (
-    <div ref={ref} className="absolute inset-x-8 top-9 bottom-4 border-2 border-black bg-white p-2">
+    <div ref={ref} className="absolute inset-x-8 top-9 bottom-4 border-[1.5px] border-ink bg-surface p-2">
       {open ? (
         <div className="flex h-full flex-col gap-1.5">
           {/* 같은 view-transition-name 끼리 old → new 로 이어짐 (여기선 layoutId 로 흉내) */}
-          <motion.div layoutId="vt-hero" className={cn('h-14 border-2 border-black', VT_ITEMS[0])} transition={{ duration: 0.4, ease: EASE_OUT_QUART }} />
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="bg-nb-line h-2 w-4/5" />
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} className="bg-nb-line h-2 w-3/5" />
+          <motion.div layoutId="vt-hero" className={cn('h-14 border-[1.5px] border-ink', VT_ITEMS[0])} transition={{ duration: 0.4, ease: EASE_OUT_QUART }} />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="bg-line-strong h-2 w-4/5" />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} className="bg-line-strong h-2 w-3/5" />
         </div>
       ) : (
         <div className="grid h-full grid-cols-3 gap-2">
@@ -24,7 +24,7 @@ export default function ViewTransitions() {
             <motion.div
               key={bg}
               layoutId={index === 0 ? 'vt-hero' : undefined}
-              className={cn('border-2 border-black', bg)}
+              className={cn('border-[1.5px] border-ink', bg)}
               transition={{ duration: 0.4, ease: EASE_OUT_QUART }}
             />
           ))}

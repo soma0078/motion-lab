@@ -3,9 +3,9 @@ import { EASE_OUT_QUART, useLoop, wait } from '../_shared'
 import { cn } from '../../lib/utils'
 
 const TRACKS = [
-  { label: 'A', at: 0, bg: 'bg-nb-blue' },
-  { label: 'B', at: 0.35, bg: 'bg-nb-yellow' },
-  { label: 'C', at: 0.35, bg: 'bg-nb-green' }
+  { label: 'A', at: 0, bg: 'paint-key' },
+  { label: 'B', at: 0.35, bg: 'paint-sub' },
+  { label: 'C', at: 0.35, bg: 'paint-tone' }
 ]
 
 export default function Timeline() {
@@ -32,10 +32,10 @@ export default function Timeline() {
       {TRACKS.map((track, index) => (
         <div key={track.label} className="flex h-6 items-center gap-2">
           <span className="w-3 font-mono text-[10px] font-bold">{track.label}</span>
-          <div className="relative h-full flex-1 border-b-2 border-dashed border-nb-line">
+          <div className="relative h-full flex-1 border-b-[1.5px] border-dashed border-line-strong">
             <span
               className={cn(
-                `chip chip-${index} absolute top-0 grid h-6 w-[30%] place-items-center border-2 border-black text-[10px] font-extrabold`,
+                `chip chip-${index} absolute top-0 grid h-6 w-[30%] place-items-center border-[1.5px] border-ink text-[10px] font-extrabold`,
                 track.bg
               )}
             />
@@ -44,7 +44,7 @@ export default function Timeline() {
       ))}
       {/* 재생 위치 표시줄 */}
       <div className="pointer-events-none absolute inset-y-0 right-0 left-5">
-        <span className="head absolute inset-y-0 w-0.5 bg-black" />
+        <span className="head absolute inset-y-0 w-0.5 bg-current" />
       </div>
     </div>
   )

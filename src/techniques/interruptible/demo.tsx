@@ -24,15 +24,15 @@ export default function Interruptible({ params }: DemoProps) {
 
   return (
     <div ref={scope} className="absolute inset-0">
-      <div className="absolute top-[88px] right-[10%] left-[10%] border-t-2 border-dashed border-black/50" />
-      <span className="tap2 absolute top-[56px] left-[10%] border-2 border-black bg-white px-1 font-mono text-[10px] font-bold opacity-0">
+      <div className="absolute top-[88px] right-[10%] left-[10%] border-t-[1.5px] border-dashed border-ink/50" />
+      <span className="tap2 absolute top-[56px] left-[10%] border-[1.5px] border-ink bg-surface px-1 font-mono text-[10px] font-bold opacity-0">
         탭 2
       </span>
-      <span className="tap1 absolute top-[56px] right-[10%] border-2 border-black bg-white px-1 font-mono text-[10px] font-bold opacity-0">
+      <span className="tap1 absolute top-[56px] right-[10%] border-[1.5px] border-ink bg-surface px-1 font-mono text-[10px] font-bold opacity-0">
         탭 1
       </span>
       <div className="absolute top-[88px] left-1/2 size-0">
-        <motion.div className="bg-nb-orange absolute -top-4 -left-4 size-8 rounded-full border-2 border-black" style={{ x }} />
+        <motion.div className="paint-key absolute -top-4 -left-4 size-8 rounded-full border-[1.5px] border-ink" style={{ x }} />
       </div>
     </div>
   )

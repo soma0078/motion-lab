@@ -24,16 +24,16 @@ export default function VelocitySkew() {
 
   return (
     <div ref={scope} className="absolute inset-x-8 top-9 bottom-4 flex gap-4">
-      <div className="flex-1 overflow-hidden border-2 border-black">
+      <div className="flex-1 overflow-hidden border-[1.5px] border-ink">
         <motion.div className="space-y-2 p-3" style={{ y: contentY, skewY }}>
           {VELOCITY_LINES.map((width, index) => (
-            <div key={index} className={index % 4 === 0 ? 'bg-nb-blue h-3 border-2 border-black' : 'bg-nb-line h-2'} style={{ width: `${width}%` }} />
+            <div key={index} className={index % 4 === 0 ? 'paint-key h-3 border-[1.5px] border-ink' : 'bg-line-strong h-2'} style={{ width: `${width}%` }} />
           ))}
         </motion.div>
       </div>
       {/* 속도계 */}
-      <div className="flex w-3 items-end border-2 border-black">
-        <motion.div className="bg-nb-orange h-full w-full origin-bottom" style={{ scaleY: meter }} />
+      <div className="flex w-3 items-end border-[1.5px] border-ink">
+        <motion.div className="paint-key h-full w-full origin-bottom" style={{ scaleY: meter }} />
       </div>
     </div>
   )

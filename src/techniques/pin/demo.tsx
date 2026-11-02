@@ -31,19 +31,19 @@ export default function Pin() {
   return (
     <div
       ref={scope}
-      className="absolute inset-x-10 top-8 bottom-3 overflow-hidden border-2 border-black"
+      className="absolute inset-x-10 top-8 bottom-3 overflow-hidden border-[1.5px] border-ink"
     >
       <motion.div className="space-y-2.5 px-3 pt-2" style={{ y: contentY }}>
         {PIN_LINES.map((width, index) => (
           <div
             key={index}
-            className={index === 1 ? 'h-5' : 'bg-nb-line h-2'}
+            className={index === 1 ? 'h-5' : 'bg-line-strong h-2'}
             style={index === 1 ? undefined : { width: `${width}%` }}
           />
         ))}
       </motion.div>
       <motion.div
-        className="bg-nb-yellow absolute inset-x-3 top-0 h-5 border-2 border-black"
+        className="paint-sub absolute inset-x-3 top-0 h-5 border-[1.5px] border-ink"
         style={{ y: pinY }}
       />
     </div>

@@ -31,7 +31,7 @@ export default function Stagger({ params }: DemoProps) {
       {BAR_HEIGHTS.map((height, index) => (
         <div
           key={index}
-          className="bar bg-nb-blue flex-1 border-2 border-b-0 border-black"
+          className="bar paint-key flex-1 border-[1.5px] border-b-0 border-ink"
           style={{ height: `${height}%` }}
         />
       ))}

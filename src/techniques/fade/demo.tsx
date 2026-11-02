@@ -14,7 +14,7 @@ export default function Fade() {
   return (
     <div ref={scope} className="absolute inset-0 grid place-items-center pt-6">
       <div className="relative h-20 w-36">
-        <MiniCard label="FADE" className="card bg-nb-blue" />
+        <MiniCard label="FADE" className="card paint-key" />
       </div>
     </div>
   )

@@ -1,0 +1,39 @@
+/**
+ * 섹션 제목. 도면 번호(§01) · 제목 · 개수 · 끝에 눈금이 있는 치수선.
+ * 카드 제목(text-lg)보다 크게 해서 섹션이 바뀌는 지점이 보이게 한다
+ */
+export function SectionHeading({
+  index,
+  title,
+  count,
+  lead
+}: {
+  index?: number
+  title: string
+  count?: number
+  lead?: string
+}) {
+  return (
+    <header className="mb-8">
+      <div className="flex items-center gap-3">
+        {index !== undefined && (
+          <span className="text-key-text font-mono text-xs font-semibold tracking-wider">
+            §{String(index).padStart(2, '0')}
+          </span>
+        )}
+        <h2 className="text-2xl font-bold tracking-tight break-keep sm:text-[28px]">{title}</h2>
+        {count !== undefined && (
+          <span className="border-line text-ink-3 rounded-full border px-2 py-0.5 font-mono text-[11px] font-medium">
+            {count}
+          </span>
+        )}
+        {/* 치수선: 가는 선 + 오른쪽 끝 눈금 */}
+        <span
+          aria-hidden="true"
+          className="bg-line-strong after:bg-line-strong relative ml-1 hidden h-px flex-1 after:absolute after:-top-1.5 after:right-0 after:h-3 after:w-px sm:block"
+        />
+      </div>
+      {lead && <p className="text-ink-2 mt-2 max-w-3xl text-sm break-keep">{lead}</p>}
+    </header>
+  )
+}

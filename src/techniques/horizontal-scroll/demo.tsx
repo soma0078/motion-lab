@@ -3,7 +3,7 @@ import { motion, useMotionValue, useTransform } from 'motion/react'
 import { useLoop, wait } from '../_shared'
 import { cn } from '../../lib/utils'
 
-const H_PANELS = ['bg-nb-blue', 'bg-nb-yellow', 'bg-nb-green', 'bg-nb-purple']
+const H_PANELS = ['paint-key', 'paint-sub', 'paint-tone', 'paint-sub']
 
 export default function HorizontalScroll() {
   const progress = useMotionValue(0)
@@ -20,11 +20,11 @@ export default function HorizontalScroll() {
 
   return (
     <div ref={scope} className="absolute inset-x-8 top-9 bottom-4 flex gap-4">
-      <div className="flex-1 overflow-hidden border-2 border-black">
+      <div className="flex-1 overflow-hidden border-[1.5px] border-ink">
         <motion.div className="flex h-full w-[400%]" style={{ x: stripX }}>
           {H_PANELS.map((bg, index) => (
-            <div key={bg} className="grid flex-1 place-items-center border-r-2 border-black last:border-r-0">
-              <span className={cn('grid size-10 place-items-center border-2 border-black font-mono text-sm font-extrabold', bg)}>
+            <div key={bg} className="grid flex-1 place-items-center border-r-[1.5px] border-ink last:border-r-0">
+              <span className={cn('grid size-10 place-items-center border-[1.5px] border-ink font-mono text-sm font-extrabold', bg)}>
                 {index + 1}
               </span>
             </div>
@@ -32,8 +32,8 @@ export default function HorizontalScroll() {
         </motion.div>
       </div>
       {/* 세로 스크롤바: 세로로 내려도 가로로 흐름 */}
-      <div className="w-3 border-2 border-black">
-        <motion.div className="h-1/4 bg-black" style={{ y: thumbY }} />
+      <div className="w-3 border-[1.5px] border-ink">
+        <motion.div className="h-1/4 bg-current" style={{ y: thumbY }} />
       </div>
     </div>
   )

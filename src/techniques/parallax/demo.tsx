@@ -8,19 +8,19 @@ const PARALLAX_LAYERS = [
     name: 'far',
     duration: 25,
     heights: [34, 52, 28, 46, 60, 38, 44, 30],
-    className: 'bg-nb-line w-6'
+    className: 'bg-line-strong w-6'
   },
   {
     name: 'mid',
     duration: 10,
     heights: [56, 80, 48, 70, 62],
-    className: 'bg-nb-blue w-7 border-2 border-b-0 border-black'
+    className: 'paint-key w-7 border-[1.5px] border-b-0 border-ink'
   },
   {
     name: 'near',
     duration: 5,
     heights: [72, 72, 72, 72],
-    className: 'bg-black w-2.5'
+    className: 'bg-current w-2.5'
   }
 ]
 
@@ -54,7 +54,7 @@ export default function Parallax() {
           ))}
         </div>
       ))}
-      <div className="bg-nb-bg absolute inset-x-0 bottom-0 h-3 border-t-2 border-black" />
+      <div className="bg-paper absolute inset-x-0 bottom-0 h-3 border-t-[1.5px] border-ink" />
     </div>
   )
 }

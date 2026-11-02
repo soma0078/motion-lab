@@ -24,14 +24,14 @@ export default function Easing({ params }: DemoProps) {
         ['ease-out', 'eased']
       ].map(([label, name]) => (
         <div key={name}>
-          <span className="text-nb-muted font-mono text-[10px] font-bold">
+          <span className="text-ink-3 font-mono text-[10px] font-bold">
             {label}
           </span>
           {/* 오른쪽 여백 = 점 크기. mover를 100% 옮기면 끝에 닿음 */}
           <div className="relative mt-1 mr-4 h-4">
-            <div className="border-nb-line absolute top-1/2 -right-4 left-0 -translate-y-1/2 border-t-2 border-dashed" />
+            <div className="border-line-strong absolute top-1/2 -right-4 left-0 -translate-y-1/2 border-t-[1.5px] border-dashed" />
             <div className={cn('mover absolute inset-0', name)}>
-              <span className={cn(DOT, name === 'linear' && 'bg-white')} />
+              <span className={cn(DOT, name === 'linear' && 'bg-surface')} />
             </div>
           </div>
         </div>

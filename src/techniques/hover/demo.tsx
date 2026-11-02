@@ -5,14 +5,16 @@ import { Cursor } from '../_shared/ui'
 const HOVER_REST = {
   x: 0,
   y: 0,
-  boxShadow: '4px 4px 0px 0px #000',
-  backgroundColor: COLOR.surface
+  boxShadow: 'var(--lift-rest)',
+  backgroundColor: COLOR.surface,
+  color: COLOR.ink
 }
 const HOVER_ON = {
   x: -3,
   y: -3,
-  boxShadow: '7px 7px 0px 0px #000',
-  backgroundColor: COLOR.yellow
+  boxShadow: 'var(--lift-up)',
+  backgroundColor: COLOR.key,
+  color: 'var(--on-key)'
 }
 
 export default function Hover() {
@@ -40,7 +42,7 @@ export default function Hover() {
     <div ref={scope} className="absolute inset-0 overflow-hidden">
       <div className="absolute top-[58%] left-1/2 size-0">
         <div
-          className="btn absolute -top-5 -left-14 grid h-10 w-28 place-items-center rounded-[5px] border-2 border-black text-xs font-extrabold"
+          className="btn absolute -top-5 -left-14 grid h-10 w-28 place-items-center rounded-md border-[1.5px] border-ink text-xs font-extrabold"
           style={HOVER_REST}
         >
           HOVER ME

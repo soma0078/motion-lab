@@ -33,7 +33,7 @@ export default function Magnetic({ params }: DemoProps) {
     <div ref={scope} className="absolute inset-0 overflow-hidden">
       <div className="absolute top-[58%] left-1/2 size-0">
         <div
-          className="border-nb-line absolute rounded-full border-2 border-dashed"
+          className="border-line-strong absolute rounded-full border-[1.5px] border-dashed"
           style={{
             left: -range,
             top: -range,
@@ -42,7 +42,7 @@ export default function Magnetic({ params }: DemoProps) {
           }}
         />
         <motion.div
-          className="bg-nb-blue shadow-nb-sm absolute -top-5 -left-12 grid h-10 w-24 place-items-center rounded-[5px] border-2 border-black text-xs font-extrabold"
+          className="paint-key shadow-raised-sm absolute -top-5 -left-12 grid h-10 w-24 place-items-center rounded-md border-[1.5px] border-ink text-xs font-extrabold"
           style={{ x: buttonX, y: buttonY }}
         >
           BUTTON

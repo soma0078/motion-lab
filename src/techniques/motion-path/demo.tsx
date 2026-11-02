@@ -16,11 +16,11 @@ export default function MotionPath() {
     <div ref={scope} className="absolute inset-0 grid place-items-center pt-6">
       <div className="relative h-[90px] w-[240px]">
         <svg viewBox="0 0 240 90" className="absolute inset-0 overflow-visible">
-          <path d={MOTION_PATH} fill="none" stroke="var(--nb-line)" strokeWidth={2} strokeDasharray="5 5" />
+          <path d={MOTION_PATH} fill="none" stroke="var(--line-strong)" strokeWidth={1.5} strokeDasharray="5 5" />
         </svg>
         {/* offsetRotate auto: 진행 방향으로 회전 (GSAP autoRotate) */}
         <div
-          className="rider bg-nb-purple absolute top-0 left-0 h-3 w-5 border-2 border-black"
+          className="rider paint-sub absolute top-0 left-0 h-3 w-5 border-[1.5px] border-ink"
           style={{ offsetPath: `path('${MOTION_PATH}')`, offsetRotate: 'auto', offsetDistance: '0%' }}
         />
       </div>

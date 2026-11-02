@@ -30,12 +30,12 @@ export default function RubberBand({ params }: DemoProps) {
     <div ref={scope} className="absolute inset-0">
       <div className="absolute top-[58%] left-[38%] size-0">
         {/* 끌 수 있는 한계. 넘어간 만큼은 버팀 */}
-        <div className="absolute -top-10 left-5 h-20 border-l-2 border-dashed border-black" />
+        <div className="absolute -top-10 left-5 h-20 border-l-[1.5px] border-dashed border-ink" />
         <span className="absolute -top-14 left-5 -translate-x-1/2 font-mono text-[10px] font-bold">
           limit
         </span>
         <motion.div
-          className="bg-nb-blue absolute -top-5 -left-5 size-10 rounded-full border-2 border-black"
+          className="paint-key absolute -top-5 -left-5 size-10 rounded-full border-[1.5px] border-ink"
           style={{ x: ballX, scaleX: stretch, originX: 0 }}
         />
         <motion.div

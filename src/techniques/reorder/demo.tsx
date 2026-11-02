@@ -11,7 +11,7 @@ const REORDER_STEPS = [
   ['B', 'C', 'A'],
   ['A', 'B', 'C']
 ]
-const REORDER_BG: Record<string, string> = { A: 'bg-nb-orange', B: 'bg-white', C: 'bg-white' }
+const REORDER_BG: Record<string, string> = { A: 'paint-key', B: 'bg-surface', C: 'bg-surface' }
 
 export default function Reorder() {
   const [ref, step] = useStep(800, REORDER_STEPS.length)
@@ -28,12 +28,12 @@ export default function Reorder() {
             layout
             transition={{ type: 'spring', stiffness: 500, damping: 35 }}
             className={cn(
-              'relative flex h-7 items-center gap-2 border-2 border-black px-2 text-xs font-extrabold',
+              'relative flex h-7 items-center gap-2 border-[1.5px] border-ink px-2 text-xs font-extrabold',
               REORDER_BG[item]
             )}
             animate={{
               scale: item === 'A' && dragging ? 1.05 : 1,
-              boxShadow: item === 'A' && dragging ? '4px 4px 0px 0px #000' : '0px 0px 0px 0px #000'
+              boxShadow: item === 'A' && dragging ? 'var(--lift-up)' : 'var(--lift-none)'
             }}
             style={{ zIndex: item === 'A' ? 1 : 0 }}
           >

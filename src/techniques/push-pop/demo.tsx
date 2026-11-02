@@ -14,16 +14,16 @@ export default function PushPop({ params }: DemoProps) {
   })
 
   return (
-    <div ref={scope} className="absolute top-8 bottom-0 left-1/2 w-44 -translate-x-1/2 overflow-hidden rounded-t-xl border-x-2 border-t-2 border-black bg-white">
-      <div className="a bg-nb-yellow absolute inset-0 p-3">
+    <div ref={scope} className="absolute top-8 bottom-0 left-1/2 w-44 -translate-x-1/2 overflow-hidden rounded-t-xl border-x-[1.5px] border-t-[1.5px] border-ink bg-surface">
+      <div className="a paint-sub absolute inset-0 p-3">
         <p className="text-xs font-extrabold">목록</p>
-        <div className="mt-2 h-1.5 w-2/3 bg-black" />
-        <div className="mt-1.5 h-1.5 w-1/2 bg-black" />
+        <div className="mt-2 h-1.5 w-2/3 bg-current" />
+        <div className="mt-1.5 h-1.5 w-1/2 bg-current" />
       </div>
-      <div className="b bg-nb-blue absolute inset-0 border-l-2 border-black p-3 shadow-[-4px_0_0_0_rgba(0,0,0,0.25)]">
+      <div className="b paint-key absolute inset-0 border-l-[1.5px] border-ink p-3 shadow-[-8px_0_16px_-8px_var(--sh-lo)]">
         <p className="text-xs font-extrabold">상세</p>
-        <div className="mt-2 h-1.5 w-3/4 bg-black" />
-        <div className="mt-1.5 h-1.5 w-1/3 bg-black" />
+        <div className="mt-2 h-1.5 w-3/4 bg-current" />
+        <div className="mt-1.5 h-1.5 w-1/3 bg-current" />
       </div>
     </div>
   )

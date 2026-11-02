@@ -6,12 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1f24" media="(prefers-color-scheme: dark)" />
+    <script>
+      // 첫 화면을 그리기 전에 테마를 정해 깜빡임을 막는다. 키는 src/components/theme.ts 와 같다
+      ;(function () {
+        var theme = null
+        try {
+          theme = localStorage.getItem('motion-lab-theme')
+        } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        document.documentElement.dataset.theme = theme
+      })()
+    </script>
     <meta name="description" content="원하는 움직임을 이름과 수치로 바꿔, AI에게 바로 붙여 넣을 지시문으로. 모션 기법 사전 · Motion / GSAP / CSS API 비교 · 수치 조절과 지시문 복사." />
-    <meta property="og:title" content="Motion Lab" />
+    <meta property="og:title" content="Motion Lab · 모션 기법 사전" />
     <meta property="og:description" content="원하는 움직임을 이름과 수치로 바꿔, AI에게 바로 붙여 넣을 지시문으로." />
     <meta property="og:type" content="website" />
-    <title>Motion Lab</title>
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:url" content="https://react-motion-lab.netlify.app/" />
+    <meta property="og:image" content="https://react-motion-lab.netlify.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Motion Lab 모션 기법 사전. 원하는 움직임을 표준 용어와 숫자로 바꾸는 사이트" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Motion Lab · 모션 기법 사전</title>
   </head>
   <body>
     <div id="root"></div>

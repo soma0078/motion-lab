@@ -15,14 +15,14 @@ export default function Overshoot({ params }: DemoProps) {
   return (
     <div ref={scope} className="absolute inset-0 flex items-center px-8 pt-6">
       <div className="relative mr-6 h-6 w-full">
-        <div className="border-nb-line absolute top-1/2 -right-6 left-0 -translate-y-1/2 border-t-2 border-dashed" />
+        <div className="border-line-strong absolute top-1/2 -right-6 left-0 -translate-y-1/2 border-t-[1.5px] border-dashed" />
         {/* 목표 지점: 블록 중심이 70%에 오는 자리 */}
-        <div className="absolute -top-4 -bottom-4 left-[calc(70%+12px)] border-l-2 border-dashed border-black" />
+        <div className="absolute -top-4 -bottom-4 left-[calc(70%+12px)] border-l-[1.5px] border-dashed border-ink" />
         <span className="absolute -top-9 left-[calc(70%+12px)] -translate-x-1/2 font-mono text-[10px] font-bold">
           target
         </span>
         <div className="mover absolute inset-0">
-          <span className="bg-nb-blue block size-6 border-2 border-black" />
+          <span className="paint-key block size-6 border-[1.5px] border-ink" />
         </div>
       </div>
     </div>

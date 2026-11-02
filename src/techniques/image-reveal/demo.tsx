@@ -17,12 +17,12 @@ export default function ImageReveal({ params }: DemoProps) {
 
   return (
     <div ref={scope} className="absolute inset-0 grid place-items-center pt-6">
-      <div className="frame h-24 w-40 overflow-hidden border-2 border-black">
+      <div className="frame h-24 w-40 overflow-hidden border-[1.5px] border-ink">
         {/* 이미지 대신 도형으로 그린 풍경 */}
-        <div className="photo relative size-full bg-nb-blue">
-          <span className="bg-nb-yellow absolute top-3 right-6 size-6 rounded-full border-2 border-black" />
-          <span className="bg-nb-green absolute -bottom-6 -left-4 h-16 w-28 rounded-full border-2 border-black" />
-          <span className="bg-nb-green absolute -right-6 -bottom-8 h-16 w-28 rounded-full border-2 border-black" />
+        <div className="photo relative size-full paint-key">
+          <span className="paint-sub absolute top-3 right-6 size-6 rounded-full border-[1.5px] border-ink" />
+          <span className="paint-tone absolute -bottom-6 -left-4 h-16 w-28 rounded-full border-[1.5px] border-ink" />
+          <span className="paint-tone absolute -right-6 -bottom-8 h-16 w-28 rounded-full border-[1.5px] border-ink" />
         </div>
       </div>
     </div>

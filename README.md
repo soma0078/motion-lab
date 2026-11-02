@@ -2,7 +2,10 @@
 
 모션 기법 사전. 원하는 움직임을 표준 용어와 숫자로 바꿔, AI에게 바로 붙여 넣을 지시문으로 가져갈 수 있습니다. 웹(Motion · GSAP · CSS)과 앱(React Native) 기준을 함께 다룹니다.
 
-![Motion Lab](docs/preview.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/preview-dark.png">
+  <img src="docs/preview.png" alt="Motion Lab 첫 화면: 모션 기법 사전 소개와 같은 용어가 네 가지 구현으로 이어지는 도면">
+</picture>
 
 "부드럽게", "세련되게" 같은 말은 사람마다, 실행마다 다른 결과를 냅니다. Motion Lab은 모션을 `스태거`, `마스크 리빌`, `오버슈트`처럼 업계에서 통하는 표준 용어와 숫자로 정리해서, 같은 연출을 한 번에 지시할 수 있게 합니다.
 
@@ -10,13 +13,14 @@
 
 - **기법 사전**: 모션 기법을 한글 표준 용어와 원어로 정리하고, 카드마다 실시간 데모를 보여 줍니다.
 - **도구 비교**: 같은 기법을 Motion · GSAP · CSS로 구현할 때의 핵심 API를 나란히 보여 주고, 어느 쪽이 맞는지, 유료 기능인지 표시합니다. 공식 문서와 대조했으며 링크를 달았습니다.
-- **앱 · 제스처 (React Native)**: 스와이프 액션, 바텀시트 스냅, 당겨서 새로고침, 인터럽트 가능한 전환, 누르기 피드백, 롱프레스 메뉴, 컨테이너 트랜스폼, 공유 축, 페이드 스루, 푸시 · 팝, 햅틱 동기화, 스켈레톤 로딩 12개를 React Native(Reanimated · Gesture Handler 등) 기준 API로 정리했습니다. 데모는 웹에서 같은 움직임을 비슷하게 보여 주고, 카드마다 "React Native로 복사" 버튼이 있습니다.
-- **수치 조절과 지시문 복사**: 슬라이더로 간격, 스프링 값 등을 조절하고, 현재 값이 담긴 지시문을 복사합니다.
+- **앱 · 제스처 (React Native)**: 스와이프 액션, 바텀시트 스냅, 당겨서 새로고침, 인터럽트 가능한 전환, 누르기 피드백, 롱프레스 메뉴, 컨테이너 트랜스폼, 공유 축, 페이드 스루, 푸시 · 팝, 햅틱 동기화, 스켈레톤 로딩 12개를 React Native(Reanimated · Gesture Handler 등) 기준 API로 정리했습니다. 데모는 웹에서 같은 움직임을 비슷하게 보여 주고, 지시문은 React Native 구현으로 복사됩니다.
+- **수치 조절과 지시문 복사**: 슬라이더로 간격, 스프링 값 등을 조절하면 카드 안의 지시문 미리보기가 바로 바뀝니다. 구현 라이브러리를 고르고 버튼 하나로 복사합니다.
+- **검색 · 테마**: 기법 이름, 영문 이름, 뜻으로 찾을 수 있고 (`/` 로 바로 검색), 라이트 · 다크 테마를 지원합니다.
 - **어휘집 내보내기**: 전체 기법을 `motion-vocabulary.md` 한 파일로 내보내 다른 프로젝트의 AI 컨텍스트로 쓸 수 있습니다.
 
-<img src="docs/card.png" alt="기법 카드: 데모, 슬라이더, API, 복사 버튼" width="360">
+<img src="docs/card.png" alt="기법 카드: 데모, 슬라이더, 라이브러리 선택, 지시문 미리보기, 복사 버튼" width="360">
 
-카드에서 "Motion으로 복사"를 누르면 이런 지시문이 만들어집니다.
+라이브러리를 Motion으로 두고 복사하면 이런 지시문이 만들어집니다.
 
 ```
 스태거(stagger): 스태거로 0.12s 간격을 두고, 하나씩 0.5s ease-out-quart로 아래에서 올라오게.
@@ -44,11 +48,13 @@ npm run dev
 
 ## Tech Stack
 
-React 19 · Vite · TypeScript · Tailwind CSS v4 · [motion](https://motion.dev) · lucide-react
+React 19 · Vite · TypeScript · Tailwind CSS v4 · [motion](https://motion.dev) · lucide-react · Pretendard · JetBrains Mono
 
 ## Project Structure
 
 ```
+src/components/   헤더 · 히어로 · 기법 카드 · 섹션 제목 · 테마 훅
+src/index.css     디자인 토큰 (라이트 · 다크) · 뉴모피즘 그림자 · 설계도 격자
 src/techniques/
   <slug>/
     meta.ts     용어 · 뜻 · 섹션 · Motion/GSAP/CSS/React Native API · 추천 · 공식 문서 · 수치 슬라이더

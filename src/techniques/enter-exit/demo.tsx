@@ -24,8 +24,8 @@ export default function EnterExit({ params }: DemoProps) {
 
   return (
     <div ref={scope} className="absolute inset-0 grid place-items-center pt-6">
-      <div className="toast shadow-nb-sm flex items-center gap-2 border-2 border-black bg-white px-3 py-2 text-sm font-extrabold">
-        <span className="bg-nb-green grid size-5 place-items-center border-2 border-black">
+      <div className="toast shadow-raised-sm flex items-center gap-2 border-[1.5px] border-ink bg-surface px-3 py-2 text-sm font-extrabold">
+        <span className="paint-tone grid size-5 place-items-center border-[1.5px] border-ink">
           <Check className="size-3" strokeWidth={4} />
         </span>
         저장했어요
