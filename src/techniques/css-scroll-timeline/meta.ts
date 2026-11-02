@@ -18,5 +18,6 @@ export default {
     '지원 Chrome 115 · Safari 26 · Firefox 159 → @supports (animation-timeline: scroll()) 로 가드'
   ],
   fit: 'native',
-  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/', native: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations' }
+  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/', native: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations' },
+  prompt: () => 'CSS 스크롤 타임라인(scroll-driven animations)으로 JS 없이 CSS animation-timeline만 써서 스크롤 진행도에 맞춰 애니메이션이 재생되게 해.'
 } satisfies TechniqueMeta

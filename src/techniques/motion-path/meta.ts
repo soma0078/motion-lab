@@ -14,5 +14,6 @@ export default {
     'motionPath: { path, align: path, alignOrigin: [0.5, 0.5], autoRotate: true }'
   ],
   fit: 'gsap',
-  docs: { gsap: 'https://gsap.com/docs/v3/Plugins/MotionPathPlugin/', native: 'https://developer.mozilla.org/en-US/docs/Web/CSS/offset-path' }
+  docs: { gsap: 'https://gsap.com/docs/v3/Plugins/MotionPathPlugin/', native: 'https://developer.mozilla.org/en-US/docs/Web/CSS/offset-path' },
+  prompt: () => '모션 패스(motion path)로 요소가 정해진 곡선 경로(offset-path)를 따라 이동하게 해.'
 } satisfies TechniqueMeta

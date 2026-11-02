@@ -1,5 +1,5 @@
-import { Suspense, useState, type CSSProperties } from 'react'
-import { ArrowUpRight, Check, ChevronRight, Copy, RotateCcw } from 'lucide-react'
+import { Suspense, useId, useState, type CSSProperties } from 'react'
+import { ArrowUpRight, Check, Copy, RotateCcw } from 'lucide-react'
 
 import type { Technique } from '../techniques/registry'
 import { buildPrompt, defaultValues, LIB_LABEL, type Lib } from '../techniques/prompt'
@@ -17,6 +17,10 @@ const FIT_LABEL: Record<Fit, { text: string; dot: string }> = {
 /** 카드에 보이는 라이브러리 순서. 앱 기법은 RN 이 먼저 */
 const LIB_ORDER = ['rn', 'motion', 'gsap', 'native'] as const
 
+/**
+ * 기법 카드: 용어 · 데모 · 뜻 · 조절하는 값 · 지시문 미리보기와 복사 · 공식 문서.
+ * 구현 코드 비교는 쓰는 도구와 AI 마다 달라서 보여 주지 않는다
+ */
 export function TechniqueCard({ technique, index }: { technique: Technique; index: number }) {
   const fit = FIT_LABEL[technique.fit]
   const libs = LIB_ORDER.filter((lib) => technique[lib])
@@ -65,18 +69,19 @@ export function TechniqueCard({ technique, index }: { technique: Technique; inde
         />
       )}
 
-      {/* 바닥에 붙이면 슬라이더가 적은 카드 가운데에 빈 구멍이 생겨서, 위에서부터 채우고 남는 공간은 카드 아래로 보낸다 */}
-      <div className="pt-4">
+      {/* 아래 공식 문서 줄은 카드 바닥에 붙는다. 가장 긴 카드에서도 선과 붙지 않게 mb 를 둔다 */}
+      <div className="mt-4 mb-4">
         {libs.length > 1 && <LibToggle libs={libs} value={lib} onChange={setLib} />}
         <PromptPreview prompt={prompt} />
         <CopyButton slug={technique.slug} prompt={prompt} />
-        <ApiDetails technique={technique} libs={libs} />
       </div>
+
+      <DocLinks docs={technique.docs} />
     </li>
   )
 }
 
-/** 슬라이더를 움직이면 데모가 다음 반복부터 그 값으로 재생 */
+/** 값마다 이름 · 지금 값 · 슬라이더 · 바꾸면 달라지는 것. 슬라이더를 움직이면 데모가 다음 반복부터 그 값으로 재생 */
 function ParamPanel({
   params,
   values,
@@ -89,41 +94,61 @@ function ParamPanel({
   onReset: () => void
 }) {
   const changed = params.some((param) => values[param.key] !== param.default)
+  // 카드마다 같은 key(stiffness 등)가 있어서 id 앞에 카드별 고유값을 붙인다
+  const baseId = useId()
 
   return (
-    <div className="mt-3 grid gap-1.5">
-      {params.map((param) => {
-        const pct = ((values[param.key] - param.min) / (param.max - param.min)) * 100
-        return (
-          <label key={param.key} className="grid grid-cols-[4.5rem_1fr_3.75rem] items-center gap-2.5 text-xs font-semibold">
-            <span className="text-ink-2 truncate">{param.label}</span>
-            <input
-              type="range"
-              min={param.min}
-              max={param.max}
-              step={param.step}
-              value={values[param.key]}
-              onChange={(event) => onChange(param.key, Number(event.target.value))}
-              className="neu-range"
-              style={{ '--pct': `${pct}%` } as CSSProperties}
-            />
-            <span className="text-right font-mono tabular-nums">
-              {values[param.key]}
-              <span className="text-ink-3">{param.unit}</span>
-            </span>
-          </label>
-        )
-      })}
-      <button
-        type="button"
-        onClick={onReset}
-        disabled={!changed}
-        className="text-ink-3 hover:text-ink flex w-fit items-center gap-1 text-[11px] font-semibold disabled:invisible"
-      >
-        <RotateCcw className="size-3" strokeWidth={2.5} />
-        기본값
-      </button>
-    </div>
+    <section aria-label="조절하는 값" className="border-line mt-4 border-t pt-3.5">
+      <div className="flex items-center">
+        <p className="text-ink-3 flex items-center gap-1.5 font-mono text-[10.5px] font-medium tracking-wider uppercase">
+          <span className="bg-key size-1.5 rounded-full" />
+          조절하는 값
+        </p>
+        <button
+          type="button"
+          onClick={onReset}
+          disabled={!changed}
+          className="text-ink-3 hover:text-ink ml-auto flex items-center gap-1 text-[11px] font-semibold disabled:invisible"
+        >
+          <RotateCcw className="size-3" strokeWidth={2.5} />
+          기본값
+        </button>
+      </div>
+      <div className="mt-2.5 grid gap-4">
+        {params.map((param) => {
+          const pct = ((values[param.key] - param.min) / (param.max - param.min)) * 100
+          const inputId = `${baseId}-${param.key}`
+          return (
+            <div key={param.key}>
+              <div className="flex items-baseline justify-between gap-3 text-xs">
+                <label htmlFor={inputId} className="font-semibold break-keep">
+                  {param.label}
+                </label>
+                <span className="font-mono font-medium tabular-nums">
+                  {values[param.key]}
+                  <span className="text-ink-3">{param.unit}</span>
+                </span>
+              </div>
+              <input
+                id={inputId}
+                type="range"
+                min={param.min}
+                max={param.max}
+                step={param.step}
+                value={values[param.key]}
+                onChange={(event) => onChange(param.key, Number(event.target.value))}
+                aria-describedby={`${inputId}-effect`}
+                className="neu-range mt-1"
+                style={{ '--pct': `${pct}%` } as CSSProperties}
+              />
+              <p id={`${inputId}-effect`} className="text-ink-2 mt-0.5 text-xs leading-relaxed break-keep">
+                {param.effect}
+              </p>
+            </div>
+          )
+        })}
+      </div>
+    </section>
   )
 }
 
@@ -213,42 +238,30 @@ function CopyButton({ slug, prompt }: { slug: string; prompt: string }) {
 
 const DOC_LABEL = { rn: 'RN 문서', motion: 'motion.dev', gsap: 'gsap.com', native: 'MDN' } as const
 
-/** 라이브러리별 핵심 API 와 대조한 공식 문서. 기본은 접어 둔다 */
-function ApiDetails({ technique, libs }: { technique: Technique; libs: readonly Lib[] }) {
-  const docs = (Object.keys(DOC_LABEL) as (keyof typeof DOC_LABEL)[]).filter((key) => technique.docs[key])
+/** 용어를 더 알아볼 공식 문서. 카드 바닥에 붙인다 */
+function DocLinks({ docs }: { docs: Technique['docs'] }) {
+  const links = (Object.keys(DOC_LABEL) as (keyof typeof DOC_LABEL)[]).filter((key) => docs[key])
 
   return (
-    <details className="group border-line mt-4 border-t pt-3">
-      <summary className="text-ink-2 hover:text-ink flex cursor-pointer items-center gap-1.5 text-xs font-semibold">
-        <ChevronRight className="size-3.5 transition-transform duration-200 group-open:rotate-90" strokeWidth={2.5} />
-        API 비교 · 공식 문서
-        <span className="text-ink-3 ml-auto font-mono text-[11px] font-medium">{libs.map((lib) => LIB_LABEL[lib]).join(' · ')}</span>
-      </summary>
-      <dl className="mt-3 grid gap-2 text-xs">
-        {libs.map((lib) => (
-          <ApiRow key={lib} lib={LIB_LABEL[lib]} lines={technique[lib] ?? []} />
-        ))}
-      </dl>
-      <p className="text-ink-3 mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold">
-        공식 문서
-        {docs.map((key) => (
-          <a
-            key={key}
-            href={technique.docs[key]}
-            target="_blank"
-            rel="noreferrer"
-            className="text-key-text inline-flex items-center gap-0.5 underline decoration-1 underline-offset-2 hover:decoration-2"
-          >
-            {DOC_LABEL[key]}
-            <ArrowUpRight className="size-3" strokeWidth={2.5} />
-          </a>
-        ))}
-      </p>
-    </details>
+    <p className="border-line text-ink-3 mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 border-t pt-3 text-xs font-semibold">
+      <span className="mr-auto">공식 문서</span>
+      {links.map((key) => (
+        <a
+          key={key}
+          href={docs[key]}
+          target="_blank"
+          rel="noreferrer"
+          className="text-key-text inline-flex items-center gap-0.5 underline decoration-1 underline-offset-2 hover:decoration-2"
+        >
+          {DOC_LABEL[key]}
+          <ArrowUpRight className="size-3" strokeWidth={2.5} />
+        </a>
+      ))}
+    </p>
   )
 }
 
-/** 첫 줄이 기본 API, 나머지는 보강 (흐리게) */
+/** 첫 줄이 기본 API, 나머지는 보강 (흐리게). 공통 규칙 섹션에서 쓴다 */
 export function ApiRow({ lib, lines }: { lib: string; lines: string[] }) {
   const [primary, ...extra] = lines
 

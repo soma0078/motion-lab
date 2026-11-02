@@ -14,5 +14,6 @@ export default {
     'ScrollTrigger onUpdate: self => skewTo(self.getVelocity() / -300)'
   ],
   fit: 'motion',
-  docs: { motion: 'https://motion.dev/docs/react-use-velocity', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/getVelocity()' }
+  docs: { motion: 'https://motion.dev/docs/react-use-velocity', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/getVelocity()' },
+  prompt: () => '속도 반응(velocity-based)으로 스크롤이나 드래그 속도가 빠를수록 기울기와 흐림이 커지게 해.'
 } satisfies TechniqueMeta

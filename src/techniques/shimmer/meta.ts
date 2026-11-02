@@ -14,5 +14,6 @@ export default {
     'repeat: -1, repeatDelay: 1 (+ yoyo)'
   ],
   fit: 'both',
-  docs: { motion: 'https://motion.dev/docs/react-transitions', gsap: 'https://gsap.com/docs/v3/GSAP/Tween/' }
+  docs: { motion: 'https://motion.dev/docs/react-transitions', gsap: 'https://gsap.com/docs/v3/GSAP/Tween/' },
+  prompt: () => '쉬머(shimmer)로 로딩 중인 표면 위를 빛줄기가 1.3s마다 훑고 지나가게 해.'
 } satisfies TechniqueMeta

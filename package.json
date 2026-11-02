@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "vocab": "node --disable-warning=ExperimentalWarning scripts/export-vocabulary.mjs"
+    "vocab": "node --disable-warning=ExperimentalWarning scripts/export-vocabulary.mjs",
+    "check:prompts": "node --disable-warning=ExperimentalWarning scripts/check-prompts.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^11.1.6",

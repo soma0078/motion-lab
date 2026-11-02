@@ -14,5 +14,6 @@ export default {
     'MorphSVGPlugin (점 개수 · 종류 달라도 됨)'
   ],
   fit: 'gsap',
-  docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/Plugins/MorphSVGPlugin/' }
+  docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/Plugins/MorphSVGPlugin/' },
+  prompt: () => '모핑(morphing)으로 원(border-radius 50%)이 둥근 사각형(8%)으로 모양 자체가 바뀌게 해.'
 } satisfies TechniqueMeta

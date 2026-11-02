@@ -14,5 +14,6 @@ export default {
     '퇴장 트윈 onComplete 에서 navigate · 또는 Flip'
   ],
   fit: 'motion',
-  docs: { motion: 'https://motion.dev/docs/react-animate-presence', gsap: 'https://gsap.com/resources/React/' }
+  docs: { motion: 'https://motion.dev/docs/react-animate-presence', gsap: 'https://gsap.com/resources/React/' },
+  prompt: () => '페이지 전환(page transition)으로 라우트가 바뀔 때 이전 화면이 나간 뒤 새 화면이 들어오게 해.'
 } satisfies TechniqueMeta

@@ -16,10 +16,10 @@ export default {
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-animate-presence', gsap: 'https://gsap.com/resources/React/' },
   params: [
-    { key: 'enter', label: '진입', min: 0.1, max: 1, step: 0.05, default: 0.4, unit: 's' },
-    { key: 'exit', label: '퇴장', min: 0.1, max: 1, step: 0.05, default: 0.25, unit: 's' }
+    { key: 'enter', label: '진입', min: 0.1, max: 1, step: 0.05, default: 0.4, unit: 's', effect: '나타날 때 걸리는 시간이에요.' },
+    { key: 'exit', label: '퇴장', min: 0.1, max: 1, step: 0.05, default: 0.25, unit: 's', effect: '사라질 때 걸리는 시간이에요. 진입보다 짧게 두면 화면이 빨리 비워진 느낌이 나요.' }
   ],
-  prompt: (v) => `토스트가 아래 24px에서 ${v.enter}s ease-out-quart로 올라오며 나타나고, 사라질 때는 ${v.exit}s ease-in으로 위로 빠지게. 퇴장은 진입보다 짧게.`,
+  prompt: (v) => `진입 · 퇴장(enter · exit) 모션으로 토스트가 아래 24px에서 ${v.enter}s ease-out-quart로 올라오며 나타나게 하고, 사라질 때는 ${v.exit}s ease-in으로 위로 빠지게 해. 퇴장은 진입보다 짧게 해.`,
   snippet: {
     motion: (v) => `<AnimatePresence> + initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { duration: ${v.enter} } }} exit={{ y: -12, opacity: 0, transition: { duration: ${v.exit} } }}`,
     gsap: (v) => `진입 gsap.from(el, { y: 24, autoAlpha: 0, duration: ${v.enter} }) · 퇴장 gsap.to(el, { y: -12, autoAlpha: 0, duration: ${v.exit}, onComplete: unmount })`

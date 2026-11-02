@@ -14,5 +14,6 @@ export default {
     'gsap.to(textPath, { attr: { startOffset: \'100%\' } })'
   ],
   fit: 'gsap',
-  docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/Attributes/' }
+  docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/Attributes/' },
+  prompt: () => '텍스트 경로(text on path)로 글자를 곡선 위에 얹고, startOffset을 바꿔 곡선을 따라 흐르게 해.'
 } satisfies TechniqueMeta

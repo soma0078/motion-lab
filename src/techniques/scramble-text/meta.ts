@@ -16,9 +16,9 @@ export default {
   fit: 'gsap',
   docs: { gsap: 'https://gsap.com/docs/v3/Plugins/ScrambleTextPlugin/' },
   params: [
-    { key: 'duration', label: '길이', min: 0.4, max: 3, step: 0.1, default: 1.4, unit: 's' }
+    { key: 'duration', label: '길이', min: 0.4, max: 3, step: 0.1, default: 1.4, unit: 's', effect: '뒤섞인 글자가 처음부터 끝까지 모두 확정되는 시간이에요. 길수록 한 글자씩 천천히 맞춰져요.' }
   ],
-  prompt: (v) => `글자가 무작위 문자로 뒤섞이다 앞에서부터 ${v.duration}s 동안 차례로 원래 글자로 확정되게.`,
+  prompt: (v) => `스크램블 텍스트(scramble text)로 글자가 무작위 문자로 뒤섞이다가 앞에서부터 ${v.duration}s 동안 차례로 원래 글자로 확정되게 해.`,
   snippet: {
     motion: (v) => `progress 0 → 1 (${v.duration}s linear) 를 useTransform 으로 문자열 변환해 motion.span 자식으로`,
     gsap: (v) => `gsap.to(el, { duration: ${v.duration}, scrambleText: { text, chars: 'upperCase' } })`

@@ -14,6 +14,8 @@ export interface Param {
   step: number
   default: number
   unit?: string
+  /** 이 값을 바꾸면 무엇이 달라지는지. 카드의 슬라이더 아래에 보인다 */
+  effect: string
 }
 
 export type ParamValues = Record<string, number>
@@ -48,8 +50,13 @@ export interface TechniqueMeta {
   docs: { motion?: string; gsap?: string; native?: string; rn?: string }
   /** 조절 가능한 수치. 없으면 슬라이더 없이 복사만 */
   params?: Param[]
-  /** AI 에게 보낼 지시 한두 문장. 수치는 여기에 넣는다. 없으면 이름 + 뜻으로 만든다 */
-  prompt?: (values: ParamValues) => string
+  /**
+   * 지시문 첫 줄. 작성 규칙 (scripts/check-prompts.mjs 가 검사한다):
+   * - 기법 용어를 "이름(원어)" 로 문장 안에 넣는다. 예: 스태거(stagger)로 …
+   * - 명령체로 쓰고, 문장마다 "~해." 로 끝낸다
+   * - 수치는 여기에 넣는다. 슬라이더 값은 values 로 받는다
+   */
+  prompt: (values: ParamValues) => string
   /** 복사할 때 붙는 라이브러리별 코드. 없으면 motion[0] · gsap[0] */
   snippet?: Partial<Record<'motion' | 'gsap' | 'rn', (values: ParamValues) => string>>
 }

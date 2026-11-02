@@ -14,5 +14,6 @@ export default {
     'scrub + 레이어별 yPercent'
   ],
   fit: 'both',
-  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollSmoother/' }
+  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollSmoother/' },
+  prompt: () => '패럴랙스(parallax)로 레이어마다 스크롤 속도를 0.2× · 0.5× · 1×로 달리해 깊이감이 생기게 해.'
 } satisfies TechniqueMeta

@@ -14,5 +14,6 @@ export default {
     'filter: \'blur(10px)\' · backgroundColor'
   ],
   fit: 'both',
-  docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/' }
+  docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/' },
+  prompt: () => '필터 · 색 전환(filter · color)으로 요소가 blur(10px)에서 또렷해지고, 흑백에서 원래 색으로 서서히 바뀌게 해.'
 } satisfies TechniqueMeta

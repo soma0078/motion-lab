@@ -11,12 +11,12 @@ export const defaultValues = (technique: Technique): ParamValues =>
 
 /**
  * 카드의 "복사" 버튼이 만드는 지시문.
- * 1줄: 표준 용어 + 원하는 결과 (수치 포함) / 2줄: 구현 라이브러리와 핵심 코드
+ * 1줄: 기법 용어를 넣은 명령문 (수치 포함, meta.prompt) / 2줄: 구현 라이브러리와 핵심 코드
  */
 export const buildPrompt = (technique: Technique, lib: Lib, values: ParamValues) => {
-  const request = technique.prompt?.(values) ?? `${technique.meaning}.`
+  const request = technique.prompt(values)
   const code =
     lib === 'native' ? technique.native?.[0] : (technique.snippet?.[lib]?.(values) ?? technique[lib]?.[0])
 
-  return [`${technique.name}(${technique.english}): ${request}`, `구현: ${LIB_LABEL[lib]} — ${code}`].join('\n')
+  return [request, `구현: ${LIB_LABEL[lib]} — ${code}`].join('\n')
 }

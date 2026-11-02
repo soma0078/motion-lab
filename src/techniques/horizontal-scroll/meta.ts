@@ -14,5 +14,6 @@ export default {
     'pin + scrub 트윈 x: -(w - innerWidth), ease: \'none\''
   ],
   fit: 'gsap',
-  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' }
+  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' },
+  prompt: () => '가로 스크롤(horizontal scroll)로 세로로 스크롤하는 동안 섹션들이 0에서 -75%까지 옆으로 흘러가게 해.'
 } satisfies TechniqueMeta

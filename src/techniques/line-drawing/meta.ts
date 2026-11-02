@@ -14,5 +14,6 @@ export default {
     'gsap.from(path, { drawSVG: 0 }) (DrawSVGPlugin)'
   ],
   fit: 'both',
-  docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/' }
+  docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/' },
+  prompt: () => '라인 드로잉(line drawing)으로 SVG 선이 pathLength 0에서 1까지 그려지듯 나타나게 해.'
 } satisfies TechniqueMeta

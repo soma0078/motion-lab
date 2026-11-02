@@ -12,8 +12,8 @@ export default {
   ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-gesture-handler/docs/2.x/components/reanimated_swipeable' },
-  params: [{ key: 'threshold', label: '열림 기준', min: 20, max: 70, step: 5, default: 40, unit: 'px' }],
-  prompt: (v) => `목록 행을 왼쪽으로 ${v.threshold}px 이상 밀고 놓으면 오른쪽 삭제 버튼이 열린 채 멈추고, 그보다 덜 밀고 놓으면 닫히게.`,
+  params: [{ key: 'threshold', label: '열림 기준', min: 20, max: 70, step: 5, default: 40, unit: 'px', effect: '놓았을 때 열린 채 멈추는 기준 거리예요. 이보다 덜 밀면 닫히고, 작을수록 조금만 밀어도 열려요.' }],
+  prompt: (v) => `스와이프 액션(swipe action)으로 목록 행을 왼쪽으로 ${v.threshold}px 이상 밀고 놓으면 오른쪽 삭제 버튼이 열린 채 멈추게 하고, 그보다 덜 밀고 놓으면 닫히게 해.`,
   snippet: {
     rn: (v) => `<Swipeable renderRightActions={renderDelete} rightThreshold={${v.threshold}} overshootRight={false} />`
   }

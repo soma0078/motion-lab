@@ -12,9 +12,11 @@ import { UI_ELEMENTS } from './techniques/ui-elements'
 
 const sectionId = (index: number) => `section-${index + 1}`
 
-/** 검색어가 이름 · 원어 · 뜻 · 폴더 이름 중 하나에 들어 있으면 */
+/** 검색어가 이름 · 원어 · 뜻 · 폴더 이름 · 조절하는 값 이름 중 하나에 들어 있으면 */
 const matches = (technique: Technique, q: string) =>
-  [technique.name, technique.english, technique.meaning, technique.slug].some((text) => text.toLowerCase().includes(q))
+  [technique.name, technique.english, technique.meaning, technique.slug, ...(technique.params ?? []).map((param) => param.label)].some((text) =>
+    text.toLowerCase().includes(q)
+  )
 
 /** 화면 위쪽 25~30% 띠에 걸친 섹션을 "지금 보는 섹션"으로 */
 function useActiveSection(ids: string[]) {
@@ -188,7 +190,7 @@ function EmptyResult({ query, onClear }: { query: string; onClear: () => void })
     <div className="border-line-strong rounded-card flex flex-col items-center gap-3 border border-dashed px-6 py-16 text-center">
       <SearchX className="text-ink-3 size-6" strokeWidth={2} />
       <p className="font-semibold break-keep">"{query.trim()}"에 맞는 기법이 없어요</p>
-      <p className="text-ink-2 text-sm break-keep">이름, 영문 이름, 뜻으로 찾을 수 있어요. 예: 스태거, spring, 스크롤</p>
+      <p className="text-ink-2 text-sm break-keep">이름, 영문 이름, 뜻, 조절하는 값 이름으로 찾을 수 있어요. 예: 스태거, spring, damping</p>
       <button
         type="button"
         onClick={onClear}

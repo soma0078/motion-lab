@@ -219,13 +219,15 @@ body {
   height: 8px;
   border-radius: 999px;
   background: linear-gradient(to right, var(--key) var(--pct), var(--well) var(--pct));
-  box-shadow: var(--shadow-inset-sm);
+  /* 홈 그림자를 얇게: 두꺼우면 밝은 쪽 그림자가 채워진 오렌지를 뿌옇게 덮는다 */
+  box-shadow: inset 1px 1px 2px var(--sh-lo), inset -1px -1px 1px var(--sh-hi);
 }
 .neu-range::-moz-range-track {
   height: 8px;
   border-radius: 999px;
   background: linear-gradient(to right, var(--key) var(--pct), var(--well) var(--pct));
-  box-shadow: var(--shadow-inset-sm);
+  /* 홈 그림자를 얇게: 두꺼우면 밝은 쪽 그림자가 채워진 오렌지를 뿌옇게 덮는다 */
+  box-shadow: inset 1px 1px 2px var(--sh-lo), inset -1px -1px 1px var(--sh-hi);
 }
 .neu-range::-webkit-slider-thumb {
   appearance: none;
