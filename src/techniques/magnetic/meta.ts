@@ -21,9 +21,5 @@ export default {
     { key: 'stiffness', label: 'stiffness', min: 50, max: 500, step: 10, default: 220, effect: '따라가고 돌아오는 힘이에요. 클수록 빠르고 바짝 붙어요.' },
     { key: 'damping', label: 'damping', min: 4, max: 40, step: 1, default: 12, effect: '출렁임을 줄이는 힘이에요. 낮으면 제자리로 돌아올 때 흔들려요.' }
   ],
-  prompt: (v) => `마그네틱(magnetic) 효과로 커서가 ${v.range}px 안에 들어오면 버튼이 커서 거리의 ${Math.round(v.pull * 100)}%만큼 끌려오게 해. 따라오고 돌아올 때는 스프링(stiffness ${v.stiffness}, damping ${v.damping})으로 움직이게 해.`,
-  snippet: {
-    motion: (v) => `pointer 오프셋 × ${v.pull} → useMotionValue → useSpring(mv, { stiffness: ${v.stiffness}, damping: ${v.damping} })`,
-    gsap: (v) => `const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'elastic.out(1, 0.4)' }) · mousemove 에서 xTo(dx * ${v.pull})`
-  }
+  prompt: (v) => `마그네틱(magnetic) 효과로 커서가 ${v.range}px 안에 들어오면 버튼이 커서 거리의 ${Math.round(v.pull * 100)}%만큼 끌려오게 해. 따라오고 돌아올 때는 스프링(stiffness ${v.stiffness}, damping ${v.damping})으로 움직이게 해.`
 } satisfies TechniqueMeta

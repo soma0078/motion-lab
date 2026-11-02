@@ -2,6 +2,7 @@
 //   1. 기법 용어 "이름(원어)" 가 문장 안에 들어 있다 (원어의 괄호 보충은 빼도 된다. 예: 관성(inertia))
 //   2. 명령체: 문장마다 "~해." 로 끝난다
 //   3. 슬라이더 최소 · 기본 · 최대값 어디서도 undefined · NaN 이 나오지 않는다
+//   4. 둘째 줄은 라이브러리마다 "~으로/로 구현해." 한 문장
 import { readdirSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -39,7 +40,8 @@ for (const slug of readdirSync(dir)) {
     }
 
     for (const lib of LIBS.filter((l) => technique[l])) {
-      if (/undefined|NaN/.test(buildPrompt(technique, lib, values))) fail(`${lib} 구현 줄에 빈 값`)
+      const [, implement] = buildPrompt(technique, lib, values).split('\n')
+      if (!implement?.endsWith('구현해.')) fail(`${lib} 둘째 줄이 "~구현해." 가 아님 → ${implement}`)
     }
   }
   checked += 1

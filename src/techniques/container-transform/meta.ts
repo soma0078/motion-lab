@@ -13,9 +13,5 @@ export default {
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-reanimated/docs/shared-element-transitions/overview/' },
   params: [{ key: 'duration', label: '시간', min: 300, max: 900, step: 50, default: 550, unit: 'ms', effect: '카드가 화면 크기로 늘어나는 시간이에요. 길수록 카드가 화면이 되는 과정이 또렷이 보이고, 짧을수록 즉각적이에요.' }],
-  prompt: (v) => `컨테이너 트랜스폼(container transform)으로 카드를 누르면 ${v.duration}ms 동안 카드가 화면 크기로 늘어나며 상세 화면이 되게 하고, 뒤로 가면 다시 카드로 줄어들게 해.`,
-  snippet: {
-    rn: (v) =>
-      `<Animated.View sharedTransitionTag={\`card-\${id}\`} sharedTransitionStyle={SharedTransition.duration(${v.duration})} />  // 실험적 · native stack`
-  }
+  prompt: (v) => `컨테이너 트랜스폼(container transform)으로 카드를 누르면 ${v.duration}ms 동안 카드가 화면 크기로 늘어나며 상세 화면이 되게 하고, 뒤로 가면 다시 카드로 줄어들게 해.`
 } satisfies TechniqueMeta

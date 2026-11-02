@@ -6,7 +6,7 @@ import { TECHNIQUE_SECTIONS } from '../techniques/registry'
 const STEPS = [
   { title: '기법 용어 찾기', body: '데모를 보며 머릿속 "그 스르륵 올라오는 거"의 정확한 이름을 찾아요.' },
   { title: '조절하는 값 알기', body: '슬라이더를 움직이며 값마다 무엇이 달라지는지 눈으로 확인해요.' },
-  { title: '지시문 복사', body: '용어와 지금 값이 담긴 명령문을, 고른 라이브러리의 구현 줄과 함께 복사해 AI에게 붙여 넣어요.' }
+  { title: '지시문 복사', body: '용어와 지금 값이 담긴 명령문을, 구현할 라이브러리 이름과 함께 복사해 AI에게 붙여 넣어요.' }
 ]
 
 export interface HeroSection {

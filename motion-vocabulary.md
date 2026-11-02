@@ -24,7 +24,7 @@
 
 ```
 이징(easing)을 ease-out-quart 곡선 cubic-bezier(0.25, 1, 0.5, 1)로 정하고, 1.4s 동안 빠르게 출발해 길게 감속하게 해.
-구현: Motion — transition={{ duration: 1.4, ease: [0.25, 1, 0.5, 1] }}
+Motion으로 구현해.
 ```
 
 ### 스프링 (spring)
@@ -39,7 +39,7 @@
 
 ```
 스프링(spring)으로 stiffness 220, damping 8, mass 0.6을 써서 출렁이며 제자리로 돌아오게 해.
-구현: Motion — transition={{ type: 'spring', stiffness: 220, damping: 8, mass: 0.6 }}
+Motion으로 구현해.
 ```
 
 ### 오버슈트 (overshoot)
@@ -53,7 +53,7 @@
 
 ```
 오버슈트(overshoot)로 목표를 살짝 넘었다 돌아오게 해. 곡선은 cubic-bezier(0.34, 1.55, 0.64, 1), 길이는 0.9s로 해.
-구현: Motion — transition={{ duration: 0.9, ease: [0.34, 1.55, 0.64, 1] }}
+Motion으로 구현해.
 ```
 
 ### 키프레임 (keyframe)
@@ -66,7 +66,7 @@
 
 ```
 키프레임(keyframe)으로 시간 위 네 지점에 값을 정하고, 그 사이는 보간되며 순서대로 지나가게 해.
-구현: Motion — x: [0, 80, 40]
+Motion으로 구현해.
 ```
 
 ### 스태거 (stagger)
@@ -81,7 +81,7 @@
 
 ```
 스태거(stagger)로 항목마다 0.08s 간격을 두고, 하나씩 0.5s ease-out-quart로 아래에서 올라오게 해.
-구현: Motion — 부모 variant transition: { delayChildren: stagger(0.08) } · 자식 { duration: 0.5, ease: [0.25, 1, 0.5, 1] }
+Motion으로 구현해.
 ```
 
 ### 타임라인 (timeline)
@@ -94,7 +94,7 @@
 
 ```
 타임라인(timeline)으로 여러 모션을 한 줄에 놓고 0s · 0.35s처럼 시작 시점을 정해 겹치거나 순서대로 재생하게 해. 통째로 재생하고 되감을 수 있게 해.
-구현: GSAP — gsap.timeline({ defaults }) + 위치 '<' · '>' · '-=0.2' · '<0.1'
+GSAP으로 구현해.
 ```
 
 ## 나타남 · 전환
@@ -111,7 +111,7 @@
 
 ```
 페이드 인 · 아웃(fade in · out)으로 요소가 0.6s 동안 투명도만 바뀌며 나타나고 사라지게 해.
-구현: Motion — initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+Motion으로 구현해.
 ```
 
 ### 진입 · 퇴장 (enter · exit)
@@ -125,7 +125,7 @@
 
 ```
 진입 · 퇴장(enter · exit) 모션으로 토스트가 아래 24px에서 0.4s ease-out-quart로 올라오며 나타나게 하고, 사라질 때는 0.25s ease-in으로 위로 빠지게 해. 퇴장은 진입보다 짧게 해.
-구현: Motion — <AnimatePresence> + initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { duration: 0.4 } }} exit={{ y: -12, opacity: 0, transition: { duration: 0.25 } }}
+Motion으로 구현해.
 ```
 
 ### 크로스페이드 (crossfade)
@@ -138,7 +138,7 @@
 
 ```
 크로스페이드(crossfade)로 앞 요소가 0.7s 동안 사라지는 사이 뒤 요소가 같은 자리에 겹쳐 나타나게 해.
-구현: Motion — <AnimatePresence> 기본 mode='sync' + absolute 겹치기
+Motion으로 구현해.
 ```
 
 ### 마스크 리빌 (mask reveal)
@@ -152,7 +152,7 @@
 
 ```
 마스크 리빌(mask reveal)로 overflow: hidden 틀 아래 110%에서 줄마다 0.12s 스태거를 두고 0.9s ease-out-quart로 올라오게 해. 투명도는 바꾸지 않게 해.
-구현: Motion — overflow-hidden 틀 + 줄 y: '110%' → 0, { duration: 0.9, ease: [0.25, 1, 0.5, 1], delay: stagger(0.12) }
+Motion으로 구현해.
 ```
 
 ### 텍스트 스플릿 (split text)
@@ -167,7 +167,7 @@
 
 ```
 텍스트 스플릿(split text)으로 글자 단위로 쪼개고, 0.06s 스태거와 스프링(stiffness 320, damping 18)으로 아래에서 튀어 오르게 해.
-구현: GSAP — SplitText.create(el, { type: 'words,chars' }) → gsap.from(split.chars, { yPercent: 110, ease: 'back.out(2)', stagger: 0.06 })
+GSAP으로 구현해.
 ```
 
 ### 스크램블 텍스트 (scramble text)
@@ -181,7 +181,7 @@
 
 ```
 스크램블 텍스트(scramble text)로 글자가 무작위 문자로 뒤섞이다가 앞에서부터 1.4s 동안 차례로 원래 글자로 확정되게 해.
-구현: GSAP — gsap.to(el, { duration: 1.4, scrambleText: { text, chars: 'upperCase' } })
+GSAP으로 구현해.
 ```
 
 ### 숫자 카운트업 (count up)
@@ -196,7 +196,7 @@
 
 ```
 숫자 카운트업(count up)으로 숫자가 0에서 목표값까지 1.6s 동안 ease-out-quart로 올라가 끝에서 감속하게 해. 정수로 표시하고 천 단위마다 콤마를 표시해.
-구현: Motion — animate(count, target, { duration: 1.6, ease: [0.25, 1, 0.5, 1] }) + useTransform(count, (n) => Math.round(n).toLocaleString())
+Motion으로 구현해.
 ```
 
 ### 공유 레이아웃 전환 (shared layout transition)
@@ -209,7 +209,7 @@
 
 ```
 공유 레이아웃 전환(shared layout transition)으로 같은 요소가 화면이나 상태가 바뀌어도 위치와 크기를 이어서 움직이게 해.
-구현: Motion — layout · layoutId
+Motion으로 구현해.
 ```
 
 ### 페이지 전환 (page transition)
@@ -222,7 +222,7 @@
 
 ```
 페이지 전환(page transition)으로 라우트가 바뀔 때 이전 화면이 나간 뒤 새 화면이 들어오게 해.
-구현: Motion — <AnimatePresence mode='wait'> + 라우트 key
+Motion으로 구현해.
 ```
 
 ### 이미지 리빌 (image reveal)
@@ -236,7 +236,7 @@
 
 ```
 이미지 리빌(image reveal)로 틀이 아래에서 위로 0.9s 동안 열리게 하고, 안쪽 이미지는 1.3배에서 1배로 조금 더 길게 줄어들게 해.
-구현: Motion — 틀 clipPath: 'inset(100% 0% 0% 0%)' → 'inset(0% 0% 0% 0%)' (0.9s) · img scale: 1.3 → 1 (1.30s)
+Motion으로 구현해.
 ```
 
 ### 필터 · 색 전환 (filter · color)
@@ -249,7 +249,7 @@
 
 ```
 필터 · 색 전환(filter · color)으로 요소가 blur(10px)에서 또렷해지고, 흑백에서 원래 색으로 서서히 바뀌게 해.
-구현: Motion — filter: 'blur(10px)' → 'blur(0px)' · backgroundColor 보간
+Motion으로 구현해.
 ```
 
 ### View Transitions (view transitions API)
@@ -264,7 +264,7 @@
 
 ```
 View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우저가 이전과 다음 스냅샷을 이어 붙여 전환하게 해.
-구현: CSS·Web — React 19.3: <ViewTransition> + startTransition (startViewTransition 직접 호출 금지)
+CSS·Web으로 구현해.
 ```
 
 ## 모양 · 경로
@@ -281,7 +281,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 모핑(morphing)으로 원(border-radius 50%)이 둥근 사각형(8%)으로 모양 자체가 바뀌게 해.
-구현: GSAP — MorphSVGPlugin (점 개수 · 종류 달라도 됨)
+GSAP으로 구현해.
 ```
 
 ### 라인 드로잉 (line drawing)
@@ -294,7 +294,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 라인 드로잉(line drawing)으로 SVG 선이 pathLength 0에서 1까지 그려지듯 나타나게 해.
-구현: Motion — pathLength: 0 → 1
+Motion으로 구현해.
 ```
 
 ### 모션 패스 (motion path)
@@ -307,7 +307,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 모션 패스(motion path)로 요소가 정해진 곡선 경로(offset-path)를 따라 이동하게 해.
-구현: GSAP — motionPath: { path, align: path, alignOrigin: [0.5, 0.5], autoRotate: true }
+GSAP으로 구현해.
 ```
 
 ### 텍스트 경로 (text on path)
@@ -320,7 +320,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 텍스트 경로(text on path)로 글자를 곡선 위에 얹고, startOffset을 바꿔 곡선을 따라 흐르게 해.
-구현: GSAP — gsap.to(textPath, { attr: { startOffset: '100%' } })
+GSAP으로 구현해.
 ```
 
 ## 스크롤
@@ -337,7 +337,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 스크롤 진입(scroll-triggered reveal)으로 요소가 화면에 들어오면 한 번만, 자기 시간으로 끝까지 재생되게 해.
-구현: Motion — whileInView + viewport={{ once: true }}
+Motion으로 구현해.
 ```
 
 ### 스크롤 스크러빙 (scroll scrubbing)
@@ -350,7 +350,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 스크롤 스크러빙(scroll scrubbing)으로 스크롤 진행도 0~1에 애니메이션 진행을 직접 묶어, 스크롤을 멈추면 애니메이션도 멈추게 해.
-구현: GSAP — scrollTrigger: { scrub: true }
+GSAP으로 구현해.
 ```
 
 ### 핀 (pin (sticky))
@@ -363,7 +363,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 핀(pin)으로 화면을 고정해 둔 채 스크롤에 따라 안쪽 내용이 진행되게 해.
-구현: GSAP — scrollTrigger: { pin: true, end: '+=1500', scrub: true }
+GSAP으로 구현해.
 ```
 
 ### 가로 스크롤 (horizontal scroll)
@@ -376,7 +376,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 가로 스크롤(horizontal scroll)로 세로로 스크롤하는 동안 섹션들이 0에서 -75%까지 옆으로 흘러가게 해.
-구현: GSAP — pin + scrub 트윈 x: -(w - innerWidth), ease: 'none'
+GSAP으로 구현해.
 ```
 
 ### 패럴랙스 (parallax)
@@ -389,7 +389,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 패럴랙스(parallax)로 레이어마다 스크롤 속도를 0.2× · 0.5× · 1×로 달리해 깊이감이 생기게 해.
-구현: Motion — useTransform(scrollYProgress, [0, 1], [0, -200]) · 레이어마다 범위 다르게
+Motion으로 구현해.
 ```
 
 ### 스크롤 스냅 (scroll snap)
@@ -402,7 +402,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 스크롤 스냅(scroll snap)으로 스크롤이 항목마다 정해진 지점에 맞춰 멈추게 해.
-구현: Motion — CSS scroll-snap-type (라이브러리 불필요)
+Motion으로 구현해.
 ```
 
 ### 섹션 스와이프 (section swipe)
@@ -415,7 +415,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 섹션 스와이프(section swipe)로 휠이나 터치 한 번에 풀스크린 섹션이 하나씩 넘어가게 해.
-구현: GSAP — Observer.create({ type: 'wheel,touch,pointer', onDown, onUp, tolerance: 10 })
+GSAP으로 구현해.
 ```
 
 ### 속도 반응 (velocity-based)
@@ -428,7 +428,7 @@ View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우�
 
 ```
 속도 반응(velocity-based)으로 스크롤이나 드래그 속도가 빠를수록 기울기와 흐림이 커지게 해.
-구현: Motion — useVelocity(scrollY) → useTransform(v, [-400, 400], [-10, 10]) → useSpring
+Motion으로 구현해.
 ```
 
 ### CSS 스크롤 타임라인 (scroll-driven animations)
@@ -443,7 +443,7 @@ JS 없이 CSS 만으로 스크롤 진행도에 애니메이션을 묶음. — �
 
 ```
 CSS 스크롤 타임라인(scroll-driven animations)으로 JS 없이 CSS animation-timeline만 써서 스크롤 진행도에 맞춰 애니메이션이 재생되게 해.
-구현: CSS·Web — animation-timeline: scroll() · view()
+CSS·Web으로 구현해.
 ```
 
 ## 인터랙션
@@ -460,7 +460,7 @@ CSS 스크롤 타임라인(scroll-driven animations)으로 JS 없이 CSS animati
 
 ```
 호버(hover) 상태에서 포인터가 올라가 있는 동안 버튼이 0.15s 만에 살짝 떠오르며 색이 바뀌게 하고, 포인터가 나가면 되돌아오게 해.
-구현: Motion — whileHover · onHoverStart / onHoverEnd
+Motion으로 구현해.
 ```
 
 ### 마이크로 인터랙션 (micro-interaction)
@@ -474,7 +474,7 @@ CSS 스크롤 타임라인(scroll-driven animations)으로 JS 없이 CSS animati
 
 ```
 마이크로 인터랙션(micro-interaction)으로 토글 손잡이가 스프링(stiffness 500, damping 30)으로 짧고 단단하게 이동하게 하고, 하트는 누르면 1.25배로 한 번 튀게 해.
-구현: Motion — animate={{ x: on ? 28 : 0 }} transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+Motion으로 구현해.
 ```
 
 ### 마그네틱 (magnetic)
@@ -488,7 +488,7 @@ CSS 스크롤 타임라인(scroll-driven animations)으로 JS 없이 CSS animati
 
 ```
 마그네틱(magnetic) 효과로 커서가 90px 안에 들어오면 버튼이 커서 거리의 35%만큼 끌려오게 해. 따라오고 돌아올 때는 스프링(stiffness 220, damping 12)으로 움직이게 해.
-구현: Motion — pointer 오프셋 × 0.35 → useMotionValue → useSpring(mv, { stiffness: 220, damping: 12 })
+Motion으로 구현해.
 ```
 
 ### 러버밴드 (rubber band)
@@ -502,7 +502,7 @@ CSS 스크롤 타임라인(scroll-driven animations)으로 JS 없이 CSS animati
 
 ```
 러버밴드(rubber band)로 끌 범위를 넘겨 끌면 거리의 35%만 따라오며 저항하게 하고, 놓으면 bounce(stiffness 400, damping 14)로 되돌아오게 해.
-구현: Motion — drag dragConstraints={{ left: 0, right: 0 }} dragElastic={0.35} dragTransition={{ bounceStiffness: 400, bounceDamping: 14 }}
+Motion으로 구현해.
 ```
 
 ### 리스트 재정렬 (reorder)
@@ -515,7 +515,7 @@ CSS 스크롤 타임라인(scroll-driven animations)으로 JS 없이 CSS animati
 
 ```
 리스트 재정렬(reorder)로 항목을 끌어 순서를 바꾸면 나머지 항목이 자리를 비켜 주며 움직이게 해.
-구현: Motion — <Reorder.Group values onReorder> + <Reorder.Item value>
+Motion으로 구현해.
 ```
 
 ### 3D 틸트 · 플립 (3D tilt · flip)
@@ -529,7 +529,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 3D 틸트 · 플립(3D tilt · flip)으로 카드가 perspective 500px에서 커서 쪽으로 최대 18°까지 기울며 스프링으로 따라오게 해. 클릭하면 rotateY 180°로 뒤집히게 해.
-구현: Motion — style={{ rotateX, rotateY, transformPerspective: 500 }} · useTransform(pointer, [-1, 1], [-18, 18])
+Motion으로 구현해.
 ```
 
 ### 커스텀 커서 (custom cursor)
@@ -544,7 +544,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 커스텀 커서(custom cursor)로 기본 커서 대신 점과 원을 그리고, 원은 스프링(stiffness 300, damping 28)으로 한 박자 늦게 따라오게 해. 링크 위에서는 원이 커지게 해.
-구현: Motion — useMotionValue(clientX) → useSpring(mv, { stiffness: 300, damping: 28 }) · pointer-events: none
+Motion으로 구현해.
 ```
 
 ### 관성 (inertia (fling))
@@ -558,7 +558,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 관성(inertia)으로 던진 속도를 이어받아 미끄러지다 감속해 멈추게 하고, 값은 power 0.8, timeConstant 350ms로 해. 벽에 닿으면 튕겨 돌아오게 해.
-구현: Motion — drag dragTransition={{ power: 0.8, timeConstant: 350 }}
+Motion으로 구현해.
 ```
 
 ## 앱 · 제스처
@@ -575,7 +575,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 스와이프 액션(swipe action)으로 목록 행을 왼쪽으로 40px 이상 밀고 놓으면 오른쪽 삭제 버튼이 열린 채 멈추게 하고, 그보다 덜 밀고 놓으면 닫히게 해.
-구현: React Native — <Swipeable renderRightActions={renderDelete} rightThreshold={40} overshootRight={false} />
+React Native로 구현해.
 ```
 
 ### 바텀시트 스냅 (bottom sheet snap)
@@ -589,7 +589,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 바텀시트 스냅(bottom sheet snap)으로 시트가 25% · 50% · 90% 높이에서 멈추게 해. 끌다 놓으면 가장 가까운 높이로 스프링(stiffness 500, damping 80)을 써서 넘치지 않게 붙게 해.
-구현: React Native — <BottomSheet snapPoints={['25%', '50%', '90%']} enableDynamicSizing={false} animationConfigs={useBottomSheetSpringConfigs({ damping: 80, stiffness: 500, overshootClamping: true })} />
+React Native로 구현해.
 ```
 
 ### 당겨서 새로고침 (pull to refresh)
@@ -602,7 +602,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 당겨서 새로고침(pull to refresh)으로 목록 맨 위에서 아래로 당겼다 놓으면 인디케이터가 돌며 새로고침이 시작되게 하고, 끝나면 목록이 제자리로 돌아오게 해. 인디케이터는 위에서 0px 아래에 나타나게 해.
-구현: React Native — <RefreshControl refreshing={refreshing} onRefresh={onRefresh} progressViewOffset={0} />
+React Native로 구현해.
 ```
 
 ### 인터럽트 가능한 전환 (interruptible)
@@ -615,7 +615,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 인터럽트 가능한 전환(interruptible)으로 전환 도중에 다시 눌러도 멈췄다 처음부터 가지 않게 하고, 지금 위치에서 새 목표로 스프링(stiffness 250, damping 22)을 써서 방향을 바꾸게 해.
-구현: React Native — x.value = withSpring(target, { stiffness: 250, damping: 22 })  // 진행 중에도 같은 코드로 재호출
+React Native로 구현해.
 ```
 
 ### 누르기 피드백 (press feedback)
@@ -628,7 +628,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 누르기 피드백(press feedback)으로 누르는 동안 0.96배로 줄어들게 하고, 놓으면 스프링(stiffness 400, damping 12)으로 1배로 돌아오게 해.
-구현: React Native — onPressIn={() => (s.value = withSpring(0.96))} onPressOut={() => (s.value = withSpring(1, { stiffness: 400, damping: 12 }))}
+React Native로 구현해.
 ```
 
 ### 롱프레스 메뉴 (long press menu)
@@ -641,7 +641,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 롱프레스 메뉴(long press menu)로 카드를 500ms 이상 누르고 있으면 카드가 1.05배로 떠오르게 하고, 옆에 메뉴가 열리게 해.
-구현: React Native — Gesture.LongPress().minDuration(500).onStart(() => openMenu())
+React Native로 구현해.
 ```
 
 ### 컨테이너 트랜스폼 (container transform)
@@ -654,7 +654,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 컨테이너 트랜스폼(container transform)으로 카드를 누르면 550ms 동안 카드가 화면 크기로 늘어나며 상세 화면이 되게 하고, 뒤로 가면 다시 카드로 줄어들게 해.
-구현: React Native — <Animated.View sharedTransitionTag={`card-${id}`} sharedTransitionStyle={SharedTransition.duration(550)} />  // 실험적 · native stack
+React Native로 구현해.
 ```
 
 ### 공유 축 (shared axis)
@@ -667,7 +667,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 공유 축(shared axis) 전환으로 다음 단계로 넘어갈 때 현재 화면은 왼쪽으로 밀리며 300ms 동안 사라지게 하고, 새 화면은 오른쪽에서 같은 시간에 들어오게 해. 뒤로 가면 반대 방향으로 움직이게 해.
-구현: React Native — <Animated.View key={step} entering={FadeInRight.duration(300)} exiting={FadeOutLeft.duration(300)} />
+React Native로 구현해.
 ```
 
 ### 페이드 스루 (fade through)
@@ -680,7 +680,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 페이드 스루(fade through)로 탭을 바꿀 때 현재 화면은 90ms 동안 사라지게 하고, 그다음 새 화면이 210ms 동안 0.92배에서 1배로 커지며 나타나게 해. 두 화면이 겹치지 않게 해.
-구현: React Native — <Animated.View key={tab} entering={FadeIn.duration(210).delay(90)} exiting={FadeOut.duration(90)} />
+React Native로 구현해.
 ```
 
 ### 푸시 · 팝 (push / pop)
@@ -693,7 +693,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 푸시 · 팝(push / pop) 전환으로 새 화면이 오른쪽에서 350ms 동안 밀려 들어오게 하고, 이전 화면은 왼쪽으로 조금 밀려나게 해. 뒤로 가면 반대로 빠지게 해.
-구현: React Native — <Stack.Screen options={{ animation: 'simple_push', animationDuration: 350 }} />  // iOS 에서만 시간 적용
+React Native로 구현해.
 ```
 
 ### 햅틱 동기화 (haptic sync)
@@ -706,8 +706,7 @@ perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘. — 둘 다 �
 
 ```
 햅틱 동기화(haptic sync)로 슬라이더를 끌 때 눈금 5개를 지날 때마다 눈금이 튀게 하고, 같은 순간에 가벼운 햅틱(selection)이 나게 해.
-구현: React Native — // 눈금 5개 · 값이 눈금을 넘는 순간 한 번
-Haptics.selectionAsync()
+React Native로 구현해.
 ```
 
 ### 스켈레톤 로딩 (skeleton)
@@ -720,7 +719,7 @@ Haptics.selectionAsync()
 
 ```
 스켈레톤 로딩(skeleton)으로 데이터가 오기 전에 자리를 회색 블록으로 채우고, 투명도가 0.4에서 1 사이를 800ms마다 오가며 깜빡이게 해.
-구현: React Native — o.value = withRepeat(withTiming(1, { duration: 800 }), -1, true)  // o 초기값 0.4
+React Native로 구현해.
 ```
 
 ## 반복
@@ -738,7 +737,7 @@ Haptics.selectionAsync()
 
 ```
 마키(marquee)로 글자와 로고가 한 방향으로 끊김 없이 계속 흐르게 해.
-구현: Motion — 콘텐츠 2벌 + x: ['0%', '-50%'], repeat: Infinity, ease: 'linear'
+Motion으로 구현해.
 ```
 
 ### 쉬머 (shimmer)
@@ -751,7 +750,7 @@ Haptics.selectionAsync()
 
 ```
 쉬머(shimmer)로 로딩 중인 표면 위를 빛줄기가 1.3s마다 훑고 지나가게 해.
-구현: Motion — x 반복 · 또는 CSS @keyframes 로 충분
+Motion으로 구현해.
 ```
 
 ## UI 요소

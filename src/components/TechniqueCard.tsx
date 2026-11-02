@@ -152,7 +152,7 @@ function ParamPanel({
   )
 }
 
-/** 지시문 2줄째(구현 코드)를 어느 라이브러리로 쓸지. 눌린 홈 위에 고른 칸만 튀어나옴 */
+/** 지시문 2줄째에 넣을 구현 라이브러리. 눌린 홈 위에 고른 칸만 튀어나옴 */
 function LibToggle({ libs, value, onChange }: { libs: readonly Lib[]; value: Lib; onChange: (lib: Lib) => void }) {
   return (
     <div role="group" aria-label="구현 라이브러리" className="bg-well shadow-inset-sm mb-2.5 flex rounded-full p-1">

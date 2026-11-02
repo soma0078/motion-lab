@@ -13,8 +13,5 @@ export default {
   fit: 'rn',
   docs: { rn: 'https://docs.expo.dev/versions/latest/sdk/haptics/' },
   params: [{ key: 'ticks', label: '눈금 수', min: 3, max: 9, step: 1, default: 5, effect: '슬라이더 위 눈금 개수예요. 많을수록 눈금과 햅틱이 더 촘촘하게 이어져요.' }],
-  prompt: (v) => `햅틱 동기화(haptic sync)로 슬라이더를 끌 때 눈금 ${v.ticks}개를 지날 때마다 눈금이 튀게 하고, 같은 순간에 가벼운 햅틱(selection)이 나게 해.`,
-  snippet: {
-    rn: (v) => `// 눈금 ${v.ticks}개 · 값이 눈금을 넘는 순간 한 번\nHaptics.selectionAsync()`
-  }
+  prompt: (v) => `햅틱 동기화(haptic sync)로 슬라이더를 끌 때 눈금 ${v.ticks}개를 지날 때마다 눈금이 튀게 하고, 같은 순간에 가벼운 햅틱(selection)이 나게 해.`
 } satisfies TechniqueMeta

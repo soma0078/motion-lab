@@ -57,6 +57,4 @@ export interface TechniqueMeta {
    * - 수치는 여기에 넣는다. 슬라이더 값은 values 로 받는다
    */
   prompt: (values: ParamValues) => string
-  /** 복사할 때 붙는 라이브러리별 코드. 없으면 motion[0] · gsap[0] */
-  snippet?: Partial<Record<'motion' | 'gsap' | 'rn', (values: ParamValues) => string>>
 }
