@@ -17,7 +17,6 @@
 - **지시문 미리보기와 복사**: 구현 라이브러리를 고르면 지금 슬라이더 값이 담긴 지시문이 카드 안에 바로 보이고, 버튼 하나로 복사합니다.
 - **공식 문서**: 기법마다 motion.dev · gsap.com · MDN · React Native 관련 문서로 이어지는 링크가 있습니다.
 - **검색 · 테마**: 기법 이름, 영문 이름, 뜻, 조절하는 값 이름(예: `damping`)으로 찾을 수 있고 (`/` 로 바로 검색), 라이트 · 다크 테마를 지원합니다.
-- **어휘집 내보내기**: 전체 기법을 `motion-vocabulary.md` 한 파일로 내보내 다른 프로젝트의 AI 컨텍스트로 쓸 수 있습니다. 어휘집에는 기법별 라이브러리 API와 지시문 예시도 들어 있습니다.
 
 <img src="docs/card.png" alt="기법 카드: 용어, 데모, 뜻, 조절하는 값과 효과 설명, 라이브러리 선택, 지시문 미리보기, 복사 버튼, 공식 문서" width="360">
 
@@ -45,10 +44,9 @@ npm run dev
 | `npm run build` | 타입 검사 후 프로덕션 빌드 |
 | `npm run preview` | 빌드 결과 미리보기 |
 | `npm run lint` | oxlint 실행 |
-| `npm run vocab` | 전체 기법을 `motion-vocabulary.md`로 내보내기 |
 | `npm run check:prompts` | 지시문 작성 규칙 검사 |
 
-`vocab` · `check:prompts` 는 `meta.ts` 를 Node 로 바로 읽어서, `.ts` 타입 제거가 기본으로 켜진 Node(24 등)가 필요합니다.
+`check:prompts` 는 `meta.ts` 를 Node 로 바로 읽어서, `.ts` 타입 제거가 기본으로 켜진 Node(24 등)가 필요합니다.
 
 ## Tech Stack
 
@@ -61,14 +59,13 @@ src/components/   헤더 · 히어로 · 기법 카드 · 섹션 제목 · 테�
 src/index.css     디자인 토큰 (라이트 · 다크) · 뉴모피즘 그림자 · 설계도 격자
 src/techniques/
   <slug>/
-    meta.ts     용어 · 뜻 · 섹션 · 추천 · 공식 문서 · 수치 슬라이더와 값마다 효과 설명 · 지시문(prompt) · 라이브러리별 API (어휘집)
+    meta.ts     용어 · 뜻 · 섹션 · 추천 · 공식 문서 · 수치 슬라이더와 값마다 효과 설명 · 지시문(prompt) · 라이브러리별 API (있는 라이브러리가 카드 토글에 보임)
     demo.tsx    카드 데모 (default export 컴포넌트 하나)
     demo.css    선택. 데모 전용 스타일
   _shared/      데모 공용 훅 · 부품
   registry.ts   폴더를 자동으로 읽어 섹션별 목록을 만듦
   sections.ts   섹션 순서 · 제목 · 설명
-  prompt.ts     슬라이더 기본값 · 지시문 만들기 (카드의 복사 · 어휘집이 같이 씀)
-scripts/export-vocabulary.mjs   어휘집 생성
+  prompt.ts     슬라이더 기본값 · 카드에서 복사할 지시문 만들기
 scripts/check-prompts.mjs       지시문 작성 규칙 검사
 ```
 
