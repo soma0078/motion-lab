@@ -16,7 +16,7 @@ const NO_DRAG = 'input, button, a, select, textarea, label, [data-demo]'
 const SPRING = { type: 'spring', stiffness: 320, damping: 36 } as const
 
 /**
- * 복사가 많은 기법 5개를 한 장씩 넘기는 슬라이드.
+ * 복사가 많은 기법(최대 5개, 복사된 것만)을 한 장씩 넘기는 슬라이드.
  * Motion 의 drag="x" 로 마우스 · 터치를 함께 끌고, 놓으면 끈 거리 · 속도로 다음 장을 정해 스프링으로 붙인다
  */
 export function PopularSection({
