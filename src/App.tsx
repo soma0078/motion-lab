@@ -78,12 +78,14 @@ export default function App() {
       })),
     []
   )
-  // 복사가 많은 순 5개. 같으면 원래 순서 (sort 는 안정 정렬). 순위는 페이지를 열 때 읽은 값으로 고정
+  // 복사가 많은 순으로 최대 5개. 한 번도 복사되지 않은 기법은 "인기"가 아니라서 넣지 않는다.
+  // 같으면 원래 순서 (sort 는 안정 정렬). 순위는 페이지를 열 때 읽은 값으로 고정
   const popular = useMemo(
     () =>
       copies.status === 'ready'
         ? allSections
             .flatMap((section) => section.items.map(({ technique }) => technique))
+            .filter((technique) => (copies.ranking[technique.slug] ?? 0) > 0)
             .sort((a, b) => (copies.ranking[b.slug] ?? 0) - (copies.ranking[a.slug] ?? 0))
             .slice(0, 5)
         : [],
@@ -132,7 +134,7 @@ export default function App() {
           onJump={jump}
         />
 
-        {/* 횟수를 읽지 못하면(로컬 vite dev 등) 순위를 정할 수 없어 보이지 않는다. 검색 중에는 결과만 보인다 */}
+        {/* 횟수를 읽지 못했거나 복사된 기법이 하나도 없으면 보이지 않는다. 검색 중에는 결과만 보인다 */}
         {!q && popular.length > 0 && (
           <div className="mx-auto max-w-[1280px] px-4 pt-16 sm:px-6 lg:px-10">
             <PopularSection techniques={popular} countOf={copies.countOf} onCopied={copies.record} />
