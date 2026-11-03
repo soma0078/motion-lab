@@ -24,13 +24,13 @@ export default function CssScrollTimeline() {
 
   return (
     <div ref={scope} className="css-scroll-root absolute inset-x-8 top-9 bottom-4 flex flex-col gap-2">
-      <div className="h-3 border-2 border-black">
-        <div className="css-scroll-bar bg-nb-green h-full origin-left" />
+      <div className="h-3 border-[1.5px] border-ink">
+        <div className="css-scroll-bar paint-tone h-full origin-left" />
       </div>
-      <div ref={box} className="css-scroll-box flex-1 overflow-hidden border-2 border-black">
+      <div ref={box} className="css-scroll-box flex-1 overflow-hidden border-[1.5px] border-ink">
         <div className="space-y-2 p-2">
           {LINES.map((width, index) => (
-            <div key={index} className="bg-nb-line h-2" style={{ width: `${width}%` }} />
+            <div key={index} className="bg-line-strong h-2" style={{ width: `${width}%` }} />
           ))}
         </div>
       </div>

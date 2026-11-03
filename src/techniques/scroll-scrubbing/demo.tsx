@@ -21,24 +21,24 @@ export default function Scrubbing() {
   return (
     <div ref={scope} className="absolute inset-x-8 top-9 bottom-4 flex gap-5">
       <div className="flex flex-1 flex-col justify-center gap-4">
-        <div className="h-3 border-2 border-black">
+        <div className="h-3 border-[1.5px] border-ink">
           <motion.div
-            className="bg-nb-green h-full origin-left"
+            className="paint-tone h-full origin-left"
             style={{ scaleX: progress }}
           />
         </div>
         <div className="relative mr-8 h-8">
           <motion.div className="absolute inset-0" style={{ x: boxX }}>
             <motion.div
-              className="bg-nb-blue size-8 border-2 border-black"
+              className="paint-key size-8 border-[1.5px] border-ink"
               style={{ rotate }}
             />
           </motion.div>
         </div>
       </div>
       {/* 스크롤바: thumb 높이 25%라 300% 옮기면 바닥 */}
-      <div className="w-3 border-2 border-black">
-        <motion.div className="h-1/4 bg-black" style={{ y: thumbY }} />
+      <div className="w-3 border-[1.5px] border-ink">
+        <motion.div className="h-1/4 bg-current" style={{ y: thumbY }} />
       </div>
     </div>
   )

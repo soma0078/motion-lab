@@ -30,7 +30,7 @@ export default function Keyframes() {
         {KEYS.map(([x, y], index) => (
           <span
             key={index}
-            className="absolute -top-3 -left-3 grid size-6 place-items-center rounded-full border-2 border-dashed border-black font-mono text-[9px] font-bold"
+            className="absolute -top-3 -left-3 grid size-6 place-items-center rounded-full border-[1.5px] border-dashed border-ink font-mono text-[9px] font-bold"
             style={{ transform: `translate(${x}px, ${y}px)` }}
           >
             {index + 1}

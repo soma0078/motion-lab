@@ -42,12 +42,12 @@ export default function BottomSheet({ params }: DemoProps) {
 
   return (
     <div ref={scope} className="absolute inset-0">
-      <div className="absolute top-7 bottom-0 left-1/2 w-40 -translate-x-1/2 overflow-hidden rounded-t-xl border-x-2 border-t-2 border-black bg-white">
+      <div className="absolute top-7 bottom-0 left-1/2 w-40 -translate-x-1/2 overflow-hidden rounded-t-xl border-x-[1.5px] border-t-[1.5px] border-ink bg-surface">
         <motion.div
-          className="bg-nb-blue absolute inset-x-0 top-0 h-full border-t-2 border-black"
+          className="paint-key absolute inset-x-0 top-0 h-full border-t-[1.5px] border-ink"
           style={{ y }}
         >
-          <div className="mx-auto mt-1.5 h-1 w-8 rounded-full bg-black" />
+          <div className="mx-auto mt-1.5 h-1 w-8 rounded-full bg-current" />
           <div className="cursor absolute top-0.5 left-[62%] opacity-0">
             <Cursor />
           </div>
@@ -59,7 +59,7 @@ export default function BottomSheet({ params }: DemoProps) {
           className="pointer-events-none absolute left-[calc(50%+88px)] flex items-center gap-1 font-mono text-[10px] font-bold"
           style={{ top: 28 + snap.y - 7 }}
         >
-          <span className="w-4 border-t-2 border-dashed border-black/60" />
+          <span className="w-4 border-t-[1.5px] border-dashed border-ink/60" />
           {snap.label}
         </div>
       ))}

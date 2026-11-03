@@ -26,20 +26,20 @@ export default function LongPressMenu({ params }: DemoProps) {
   return (
     <div ref={scope} className="absolute inset-0">
       <motion.div
-        className="bg-nb-surface shadow-nb-sm absolute top-[46px] left-[10%] h-14 w-[46%] overflow-hidden border-2 border-black"
+        className="bg-surface shadow-raised-sm absolute top-[46px] left-[10%] h-14 w-[46%] overflow-hidden border-[1.5px] border-ink"
         style={{ scale }}
       >
         <div className="flex h-full items-center gap-2 px-3">
-          <span className="bg-nb-green size-5 rounded-full border-2 border-black" />
+          <span className="paint-tone size-5 rounded-full border-[1.5px] border-ink" />
           <span className="text-xs font-extrabold">사진 1</span>
         </div>
-        <div className="progress bg-nb-orange absolute inset-x-0 bottom-0 h-1.5 origin-left border-t-2 border-black" />
+        <div className="progress paint-key absolute inset-x-0 bottom-0 h-1.5 origin-left border-t-[1.5px] border-ink" />
         <div className="cursor absolute top-1/2 right-3 opacity-0">
           <Cursor />
         </div>
       </motion.div>
-      <div className="menu bg-nb-surface shadow-nb-sm absolute top-[46px] left-[62%] w-[28%] origin-left border-2 border-black text-[11px] font-extrabold opacity-0">
-        <p className="border-b-2 border-black px-2 py-1">복사</p>
+      <div className="menu bg-surface shadow-raised-sm absolute top-[46px] left-[62%] w-[28%] origin-left border-[1.5px] border-ink text-[11px] font-extrabold opacity-0">
+        <p className="border-b-[1.5px] border-ink px-2 py-1">복사</p>
         <p className="px-2 py-1">삭제</p>
       </div>
     </div>

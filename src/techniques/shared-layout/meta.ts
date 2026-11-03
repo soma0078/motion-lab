@@ -7,12 +7,7 @@ export default {
   section: 'transition',
   order: 80,
   param: 'layoutId',
-  motion: [
-    'layout · layoutId'
-  ],
-  gsap: [
-    'Flip.getState() → 상태 변경 → Flip.from(state, { absolute, targets })'
-  ],
   fit: 'motion',
-  docs: { motion: 'https://motion.dev/docs/react-layout-animations', gsap: 'https://gsap.com/docs/v3/Plugins/Flip/' }
+  docs: { motion: 'https://motion.dev/docs/react-layout-animations', gsap: 'https://gsap.com/docs/v3/Plugins/Flip/' },
+  prompt: () => '공유 레이아웃 전환(shared layout transition)으로 같은 요소가 화면이나 상태가 바뀌어도 위치와 크기를 이어서 움직이게 해.'
 } satisfies TechniqueMeta

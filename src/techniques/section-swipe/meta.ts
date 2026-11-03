@@ -7,12 +7,7 @@ export default {
   section: 'scroll',
   order: 70,
   param: '1 tick = 1',
-  motion: [
-    'wheel · pointer 이벤트 직접 처리 + AnimatePresence'
-  ],
-  gsap: [
-    'Observer.create({ type: \'wheel,touch,pointer\', onDown, onUp, tolerance: 10 })'
-  ],
   fit: 'gsap',
-  docs: { gsap: 'https://gsap.com/docs/v3/Plugins/Observer/' }
+  docs: { gsap: 'https://gsap.com/docs/v3/Plugins/Observer/' },
+  prompt: () => '섹션 스와이프(section swipe)로 휠이나 터치 한 번에 풀스크린 섹션이 하나씩 넘어가게 해.'
 } satisfies TechniqueMeta

@@ -29,18 +29,18 @@ export default function ScrollReveal() {
   })
 
   return (
-    <div ref={scope} className="absolute inset-x-10 top-8 bottom-3 overflow-hidden border-2 border-black">
+    <div ref={scope} className="absolute inset-x-10 top-8 bottom-3 overflow-hidden border-[1.5px] border-ink">
       <motion.div className="relative h-full" style={{ y: contentY }}>
         {REVEAL_CARDS.map((index) => (
           <div
             key={index}
-            className={`card card-${index} bg-nb-blue absolute inset-x-3 h-8 border-2 border-black opacity-0`}
+            className={`card card-${index} paint-key absolute inset-x-3 h-8 border-[1.5px] border-ink opacity-0`}
             style={{ top: 20 + index * REVEAL_GAP }}
           />
         ))}
       </motion.div>
       {/* 재생 기준선 */}
-      <div className="pointer-events-none absolute inset-x-0 border-t-2 border-dashed border-nb-orange" style={{ top: REVEAL_LINE }} />
+      <div className="pointer-events-none absolute inset-x-0 border-t-[1.5px] border-dashed border-key" style={{ top: REVEAL_LINE }} />
     </div>
   )
 }

@@ -41,7 +41,7 @@ export default function Marquee() {
       className="absolute inset-x-0 top-9 bottom-4 flex flex-col justify-center gap-2 overflow-hidden"
     >
       {row('row-a')}
-      <div className="bg-nb-yellow border-y-2 border-black py-1">
+      <div className="paint-sub border-y-[1.5px] border-ink py-1">
         {row('row-b')}
       </div>
     </div>

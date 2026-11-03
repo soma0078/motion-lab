@@ -14,15 +14,15 @@ import {
 export type Animate = ReturnType<typeof useAnimate>[1]
 
 export const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const
-// 색 보간용 (index.css 팔레트 값)
+// 색 보간용. Motion 이 애니메이션 시작 때 CSS 변수를 계산된 색으로 읽어서 테마를 따라간다
 export const COLOR = {
-  blue: '#88aaee',
-  yellow: '#ffdc58',
-  green: '#a3e636',
-  orange: '#ff7a5c',
-  surface: '#ffffff'
+  key: 'var(--key)',
+  sub: 'var(--sub)',
+  tone: 'var(--tone)',
+  surface: 'var(--surface)',
+  ink: 'var(--ink)'
 }
-export const DOT = 'block size-4 rounded-full border-2 border-black bg-nb-blue'
+export const DOT = 'block size-4 rounded-full border-[1.5px] border-ink paint-key'
 
 export const wait = (ms: number) =>
   new Promise<void>((resolve) => setTimeout(resolve, ms))

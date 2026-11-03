@@ -25,7 +25,7 @@ export default function LineDrawing() {
           className="path"
           d="M 10 55 C 40 10, 60 10, 90 40 S 140 80, 170 40 S 200 15, 210 25"
           fill="none"
-          stroke="black"
+          stroke="var(--ink)"
           strokeWidth={4}
           strokeLinecap="round"
           initial={{ pathLength: 1 }}

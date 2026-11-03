@@ -7,12 +7,7 @@ export default {
   section: 'scroll',
   order: 30,
   param: 'sticky',
-  motion: [
-    '긴 wrapper + CSS position: sticky + useScroll({ target })'
-  ],
-  gsap: [
-    'scrollTrigger: { pin: true, end: \'+=1500\', scrub: true }'
-  ],
   fit: 'gsap',
-  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' }
+  docs: { motion: 'https://motion.dev/docs/react-scroll-animations', gsap: 'https://gsap.com/docs/v3/Plugins/ScrollTrigger/' },
+  prompt: () => '핀(pin)으로 화면을 고정해 둔 채 스크롤에 따라 안쪽 내용이 진행되게 해.'
 } satisfies TechniqueMeta

@@ -21,14 +21,14 @@ export default function Tilt3D({ params }: DemoProps) {
     await wait(900)
   })
 
-  const face = 'absolute inset-0 grid place-items-center border-2 border-black text-xs font-extrabold [backface-visibility:hidden]'
+  const face = 'absolute inset-0 grid place-items-center border-[1.5px] border-ink text-xs font-extrabold [backface-visibility:hidden]'
 
   return (
     <div ref={scope} className="absolute inset-0 grid place-items-center pt-6">
       <motion.div className="h-20 w-32" style={{ rotateX, rotateY, transformPerspective: params.perspective }}>
         <div className="flip relative size-full [transform-style:preserve-3d]">
-          <div className={cn(face, 'bg-nb-blue shadow-nb-sm')}>FRONT</div>
-          <div className={cn(face, 'bg-nb-yellow [transform:rotateY(180deg)]')}>BACK</div>
+          <div className={cn(face, 'paint-key shadow-raised-sm')}>FRONT</div>
+          <div className={cn(face, 'paint-sub [transform:rotateY(180deg)]')}>BACK</div>
         </div>
       </motion.div>
     </div>

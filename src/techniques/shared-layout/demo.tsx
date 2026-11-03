@@ -3,7 +3,7 @@ import { motion } from 'motion/react'
 import { useToggle } from '../_shared'
 import { cn } from '../../lib/utils'
 
-const TILE_BG = ['bg-nb-blue', 'bg-nb-yellow', 'bg-nb-green']
+const TILE_BG = ['paint-key', 'paint-sub', 'paint-tone']
 
 export default function SharedLayout() {
   const [ref, open] = useToggle(1600)
@@ -16,14 +16,14 @@ export default function SharedLayout() {
           index === 0 && open ? (
             <div
               key={index}
-              className="border-nb-line h-14 border-2 border-dashed"
+              className="border-line-strong h-14 border-[1.5px] border-dashed"
             />
           ) : (
             <motion.div
               key={index}
               layoutId={index === 0 ? 'term-shared-layout' : undefined}
               transition={transition}
-              className={cn('h-14 border-2 border-black', bg)}
+              className={cn('h-14 border-[1.5px] border-ink', bg)}
             />
           )
         )}
@@ -33,7 +33,7 @@ export default function SharedLayout() {
         <motion.div
           layoutId="term-shared-layout"
           transition={transition}
-          className="bg-nb-blue absolute inset-x-6 top-9 bottom-4 border-2 border-black"
+          className="paint-key absolute inset-x-6 top-9 bottom-4 border-[1.5px] border-ink"
         />
       )}
     </div>

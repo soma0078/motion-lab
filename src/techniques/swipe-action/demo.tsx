@@ -30,19 +30,19 @@ export default function SwipeAction({ params }: DemoProps) {
 
   return (
     <div ref={scope} className="absolute inset-0">
-      <div className="absolute top-[46px] right-[8%] left-[8%] h-12 overflow-hidden border-2 border-black bg-white">
-        <div className="bg-nb-orange absolute inset-y-0 right-0 flex w-20 items-center justify-center border-l-2 border-black text-xs font-extrabold">
+      <div className="absolute top-[46px] right-[8%] left-[8%] h-12 overflow-hidden border-[1.5px] border-ink bg-surface">
+        <div className="paint-key absolute inset-y-0 right-0 flex w-20 items-center justify-center border-l-[1.5px] border-ink text-xs font-extrabold">
           삭제
         </div>
-        <motion.div className="absolute inset-0 flex items-center bg-white px-3" style={{ x }}>
+        <motion.div className="absolute inset-0 flex items-center bg-surface px-3" style={{ x }}>
           <span className="text-xs font-extrabold">새 메시지 · 안녕하세요</span>
           <div className="cursor absolute top-1/2 right-5 opacity-0">
             <Cursor />
           </div>
         </motion.div>
         {/* 놓았을 때 열리는 기준. 오른쪽 끝에서 threshold 만큼, 위아래 눈금으로 표시 */}
-        <div className="pointer-events-none absolute top-0 h-2 border-l-2 border-black" style={{ right: params.threshold }} />
-        <div className="pointer-events-none absolute bottom-0 h-2 border-l-2 border-black" style={{ right: params.threshold }} />
+        <div className="pointer-events-none absolute top-0 h-2 border-l-[1.5px] border-ink" style={{ right: params.threshold }} />
+        <div className="pointer-events-none absolute bottom-0 h-2 border-l-[1.5px] border-ink" style={{ right: params.threshold }} />
       </div>
     </div>
   )

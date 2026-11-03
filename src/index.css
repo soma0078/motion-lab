@@ -1,45 +1,185 @@
 @import "tailwindcss";
 
+/* data-theme 이 붙으면 OS 설정보다 우선. dark: 변형도 같은 기준을 따른다 */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /*
- * Neobrutalism 팔레트 (react-playground 와 같은 값).
- * 배경은 플랫 컬러, 테두리는 검정 2px, 그림자는 블러 없는 오프셋.
+ * Neumorphic Tech Schematic (designmd.app 참고) · 키 컬러 #fc9140
+ *
+ * 면: 배경과 같은 색의 면이 왼쪽 위 빛을 받아 튀어나오거나(raised) 눌린다(inset).
+ *     입체는 조작하는 것(버튼 · 슬라이더 · 토글 · 데모 화면)에만 주고, 카드는 얇은 선으로 경계를 잡는다.
+ * 선: 설계도처럼 가는 격자 · 모서리 표시 · 치수선. 선은 1px, 데모 도형은 1.5px.
+ * 색: 키 컬러(오렌지) 하나 + 보조색(파랑) 하나 + 회색 톤. 진한 색은 움직이는 대상 · 활성 상태에만.
+ *     오렌지 위 글자는 흰색이 아니라 어두운 색 (흰색은 대비 2.3:1). 오렌지 글자는 --key-text 로 (배경 대비 4.5:1 이상).
  */
 :root {
-  --nb-bg: #fff4e0;
-  --nb-surface: #ffffff;
-  --nb-ink: #000000;
-  --nb-yellow: #ffdc58;
-  --nb-blue: #88aaee;
-  --nb-green: #a3e636;
-  --nb-purple: #a388ee;
-  --nb-orange: #ff7a5c;
-  --nb-muted: #4b4b4b;
-  --nb-line: #d8d2c6;
+  --paper: #eef1f5;
+  --surface: #f4f6f9;
+  --well: #e6eaf0;
 
-  font-family: 'Public Sans', system-ui, -apple-system, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-  font-weight: 500;
-  line-height: 1.5;
+  --ink: #2c2c2c;
+  --ink-2: #4a5160;
+  --ink-3: #636b7a;
+
+  --line: #dce1e8;
+  --line-strong: #b4bcc8;
+  --grid: rgb(44 52 64 / 0.07);
+  --grid-strong: rgb(44 52 64 / 0.14);
+
+  --key: #fc9140;
+  --key-hover: #f5802a;
+  --key-text: #a34e0b;
+  --key-soft: #fde7d6;
+  --on-key: #2c2c2c;
+
+  --sub: #8ea8d8;
+  --on-sub: #1f2733;
+  --tone: #c9d0da;
+  --on-tone: #2c2c2c;
+
+  --sh-hi: #ffffff;
+  --sh-lo: #cdd4df;
+
+  /* 데모에서 Motion 으로 보간하는 그림자. 값 전체가 변수 하나여야 Motion 이 계산된 값으로 읽는다 */
+  --lift-none: 0px 0px 0px transparent, 0px 0px 0px transparent;
+  --lift-rest: 3px 3px 7px var(--sh-lo), -3px -3px 7px var(--sh-hi);
+  --lift-up: 10px 10px 20px var(--sh-lo), -6px -6px 14px var(--sh-hi);
+
   color-scheme: light;
-  color: var(--nb-ink);
-  background-color: var(--nb-bg);
-  -webkit-font-smoothing: antialiased;
+}
+
+/* 다크 값. OS 가 다크이고 사용자가 라이트를 고르지 않았을 때 · 사용자가 다크를 골랐을 때 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #1c1f24;
+    --surface: #22262c;
+    --well: #181b1f;
+
+    --ink: #e7e9ee;
+    --ink-2: #b3b9c4;
+    --ink-3: #8c93a0;
+
+    --line: #30353d;
+    --line-strong: #4a515c;
+    --grid: rgb(231 233 238 / 0.05);
+    --grid-strong: rgb(231 233 238 / 0.11);
+
+    --key: #fc9140;
+    --key-hover: #ffa25e;
+    --key-text: #ffa866;
+    --key-soft: #3a2919;
+    --on-key: #1c1f24;
+
+    --sub: #7f9bd1;
+    --on-sub: #12161c;
+    --tone: #4a515d;
+    --on-tone: #e7e9ee;
+
+    --sh-hi: rgb(255 255 255 / 0.045);
+    --sh-lo: rgb(0 0 0 / 0.5);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --paper: #1c1f24;
+  --surface: #22262c;
+  --well: #181b1f;
+
+  --ink: #e7e9ee;
+  --ink-2: #b3b9c4;
+  --ink-3: #8c93a0;
+
+  --line: #30353d;
+  --line-strong: #4a515c;
+  --grid: rgb(231 233 238 / 0.05);
+  --grid-strong: rgb(231 233 238 / 0.11);
+
+  --key: #fc9140;
+  --key-hover: #ffa25e;
+  --key-text: #ffa866;
+  --key-soft: #3a2919;
+  --on-key: #1c1f24;
+
+  --sub: #7f9bd1;
+  --on-sub: #12161c;
+  --tone: #4a515d;
+  --on-tone: #e7e9ee;
+
+  --sh-hi: rgb(255 255 255 / 0.045);
+  --sh-lo: rgb(0 0 0 / 0.5);
+
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-nb-bg: var(--nb-bg);
-  --color-nb-surface: var(--nb-surface);
-  --color-nb-ink: var(--nb-ink);
-  --color-nb-yellow: var(--nb-yellow);
-  --color-nb-blue: var(--nb-blue);
-  --color-nb-green: var(--nb-green);
-  --color-nb-purple: var(--nb-purple);
-  --color-nb-orange: var(--nb-orange);
-  --color-nb-muted: var(--nb-muted);
-  --color-nb-line: var(--nb-line);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-well: var(--well);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-key: var(--key);
+  --color-key-hover: var(--key-hover);
+  --color-key-text: var(--key-text);
+  --color-key-soft: var(--key-soft);
+  --color-on-key: var(--on-key);
+  --color-sub: var(--sub);
+  --color-tone: var(--tone);
 
-  --shadow-nb: 4px 4px 0px 0px var(--nb-ink);
-  --shadow-nb-sm: 2px 2px 0px 0px var(--nb-ink);
-  --shadow-nb-lg: 8px 8px 0px 0px var(--nb-ink);
+  /* 빛은 항상 왼쪽 위에서 */
+  --shadow-raised: 6px 6px 14px var(--sh-lo), -6px -6px 14px var(--sh-hi);
+  --shadow-raised-sm: 3px 3px 7px var(--sh-lo), -3px -3px 7px var(--sh-hi);
+  --shadow-inset: inset 4px 4px 9px var(--sh-lo), inset -4px -4px 9px var(--sh-hi);
+  --shadow-inset-sm: inset 2px 2px 5px var(--sh-lo), inset -2px -2px 5px var(--sh-hi);
+
+  --radius-card: 20px;
+
+  --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  /* API 줄의 한글 설명도 Pretendard 로 */
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace;
+}
+
+/* 데모 도형 칠하기. 글자색도 함께 바꿔서 오렌지 위에 흰 글자가 오지 않게 한다 */
+@utility paint-key {
+  background-color: var(--key);
+  color: var(--on-key);
+}
+@utility paint-sub {
+  background-color: var(--sub);
+  color: var(--on-sub);
+}
+@utility paint-tone {
+  background-color: var(--tone);
+  color: var(--on-tone);
+}
+
+/* 설계도 격자. 16px 가는 선 + 64px 굵은 선 */
+@utility blueprint {
+  background-image:
+    linear-gradient(to right, var(--grid-strong) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-strong) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size:
+    64px 64px,
+    64px 64px,
+    16px 16px,
+    16px 16px;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-weight: 450;
+  line-height: 1.55;
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  /* 고정 헤더에 섹션 제목이 가리지 않게 */
+  scroll-padding-top: 5rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -50,15 +190,89 @@
 
 body {
   margin: 0;
-  background-color: var(--nb-bg);
+  background-color: var(--paper);
 }
 
-@layer utilities {
-  .nb-grid {
-    background-image:
-      linear-gradient(to right, rgba(0, 0, 0, 0.08) 2px, transparent 2px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 2px, transparent 2px);
-    background-size: 32px 32px;
+/* Tailwind v4 는 버튼 커서가 기본(화살표)이라, 누를 수 있는 버튼은 손가락 커서로 되돌린다 */
+@layer base {
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
   }
 }
 
+::selection {
+  background-color: var(--key-soft);
+  color: var(--ink);
+}
+
+/* base 레이어에 둬야 요소에 준 outline-none 같은 유틸리티가 이긴다 (레이어 밖 규칙은 유틸리티보다 우선) */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--key-text);
+    outline-offset: 2px;
+  }
+}
+
+/*
+ * 슬라이더: 눌린 홈(inset) 위에 튀어나온 손잡이(raised). 채워진 구간은 키 컬러.
+ * --pct 는 컴포넌트가 0~100% 로 넘긴다
+ */
+.neu-range {
+  --pct: 50%;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.neu-range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--key) var(--pct), var(--well) var(--pct));
+  /* 홈 그림자를 얇게: 두꺼우면 밝은 쪽 그림자가 채워진 오렌지를 뿌옇게 덮는다 */
+  box-shadow: inset 1px 1px 2px var(--sh-lo), inset -1px -1px 1px var(--sh-hi);
+}
+.neu-range::-moz-range-track {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--key) var(--pct), var(--well) var(--pct));
+  /* 홈 그림자를 얇게: 두꺼우면 밝은 쪽 그림자가 채워진 오렌지를 뿌옇게 덮는다 */
+  box-shadow: inset 1px 1px 2px var(--sh-lo), inset -1px -1px 1px var(--sh-hi);
+}
+.neu-range::-webkit-slider-thumb {
+  appearance: none;
+  margin-top: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-raised-sm);
+}
+.neu-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-raised-sm);
+}
+.neu-range:active::-webkit-slider-thumb {
+  box-shadow: var(--shadow-inset-sm);
+}
+.neu-range:active::-moz-range-thumb {
+  box-shadow: var(--shadow-inset-sm);
+}
+.neu-range:focus-visible {
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+/* 접는 영역의 기본 삼각형 숨김 */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}

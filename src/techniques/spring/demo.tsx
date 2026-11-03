@@ -23,9 +23,9 @@ export default function Spring({ params }: DemoProps) {
 
   return (
     <div ref={scope} className="absolute inset-0 pt-7">
-      <div className="mx-auto h-2 w-14 bg-black" />
-      <motion.div style={{ height: rope }} className="mx-auto w-0.5 bg-black" />
-      <div className="bg-nb-blue mx-auto size-10 border-2 border-black" />
+      <div className="mx-auto h-2 w-14 bg-current" />
+      <motion.div style={{ height: rope }} className="mx-auto w-0.5 bg-current" />
+      <div className="paint-key mx-auto size-10 border-[1.5px] border-ink" />
     </div>
   )
 }

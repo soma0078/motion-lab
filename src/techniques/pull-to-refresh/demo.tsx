@@ -26,16 +26,16 @@ export default function PullToRefresh({ params }: DemoProps) {
 
   return (
     <div ref={scope} className="absolute inset-0">
-      <div className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-2 border-black bg-white">
+      <div className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-[1.5px] border-ink bg-surface">
         <div
-          className="spinner absolute left-1/2 size-5 -translate-x-1/2 rounded-full border-[3px] border-black border-t-transparent opacity-0"
+          className="spinner absolute left-1/2 size-5 -translate-x-1/2 rounded-full border-[3px] border-ink border-t-transparent opacity-0"
           style={{ top: 8 + params.offset }}
         />
-        <motion.div className="absolute inset-0 bg-white" style={{ y }}>
+        <motion.div className="absolute inset-0 bg-surface" style={{ y }}>
           {[0, 1, 2, 3].map((row) => (
-            <div key={row} className="flex h-9 items-center gap-2 border-b-2 border-black px-3">
-              <span className="bg-nb-blue size-4 rounded-full border-2 border-black" />
-              <span className="h-1.5 w-1/2 bg-black" />
+            <div key={row} className="flex h-9 items-center gap-2 border-b-[1.5px] border-ink px-3">
+              <span className="paint-key size-4 rounded-full border-[1.5px] border-ink" />
+              <span className="h-1.5 w-1/2 bg-current" />
             </div>
           ))}
           <div className="cursor absolute top-2 right-6 opacity-0">

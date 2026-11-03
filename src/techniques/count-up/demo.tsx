@@ -21,8 +21,8 @@ export default function CountUp({ params }: DemoProps) {
   return (
     <div ref={scope} className="absolute inset-x-10 top-9 bottom-4 flex flex-col justify-center gap-3">
       <motion.span className="text-4xl font-extrabold tabular-nums">{rounded}</motion.span>
-      <div className="h-3 border-2 border-black">
-        <motion.div className="bg-nb-yellow h-full origin-left" style={{ scaleX: barScale }} />
+      <div className="h-3 border-[1.5px] border-ink">
+        <motion.div className="paint-sub h-full origin-left" style={{ scaleX: barScale }} />
       </div>
     </div>
   )

@@ -17,14 +17,14 @@ export default function FadeThrough({ params }: DemoProps) {
   })
 
   return (
-    <div ref={scope} className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-2 border-black bg-white">
-      <div className="a bg-nb-green absolute inset-4 border-2 border-black p-3">
+    <div ref={scope} className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-[1.5px] border-ink bg-surface">
+      <div className="a paint-tone absolute inset-4 border-[1.5px] border-ink p-3">
         <p className="text-xs font-extrabold">홈</p>
-        <div className="mt-2 h-1.5 w-2/3 bg-black" />
+        <div className="mt-2 h-1.5 w-2/3 bg-current" />
       </div>
-      <div className="b bg-nb-purple absolute inset-4 border-2 border-black p-3 opacity-0">
+      <div className="b paint-sub absolute inset-4 border-[1.5px] border-ink p-3 opacity-0">
         <p className="text-xs font-extrabold">설정</p>
-        <div className="mt-2 h-1.5 w-1/2 bg-black" />
+        <div className="mt-2 h-1.5 w-1/2 bg-current" />
       </div>
     </div>
   )

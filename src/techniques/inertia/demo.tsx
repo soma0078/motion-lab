@@ -29,9 +29,9 @@ export default function Inertia({ params }: DemoProps) {
   return (
     <div ref={scope} className="absolute inset-x-6 top-9 bottom-4 flex items-center">
       <div className="relative h-12 flex-1">
-        <div className="bg-nb-line absolute inset-x-0 top-1/2 h-0.5" />
-        <div className="absolute top-0 h-full w-1 bg-black" style={{ left: INERTIA_MAX + 40 }} />
-        <motion.div className="bg-nb-green absolute top-1 size-10 rounded-full border-2 border-black" style={{ x }} />
+        <div className="bg-line-strong absolute inset-x-0 top-1/2 h-0.5" />
+        <div className="absolute top-0 h-full w-1 bg-current" style={{ left: INERTIA_MAX + 40 }} />
+        <motion.div className="paint-tone absolute top-1 size-10 rounded-full border-[1.5px] border-ink" style={{ x }} />
         <motion.div className="absolute top-6 left-4" style={{ x: pointerX }}>
           <Cursor />
         </motion.div>

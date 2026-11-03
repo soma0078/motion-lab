@@ -17,12 +17,12 @@ export default function ContainerTransform({ params }: DemoProps) {
   })
 
   return (
-    <div ref={scope} className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-2 border-black bg-white">
-      <div className="card bg-nb-blue absolute overflow-hidden border-2 border-black">
+    <div ref={scope} className="absolute top-8 right-[8%] bottom-3 left-[8%] overflow-hidden border-[1.5px] border-ink bg-surface">
+      <div className="card paint-key absolute overflow-hidden border-[1.5px] border-ink">
         <div className="detail space-y-1.5 p-3 opacity-0">
           <p className="text-xs font-extrabold">상세 화면</p>
-          <div className="h-1.5 w-3/4 bg-black" />
-          <div className="h-1.5 w-1/2 bg-black" />
+          <div className="h-1.5 w-3/4 bg-current" />
+          <div className="h-1.5 w-1/2 bg-current" />
         </div>
       </div>
     </div>

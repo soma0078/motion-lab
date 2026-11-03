@@ -7,12 +7,7 @@ export default {
   section: 'interaction',
   order: 50,
   param: 'layout',
-  motion: [
-    '<Reorder.Group values onReorder> + <Reorder.Item value>'
-  ],
-  gsap: [
-    'Draggable + 놓을 때 Flip 으로 자리 이동'
-  ],
   fit: 'motion',
-  docs: { motion: 'https://motion.dev/docs/react-reorder', gsap: 'https://gsap.com/docs/v3/Plugins/Draggable/' }
+  docs: { motion: 'https://motion.dev/docs/react-reorder', gsap: 'https://gsap.com/docs/v3/Plugins/Draggable/' },
+  prompt: () => '리스트 재정렬(reorder)로 항목을 끌어 순서를 바꾸면 나머지 항목이 자리를 비켜 주며 움직이게 해.'
 } satisfies TechniqueMeta

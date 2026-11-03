@@ -7,21 +7,11 @@ export default {
   section: 'transition',
   order: 40,
   param: '110% → 0',
-  motion: [
-    'overflow-hidden 틀 + y: \'110%\' → 0'
-  ],
-  gsap: [
-    'SplitText.create(el, { type: \'lines\', mask: \'lines\', autoSplit: true, onSplit })'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/Plugins/SplitText/' },
   params: [
-    { key: 'duration', label: '길이', min: 0.4, max: 1.6, step: 0.05, default: 0.9, unit: 's' },
-    { key: 'gap', label: '줄 간격', min: 0, max: 0.4, step: 0.02, default: 0.12, unit: 's' }
+    { key: 'duration', label: '길이', min: 0.4, max: 1.6, step: 0.05, default: 0.9, unit: 's', effect: '줄 하나가 틀 아래에서 올라오는 시간이에요.' },
+    { key: 'gap', label: '줄 간격', min: 0, max: 0.4, step: 0.02, default: 0.12, unit: 's', effect: '줄과 줄 사이의 시작 간격이에요. 0이면 모든 줄이 한꺼번에, 클수록 한 줄씩 차례로 올라와요.' }
   ],
-  prompt: (v) => `overflow: hidden 틀 아래 110%에서 줄마다 ${v.gap}s 스태거로 ${v.duration}s ease-out-quart로 올라오게. 투명도는 쓰지 않는다.`,
-  snippet: {
-    motion: (v) => `overflow-hidden 틀 + 줄 y: '110%' → 0, { duration: ${v.duration}, ease: [0.25, 1, 0.5, 1], delay: stagger(${v.gap}) }`,
-    gsap: (v) => `SplitText.create(el, { type: 'lines', mask: 'lines', autoSplit: true, onSplit: (s) => gsap.from(s.lines, { yPercent: 110, duration: ${v.duration}, ease: 'power3.out', stagger: ${v.gap} }) })`
-  }
+  prompt: (v) => `마스크 리빌(mask reveal)로 overflow: hidden 틀 아래 110%에서 줄마다 ${v.gap}s 스태거를 두고 ${v.duration}s ease-out-quart로 올라오게 해. 투명도는 바꾸지 않게 해.`
 } satisfies TechniqueMeta

@@ -7,12 +7,7 @@ export default {
   section: 'transition',
   order: 10,
   param: '0.6s',
-  motion: [
-    'initial={{ opacity: 0 }} animate={{ opacity: 1 }}'
-  ],
-  gsap: [
-    'autoAlpha: 0 → 1 (0 이면 visibility: hidden · 클릭도 막힘)'
-  ],
   fit: 'both',
-  docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/' }
+  docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/' },
+  prompt: () => '페이드 인 · 아웃(fade in · out)으로 요소가 0.6s 동안 투명도만 바뀌며 나타나고 사라지게 해.'
 } satisfies TechniqueMeta

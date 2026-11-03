@@ -1,507 +1,231 @@
-import { Suspense, useLayoutEffect, useRef, useState } from 'react'
-import { ArrowUp, ArrowUpRight, Check, Copy, RotateCcw } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
+import { SearchX } from 'lucide-react'
 
+import { Footer } from './components/Footer'
+import { Header } from './components/Header'
+import { Hero } from './components/Hero'
+import { PopularSection } from './components/PopularSection'
+import { SectionHeading } from './components/SectionHeading'
+import { ApiRow, TechniqueCard } from './components/TechniqueCard'
+import { useTheme } from './components/theme'
+import { useCopyCounts } from './components/copyCounts'
 import { TECHNIQUE_SECTIONS, type Technique } from './techniques/registry'
-import { buildPrompt, defaultValues, LIB_LABEL, type Lib } from './techniques/prompt'
-import type { Accent, Fit, Param, ParamValues } from './techniques/types'
 import { UI_ELEMENTS } from './techniques/ui-elements'
-import { cn } from './lib/utils'
-
-const ACCENT_BG: Record<Accent, string> = {
-  yellow: 'bg-nb-yellow',
-  blue: 'bg-nb-blue',
-  green: 'bg-nb-green',
-  purple: 'bg-nb-purple',
-  orange: 'bg-nb-orange'
-}
-
-const FIT_LABEL: Record<Fit, { text: string; className: string }> = {
-  motion: { text: 'Motion 추천', className: 'bg-nb-yellow' },
-  gsap: { text: 'GSAP 추천', className: 'bg-nb-green' },
-  both: { text: '둘 다 무난', className: 'bg-white' },
-  native: { text: '브라우저 기본', className: 'bg-nb-purple' },
-  rn: { text: 'React Native', className: 'bg-nb-blue' }
-}
 
 const sectionId = (index: number) => `section-${index + 1}`
 
+/** 검색어가 이름 · 원어 · 뜻 · 폴더 이름 · 조절하는 값 이름 중 하나에 들어 있으면 */
+const matches = (technique: Technique, q: string) =>
+  [technique.name, technique.english, technique.meaning, technique.slug, ...(technique.params ?? []).map((param) => param.label)].some((text) =>
+    text.toLowerCase().includes(q)
+  )
+
+/** 화면 위쪽 25~30% 띠에 걸친 섹션을 "지금 보는 섹션"으로 */
+function useActiveSection(ids: string[]) {
+  const [active, setActive] = useState<string | null>(null)
+  const key = ids.join(',')
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.find((entry) => entry.isIntersecting)
+        if (hit) setActive(hit.target.id)
+      },
+      { rootMargin: '-25% 0px -70% 0px' }
+    )
+    key.split(',').forEach((id) => {
+      const el = id && document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [key])
+
+  return active
+}
+
+/** id 로 찾은 요소가 고정 헤더 아래 화면에 보이는지 */
+function useVisible(id: string) {
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), {
+      rootMargin: '-64px 0px 0px 0px'
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [id])
+
+  return visible
+}
+
 export default function App() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
-  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([])
+  const { theme, toggle } = useTheme()
+  const copies = useCopyCounts()
+  const [query, setQuery] = useState('')
+  const q = query.trim().toLowerCase()
 
-  useLayoutEffect(() => {
-    const update = () => {
-      const link = linkRefs.current[activeIndex]
-      if (link) setTooltipPos({ x: link.offsetLeft + link.offsetWidth / 2, y: link.offsetTop })
-    }
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
-  }, [activeIndex])
+  // 카드 번호는 검색으로 걸러져도 원래 순서를 유지
+  const allSections = useMemo(
+    () =>
+      TECHNIQUE_SECTIONS.map((section, sectionIndex) => ({
+        id: sectionId(sectionIndex),
+        number: sectionIndex + 1,
+        heading: section.heading,
+        lead: section.lead,
+        items: section.techniques.map((technique, index) => ({ technique, index }))
+      })),
+    []
+  )
+  // 복사가 많은 순 5개. 같으면 원래 순서 (sort 는 안정 정렬). 순위는 페이지를 열 때 읽은 값으로 고정
+  const popular = useMemo(
+    () =>
+      copies.status === 'ready'
+        ? allSections
+            .flatMap((section) => section.items.map(({ technique }) => technique))
+            .sort((a, b) => (copies.ranking[b.slug] ?? 0) - (copies.ranking[a.slug] ?? 0))
+            .slice(0, 5)
+        : [],
+    [allSections, copies.status, copies.ranking]
+  )
+
+  const sections = allSections
+    .map((section) => ({ ...section, items: q ? section.items.filter(({ technique }) => matches(technique, q)) : section.items }))
+    .filter((section) => section.items.length > 0)
+  const resultCount = sections.reduce((sum, section) => sum + section.items.length, 0)
+
+  const activeId = useActiveSection(sections.map((section) => section.id))
+  const heroIndexVisible = useVisible('hero-index')
+
+  // 검색을 시작하면 결과 목록 맨 위로
+  const wasSearching = useRef(false)
+  useEffect(() => {
+    const searching = q !== ''
+    if (searching && !wasSearching.current) document.getElementById('techniques')?.scrollIntoView({ block: 'start' })
+    wasSearching.current = searching
+  }, [q])
+
+  // 검색 중에 히어로 칩을 누르면 걸러져 숨은 섹션일 수 있어서, 검색을 풀고 나서 이동
+  const jump = (event: MouseEvent, id: string) => {
+    if (!q) return
+    event.preventDefault()
+    setQuery('')
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }))
+  }
 
   return (
-    <div className="pb-24">
-      {/* 히어로 */}
-      <section className="nb-grid border-b-2 border-black px-4 py-14 sm:px-6 lg:px-10">
-        <div className="bg-nb-surface shadow-nb-lg max-w-3xl border-2 border-black p-7 lg:p-9">
-          <span className="bg-nb-yellow shadow-nb-sm inline-block border-2 border-black px-2 py-0.5 text-[11px] font-extrabold tracking-[0.12em] uppercase">
-            Motion Lab
-          </span>
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight break-keep sm:text-5xl">
-            모션 기법 사전
-          </h1>
-          <p className="mt-4 max-w-xl text-base font-bold break-keep sm:text-lg">
-            원하는 움직임을 표준 용어와 숫자로 바꿔보세요. 
-         <br/>
-            그대로 복사해서 AI에게 붙여 넣을 수 있는 지시문이 돼요.
-          </p>
-          <p className="text-nb-muted mt-2 max-w-xl text-sm font-medium break-keep">
-            "부드럽게", "세련되게" 같은 표현은 사람마다, 실행할 때마다 다르게 해석되기 쉬워요. <br/>표준 용어와 숫자로 말하면 누가 언제 적용해도 똑같은 움직임을 만들 수 있습니다.
-          </p>
+    <>
+      <Header
+        sections={sections.map(({ id, heading }) => ({ id, heading }))}
+        activeId={activeId}
+        showChips={!heroIndexVisible}
+        query={query}
+        onQuery={setQuery}
+        resultCount={resultCount}
+        theme={theme}
+        onToggleTheme={toggle}
+      />
+      <main>
+        <Hero
+          sections={allSections.map(({ id, heading, items }) => ({ id, heading, count: items.length }))}
+          onJump={jump}
+        />
 
-          {/* 카테고리 바로가기 */}
-          <nav className="relative mt-10 flex flex-wrap gap-2">
-            {TECHNIQUE_SECTIONS.map((section, index) => (
-              <a
-                key={section.heading}
-                ref={(el) => {
-                  linkRefs.current[index] = el
-                }}
-                href={`#${sectionId(index)}`}
-                title={`${section.heading} 섹션으로 이동`}
-                onMouseEnter={() => setActiveIndex(index)}
-                onFocus={() => setActiveIndex(index)}
-                className={cn(
-                  'shadow-nb-sm rounded-[5px] border-2 border-black px-3 py-1.5 text-xs font-extrabold transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none',
-                  ACCENT_BG[section.accent]
-                )}
-              >
-                {section.heading}
-                <span className="ml-1.5 font-mono">{section.techniques.length}</span>
-              </a>
-            ))}
+        {/* 횟수를 읽지 못하면(로컬 vite dev 등) 순위를 정할 수 없어 보이지 않는다. 검색 중에는 결과만 보인다 */}
+        {!q && popular.length > 0 && (
+          <div className="mx-auto max-w-[1280px] px-4 pt-16 sm:px-6 lg:px-10">
+            <PopularSection techniques={popular} countOf={copies.countOf} onCopied={copies.record} />
+          </div>
+        )}
 
-            {tooltipPos && (
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute top-0 left-0 transition-transform duration-150 ease-out"
-                style={{ transform: `translate(${tooltipPos.x}px, ${tooltipPos.y - 32}px)` }}
-              >
-                <span className="flex -translate-x-1/2 animate-bounce flex-col items-center">
-                  <span className="shadow-nb-sm rounded-[4px] border-2 border-black bg-white px-1.5 py-0.5 text-[9px] font-extrabold tracking-tight whitespace-nowrap text-black">
-                    눌러서 바로 이동해요
-                  </span>
-                  <span className="-mt-[3px] size-1.5 rotate-45 border-r-2 border-b-2 border-black bg-white" />
-                </span>
-              </span>
-            )}
-          </nav>
+        <div id="techniques" className="mx-auto max-w-[1280px] space-y-20 px-4 pt-16 pb-24 sm:px-6 lg:px-10">
+          {sections.map((section) => (
+            <section key={section.id} id={section.id}>
+              <SectionHeading index={section.number} title={section.heading} count={section.items.length} lead={section.lead} />
+              <ol className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {section.items.map(({ technique, index }) => (
+                  <TechniqueCard
+                    key={technique.slug}
+                    technique={technique}
+                    index={index}
+                    copyCount={copies.countOf(technique.slug)}
+                    onCopied={copies.record}
+                  />
+                ))}
+              </ol>
+            </section>
+          ))}
+
+          {sections.length === 0 && <EmptyResult query={query} onClear={() => setQuery('')} />}
+
+          {!q && (
+            <>
+              <CommonRule />
+              <UiElements />
+            </>
+          )}
+
+          <Footer />
         </div>
-      </section>
-
-      <div className="space-y-14 px-4 pt-12 sm:px-6 lg:px-10">
-        <Takeaways />
-
-        {/* 모든 기법에 공통 */}
-        <aside className="bg-nb-surface shadow-nb-sm max-w-3xl rounded-[5px] border-2 border-black px-5 py-4 text-xs">
-          <p className="font-extrabold">모든 기법에 공통: 움직임을 싫어하는 사람 배려하기</p>
-          <p className="text-nb-muted mt-1 break-keep">
-            OS에서 "동작 줄이기"를 켠 사람(어지러움 · 멀미)에게는 큰 움직임을 끄고 페이드 정도만 남긴다. CSS로는{' '}
-            <code className="font-mono">prefers-reduced-motion</code>으로 읽는다.
-          </p>
-          <dl className="mt-2 grid gap-1.5">
-            <ApiRow lib="Motion" lines={["<MotionConfig reducedMotion='user'>", 'useReducedMotion()으로 패럴랙스 · 자동재생 끄기']} className="bg-nb-yellow" />
-            <ApiRow lib="GSAP" lines={["gsap.matchMedia().add({ reduce: '(prefers-reduced-motion: reduce)' }, ctx => …)"]} className="bg-nb-green" />
-          </dl>
-        </aside>
-
-        {TECHNIQUE_SECTIONS.map((section, sectionIndex) => (
-          <section key={section.heading} id={sectionId(sectionIndex)} className="scroll-mt-6">
-            <header className="mb-6">
-              <h2
-                className={cn(
-                  'shadow-nb-sm inline-block border-2 border-black px-2.5 py-1 text-xs font-extrabold tracking-[0.12em]',
-                  ACCENT_BG[section.accent]
-                )}
-              >
-                {section.heading}
-              </h2>
-              <p className="text-nb-muted mt-2 text-sm font-medium break-keep">{section.lead}</p>
-            </header>
-            <ol className="grid gap-x-5 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
-              {section.techniques.map((technique, index) => (
-                <TechniqueCard key={technique.slug} technique={technique} index={index} accent={section.accent} />
-              ))}
-            </ol>
-          </section>
-        ))}
-
-        <section>
-          <header className="mb-6">
-            <h2 className="bg-nb-surface shadow-nb-sm inline-block border-2 border-black px-2.5 py-1 text-xs font-extrabold tracking-[0.12em]">
-              UI 요소
-            </h2>
-            <p className="text-nb-muted mt-2 text-sm font-medium break-keep">
-              연출이 붙는 대상. 이름이 정확해야 흔한 구현 관례(위치 · 닫힘 방식)까지 따라온다
-            </p>
-          </header>
-          <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {UI_ELEMENTS.map((element) => (
-              <li key={element.name} className="bg-nb-surface shadow-nb-sm rounded-[5px] border-2 border-black px-4 py-3">
-                <span className="font-extrabold">{element.name}</span>
-                <span className="text-nb-muted ml-2 text-xs font-semibold">{element.english}</span>
-                <p className="text-nb-muted mt-1 text-xs break-keep">{element.meaning}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <Footer />
-      </div>
-    </div>
+      </main>
+    </>
   )
 }
 
-const REPO_URL = 'https://github.com/soma0078/motion-lab'
-
-/** CSS smooth 는 지연 로딩으로 레이아웃이 바뀌면 중간에 멈춰서, 프레임마다 직접 올린다 */
-function scrollToTop() {
-  const start = window.scrollY
-  if (start === 0) return
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-    return
-  }
-
-  const duration = Math.min(900, 300 + start / 12)
-  const startedAt = performance.now()
-  let frame = 0
-  const stop = () => cancelAnimationFrame(frame)
-  // 사용자가 직접 스크롤하면 그쪽을 따름
-  window.addEventListener('wheel', stop, { once: true, passive: true })
-  window.addEventListener('touchstart', stop, { once: true, passive: true })
-
-  const step = (now: number) => {
-    const t = Math.min((now - startedAt) / duration, 1)
-    window.scrollTo({ top: start * (1 - t) ** 3, behavior: 'instant' })
-    if (t < 1) frame = requestAnimationFrame(step)
-  }
-  frame = requestAnimationFrame(step)
-}
-
-/** 왼쪽 저작권 · 가운데 저장소 링크 · 오른쪽 맨 위로 */
-function Footer() {
-  return (
-    <footer className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-t-2 border-black pt-6 text-xs font-semibold">
-      <p className="text-nb-muted">© 2026 soma0078</p>
-      <a
-        href={REPO_URL}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-1.5 font-extrabold underline decoration-2 underline-offset-2 hover:decoration-nb-orange"
-      >
-        <svg viewBox="0 0 16 16" aria-hidden="true" className="size-4 fill-current">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-        </svg>
-        motion-lab
-      </a>
-      <button
-        type="button"
-        onClick={scrollToTop}
-        className="shadow-nb-sm flex items-center gap-1 justify-self-end rounded-[5px] border-2 border-black bg-white px-2.5 py-1 text-[11px] font-extrabold transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
-      >
-        <ArrowUp className="size-3.5" strokeWidth={3} />
-        맨 위로
-      </button>
-    </footer>
-  )
-}
-
-function TechniqueCard({
-  technique,
-  index,
-  accent
-}: {
-  technique: Technique
-  index: number
-  accent: Accent
-}) {
-  const fit = FIT_LABEL[technique.fit]
-  const [values, setValues] = useState(() => defaultValues(technique))
-
-  return (
-    <li className="flex min-w-0 flex-col">
-      <div className="flex items-center gap-2">
-        <span className={cn('border-2 border-black px-1 font-mono text-sm font-extrabold tabular-nums', ACCENT_BG[accent])}>
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <h3 className="text-xl font-extrabold break-keep">{technique.name}</h3>
-        <span className={cn('ml-auto border-2 border-black px-1.5 text-[10px] font-extrabold whitespace-nowrap', fit.className)}>
-          {fit.text}
-        </span>
-      </div>
-      <p className="text-nb-muted text-xs font-semibold">{technique.english}</p>
-
-      <div className="bg-nb-surface shadow-nb relative mt-2 h-40 overflow-hidden rounded-[5px] border-2 border-black">
-        <Suspense fallback={null}>
-          <technique.Demo params={values} />
-        </Suspense>
-        {/* 슬라이더가 있으면 지금 값 · 없으면 meta 의 고정 라벨 */}
-        <Viewfinder
-          param={
-            technique.params
-              ? technique.params.map((param) => `${values[param.key]}${param.unit ?? ''}`).join(' · ')
-              : technique.param
-          }
-        />
-      </div>
-
-      <p className="text-nb-muted mt-2 text-xs leading-relaxed break-keep">{technique.meaning}</p>
-
-      {technique.params && (
-        <ParamPanel
-          params={technique.params}
-          values={values}
-          onChange={(key, value) => setValues((prev) => ({ ...prev, [key]: value }))}
-          onReset={() => setValues(defaultValues(technique))}
-        />
-      )}
-
-      {/* 라이브러리별 핵심 API */}
-      <dl className="mt-3 grid gap-1.5 text-[11px]">
-        {technique.rn && <ApiRow lib="RN" lines={technique.rn} className="bg-nb-blue" />}
-        {technique.motion && <ApiRow lib="Motion" lines={technique.motion} className="bg-nb-yellow" />}
-        {technique.gsap && <ApiRow lib="GSAP" lines={technique.gsap} className="bg-nb-green" />}
-        {technique.native && <ApiRow lib="CSS·Web" lines={technique.native} className="bg-nb-purple" />}
-      </dl>
-
-      <CopyButtons technique={technique} values={values} />
-      <DocLinks docs={technique.docs} />
-    </li>
-  )
-}
-
-const TAKEAWAYS = [
-  {
-    title: '기법 용어 찾기',
-    body: '머릿속에 있는 "그 스르륵 올라오는 거"가 어떤 기법인지 데모를 보면서 찾아보세요. 정확한 용어를 알면 AI에게 지시할 때도, 검색할 때도, 디자이너와 대화할 때도 훨씬 정확해져요.',
-    accent: 'bg-nb-blue',
-    example: ['마스크 리빌', '스태거', '오버슈트']
-  },
-  {
-    title: '어떤 도구로 만들지',
-    body: '같은 기법을 Motion · GSAP · CSS로 각각 어떻게 구현하는지 나란히 비교해보세요. 공식 문서와 대조한 API는 물론, 어느 쪽이 맞는지, 유료 기능인지도 함께 확인할 수 있어요.',
-    accent: 'bg-nb-green',
-    example: ['Motion 추천', 'GSAP 추천', '브라우저 기본']
-  },
-  {
-    title: '정확한 수치와 지시문',
-    body: '슬라이더를 움직이며 눈으로 느낌을 맞춰보고, 그대로 복사해보세요. "부드럽게 해줘"를 여러 번 주고받던 과정을 한 번에 끝낼 수 있어요.',
-    accent: 'bg-nb-yellow',
-    example: ['0.12s 간격', 'stiffness 220', 'damping 12']
-  }
-]
-
-/** 이 사이트에서 얻어가는 것 · 쓰는 순서 */
-function Takeaways() {
+/** 동작 줄이기 설정. 기법마다 반복하지 않고 한 번만 */
+function CommonRule() {
   return (
     <section>
-      <h2 className="bg-nb-surface shadow-nb-sm inline-block border-2 border-black px-2.5 py-1 text-xs font-extrabold tracking-[0.12em]">
-        여기서 얻어가는 것
-      </h2>
-      <ol className="mt-6 grid gap-5 lg:grid-cols-3">
-        {TAKEAWAYS.map((item, index) => (
-          <li key={item.title} className="bg-nb-surface shadow-nb flex flex-col rounded-[5px] border-2 border-black p-5">
-            <div className="flex items-center gap-2">
-              <span className={cn('border-2 border-black px-1 font-mono text-sm font-extrabold', item.accent)}>
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="text-lg font-extrabold break-keep">{item.title}</h3>
-            </div>
-            <p className="text-nb-muted mt-3 flex-1 text-sm leading-relaxed break-keep">{item.body}</p>
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {item.example.map((chip) => (
-                <span key={chip} className="rounded-full border-2 border-black bg-white px-2 py-0.5 font-mono text-[11px] font-bold">
-                  {chip}
-                </span>
-              ))}
-            </div>
-          </li>
-        ))}
-      </ol>
-
-      {/* 복사 결과 예시 */}
-      <figure className="mt-5 max-w-3xl">
-        <figcaption className="text-nb-muted mb-2 text-xs font-bold">카드에서 "Motion으로 복사"를 누르면 이렇게 나와요</figcaption>
-        <pre className="overflow-x-auto rounded-[5px] border-2 border-black bg-black px-4 py-3 font-mono text-[12px] leading-relaxed whitespace-pre-wrap text-white">
-          {`스태거(stagger): 스태거로 0.12s 간격을 두고, 하나씩 0.5s ease-out-quart로 아래에서 올라오게.
-구현: Motion — 부모 variant transition: { delayChildren: stagger(0.12) } · 자식 { duration: 0.5, ease: [0.25, 1, 0.5, 1] }`}
-        </pre>
-      </figure>
+      <SectionHeading title="공통 규칙" lead="모든 기법에 적용해요. 움직임을 싫어하는 사람을 배려하는 설정이에요." />
+      <div className="border-line bg-surface shadow-raised rounded-card max-w-3xl border p-5">
+        <p className="text-ink-2 text-[13px] leading-relaxed break-keep">
+          OS에서 "동작 줄이기"를 켠 사람(어지러움 · 멀미)에게는 큰 움직임을 끄고 페이드 정도만 남겨요. CSS에서는{' '}
+          <code className="text-ink font-mono">prefers-reduced-motion</code>으로 이 설정을 읽어요.
+        </p>
+        <dl className="mt-4 grid gap-2 text-xs">
+          <ApiRow lib="Motion" lines={["<MotionConfig reducedMotion='user'>", 'useReducedMotion()으로 패럴랙스 · 자동재생 끄기']} />
+          <ApiRow lib="GSAP" lines={["gsap.matchMedia().add({ reduce: '(prefers-reduced-motion: reduce)' }, ctx => …)"]} />
+        </dl>
+      </div>
     </section>
   )
 }
 
-/** 슬라이더를 움직이면 데모가 다음 반복부터 그 값으로 재생 */
-function ParamPanel({
-  params,
-  values,
-  onChange,
-  onReset
-}: {
-  params: Param[]
-  values: ParamValues
-  onChange: (key: string, value: number) => void
-  onReset: () => void
-}) {
-  const changed = params.some((param) => values[param.key] !== param.default)
-
+function UiElements() {
   return (
-    <div className="bg-nb-surface mt-3 grid gap-2 rounded-[5px] border-2 border-black px-3 py-2.5">
-      {params.map((param) => (
-        <label key={param.key} className="grid grid-cols-[4.5rem_1fr_3.5rem] items-center gap-2 text-[11px] font-bold">
-          <span className="truncate">{param.label}</span>
-          <input
-            type="range"
-            min={param.min}
-            max={param.max}
-            step={param.step}
-            value={values[param.key]}
-            onChange={(event) => onChange(param.key, Number(event.target.value))}
-            className="accent-black"
-          />
-          <span className="text-right font-mono tabular-nums">
-            {values[param.key]}
-            {param.unit}
-          </span>
-        </label>
-      ))}
+    <section>
+      <SectionHeading
+        title="UI 요소"
+        count={UI_ELEMENTS.length}
+        lead="연출이 붙는 대상이에요. 이름을 정확히 말해야 위치나 닫는 방식 같은 흔한 구현 관례까지 함께 전달돼요."
+      />
+      <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {UI_ELEMENTS.map((element) => (
+          <li key={element.name} className="border-line bg-surface rounded-2xl border px-4 py-3">
+            <span className="font-semibold">{element.name}</span>
+            <span className="text-ink-3 ml-2 font-mono text-[11px]">{element.english}</span>
+            <p className="text-ink-2 mt-1 text-[13px] break-keep">{element.meaning}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+function EmptyResult({ query, onClear }: { query: string; onClear: () => void }) {
+  return (
+    <div className="border-line-strong rounded-card flex flex-col items-center gap-3 border border-dashed px-6 py-16 text-center">
+      <SearchX className="text-ink-3 size-6" strokeWidth={2} />
+      <p className="font-semibold break-keep">"{query.trim()}"에 맞는 기법이 없어요</p>
+      <p className="text-ink-2 text-sm break-keep">이름, 영문 이름, 뜻, 조절하는 값 이름으로 찾을 수 있어요. 예: 스태거, spring, damping</p>
       <button
         type="button"
-        onClick={onReset}
-        disabled={!changed}
-        className="text-nb-muted flex w-fit items-center gap-1 text-[10px] font-bold hover:text-black disabled:invisible"
+        onClick={onClear}
+        className="border-line bg-surface shadow-raised-sm active:shadow-inset-sm mt-2 rounded-full border px-4 py-1.5 text-xs font-semibold transition-shadow duration-200"
       >
-        <RotateCcw className="size-3" strokeWidth={3} />
-        기본값
+        검색어 지우기
       </button>
-    </div>
-  )
-}
-
-/** 지금 수치로 AI 지시문을 만들어 클립보드에 복사 */
-function CopyButtons({ technique, values }: { technique: Technique; values: ParamValues }) {
-  const [copied, setCopied] = useState<{ lib: Lib; count: number | null } | null>(null)
-  const libs = (['rn', 'motion', 'gsap', 'native'] as const).filter((lib) => technique[lib])
-
-  const copy = async (lib: Lib) => {
-    try {
-      await navigator.clipboard.writeText(buildPrompt(technique, lib, values))
-    } catch {
-      // 클립보드 권한이 없으면 조용히 무시
-      return
-    }
-    setCopied({ lib, count: null })
-    setTimeout(() => setCopied((prev) => (prev?.lib === lib ? null : prev)), 2000)
-
-    // 횟수는 기록이 되는 대로 덧붙임. 서버가 없거나 실패해도 "복사됨"은 그대로
-    try {
-      const response = await fetch('/api/copy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: technique.slug })
-      })
-      const { count } = await response.json()
-      if (response.ok && typeof count === 'number') {
-        setCopied((prev) => (prev?.lib === lib ? { lib, count } : prev))
-      }
-    } catch {
-      // 횟수 기록 실패는 사용자에게 알리지 않음
-    }
-  }
-
-  return (
-    <div className="mt-3 flex flex-wrap gap-2">
-      {libs.map((lib) => (
-        <button
-          key={lib}
-          type="button"
-          onClick={() => copy(lib)}
-          title={buildPrompt(technique, lib, values)}
-          className="shadow-nb-sm flex items-center gap-1.5 rounded-[5px] border-2 border-black bg-white px-2.5 py-1 text-[11px] font-extrabold transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
-        >
-          {copied?.lib === lib ? <Check className="size-3.5" strokeWidth={3} /> : <Copy className="size-3.5" strokeWidth={3} />}
-          {copied?.lib === lib
-            ? copied.count === null
-              ? '복사됨'
-              : `복사됨 · ${copied.count.toLocaleString()}번째`
-            : `${LIB_LABEL[lib]}으로 복사`}
-        </button>
-      ))}
-    </div>
-  )
-}
-
-const DOC_LABEL = { rn: 'RN 문서', motion: 'motion.dev', gsap: 'gsap.com', native: 'MDN' } as const
-
-/** 대조할 때 본 공식 문서. 더 깊은 옵션 · 예외는 여기서 */
-function DocLinks({ docs }: { docs: Technique['docs'] }) {
-  const links = (Object.keys(DOC_LABEL) as (keyof typeof DOC_LABEL)[]).filter((key) => docs[key])
-
-  return (
-    <p className="text-nb-muted mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold">
-      공식 문서
-      {links.map((key) => (
-        <a
-          key={key}
-          href={docs[key]}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-0.5 text-black underline decoration-2 underline-offset-2 hover:decoration-nb-orange"
-        >
-          {DOC_LABEL[key]}
-          <ArrowUpRight className="size-3" strokeWidth={3} />
-        </a>
-      ))}
-    </p>
-  )
-}
-
-/** 첫 줄이 기본 API, 나머지는 보강 (흐리게) */
-function ApiRow({ lib, lines, className }: { lib: string; lines: string[]; className: string }) {
-  const [primary, ...extra] = lines
-
-  return (
-    <div className="flex items-start gap-2">
-      <dt className={cn('w-14 shrink-0 border-2 border-black text-center font-extrabold', className)}>{lib}</dt>
-      <dd className="min-w-0 pt-0.5 font-mono leading-normal break-words">
-        <p>{primary}</p>
-        {extra.map((line) => (
-          <p key={line} className="text-nb-muted mt-1">
-            {line}
-          </p>
-        ))}
-      </dd>
-    </div>
-  )
-}
-
-/** 화면 모서리 표시 · 수치 라벨. 데모 위에 겹침 */
-function Viewfinder({ param }: { param?: string }) {
-  const corner = 'absolute size-3 border-black'
-
-  return (
-    <div className="pointer-events-none absolute inset-0">
-      <span className={`${corner} top-2 left-2 border-t-2 border-l-2`} />
-      <span className={`${corner} top-2 right-2 border-t-2 border-r-2`} />
-      <span className={`${corner} bottom-2 left-2 border-b-2 border-l-2`} />
-      <span className={`${corner} right-2 bottom-2 border-r-2 border-b-2`} />
-      {param && (
-        <span className="absolute top-2 right-6 border-2 border-black bg-white px-1 font-mono text-[10px] leading-tight font-bold">
-          {param}
-        </span>
-      )}
     </div>
   )
 }
