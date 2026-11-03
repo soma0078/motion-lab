@@ -7,12 +7,6 @@ export default {
   section: 'transition',
   order: 60,
   param: '1.4s linear',
-  motion: [
-    '무료 API 없음 → 직접 구현 (interval + 문자 치환)'
-  ],
-  gsap: [
-    'scrambleText: { text, chars: \'upperCase\', revealDelay: 0.5, speed: 0.3 }'
-  ],
   fit: 'gsap',
   docs: { gsap: 'https://gsap.com/docs/v3/Plugins/ScrambleTextPlugin/' },
   params: [

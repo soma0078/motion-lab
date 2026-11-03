@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 80,
   param: '300ms',
-  rn: [
-    '<Animated.View key={step} entering={FadeInRight.duration(300)} exiting={FadeOutLeft.duration(300)} />'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations/' },
   params: [{ key: 'duration', label: '시간', min: 150, max: 500, step: 25, default: 300, unit: 'ms', effect: '현재 화면이 밀려 나가고 새 화면이 들어오는 시간이에요. 두 화면이 같은 시간을 써요.' }],

@@ -7,13 +7,6 @@ export default {
   section: 'transition',
   order: 70,
   param: '0 → 1284',
-  motion: [
-    'animate(motionValue, 1000) + useTransform(Math.round)',
-    'AnimateNumber 는 Motion+ 유료'
-  ],
-  gsap: [
-    'const o = { v: 0 }; gsap.to(o, { v: 1000, onUpdate: () => el.textContent = Math.round(o.v).toLocaleString() })'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animate-number', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/Snap' },
   params: [

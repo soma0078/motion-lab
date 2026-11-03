@@ -7,10 +7,6 @@ export default {
   section: 'app',
   order: 20,
   param: '80 / 500',
-  rn: [
-    '<BottomSheet snapPoints={[\'25%\', \'50%\', \'90%\']} enableDynamicSizing={false} />',
-    'animationConfigs={useBottomSheetSpringConfigs({ damping: 80, stiffness: 500 })}'
-  ],
   fit: 'rn',
   docs: { rn: 'https://gorhom.dev/react-native-bottom-sheet/props' },
   params: [

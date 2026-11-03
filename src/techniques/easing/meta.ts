@@ -7,12 +7,6 @@ export default {
   section: 'timing',
   order: 10,
   param: '0.25 1 0.5 1',
-  motion: [
-    'ease: [0.25, 1, 0.5, 1]'
-  ],
-  gsap: [
-    'ease: \'power3.out\''
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-transitions', gsap: 'https://gsap.com/docs/v3/Eases' },
   params: [

@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 110,
   param: '5 ticks',
-  rn: [
-    'Haptics.selectionAsync()'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.expo.dev/versions/latest/sdk/haptics/' },
   params: [{ key: 'ticks', label: '눈금 수', min: 3, max: 9, step: 1, default: 5, effect: '슬라이더 위 눈금 개수예요. 많을수록 눈금과 햅틱이 더 촘촘하게 이어져요.' }],

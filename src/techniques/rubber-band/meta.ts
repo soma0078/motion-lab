@@ -7,12 +7,6 @@ export default {
   section: 'interaction',
   order: 40,
   param: 'elastic 0.35',
-  motion: [
-    'drag + dragConstraints + dragElastic (0~1)'
-  ],
-  gsap: [
-    'Draggable.create(el, { bounds, edgeResistance: 0.65, inertia: true })'
-  ],
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-drag', gsap: 'https://gsap.com/docs/v3/Plugins/Draggable/' },
   params: [

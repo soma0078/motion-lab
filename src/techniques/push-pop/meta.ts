@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 100,
   param: '350ms',
-  rn: [
-    '<Stack.Screen options={{ animation: \'slide_from_right\' }} />'
-  ],
   fit: 'rn',
   docs: { rn: 'https://reactnavigation.org/docs/native-stack-navigator' },
   params: [{ key: 'duration', label: '시간', min: 200, max: 600, step: 50, default: 350, unit: 'ms', effect: '새 화면이 밀려 들어오는 시간이에요. 이전 화면도 같은 시간 동안 조금 밀려나요.' }],

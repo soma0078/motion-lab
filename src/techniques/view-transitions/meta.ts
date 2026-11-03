@@ -7,16 +7,6 @@ export default {
   section: 'transition',
   order: 120,
   param: 'old → new',
-  motion: [
-    'animateView(() => update()) (무료 motion 패키지)'
-  ],
-  gsap: [
-    'JS 대안: Flip'
-  ],
-  native: [
-    'React 19.3: <ViewTransition> + startTransition (startViewTransition 직접 호출 금지)',
-    '지원 Chrome 111 · Safari 18 · Firefox 144'
-  ],
   fit: 'native',
   docs: { motion: 'https://motion.dev/docs/animate-view', gsap: 'https://gsap.com/docs/v3/Plugins/Flip/', native: 'https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API' },
   prompt: () => 'View Transitions(view transitions API)로 화면 상태가 바뀔 때 브라우저가 이전과 다음 스냅샷을 이어 붙여 전환하게 해.'

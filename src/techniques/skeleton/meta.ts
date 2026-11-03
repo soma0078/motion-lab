@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 120,
   param: '800ms',
-  rn: [
-    'o.value = withRepeat(withTiming(1, { duration: 800 }), -1, true)'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-reanimated/docs/animations/withRepeat/' },
   params: [{ key: 'duration', label: '한 번', min: 400, max: 1600, step: 100, default: 800, unit: 'ms', effect: '투명도가 한 번 오가는 시간이에요. 짧으면 급하게 깜빡이고, 길면 천천히 숨 쉬듯 보여요.' }],

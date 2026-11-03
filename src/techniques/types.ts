@@ -37,14 +37,6 @@ export interface TechniqueMeta {
   order: number
   /** 데모 화면 오른쪽 위 수치 라벨 */
   param: string
-  /** Motion(motion/react) 핵심 API. 첫 줄이 기본, 나머지는 보강. 앱 기법은 생략 */
-  motion?: string[]
-  /** GSAP 핵심 API. 첫 줄이 기본, 나머지는 보강. 앱 기법은 생략 */
-  gsap?: string[]
-  /** React Native(Reanimated · Gesture Handler 등) 핵심 API. 앱 기법에서 채움 */
-  rn?: string[]
-  /** 라이브러리 없이 CSS · Web API 로 할 때 */
-  native?: string[]
   fit: Fit
   /** 공식 문서. 대조할 때 본 페이지 */
   docs: { motion?: string; gsap?: string; native?: string; rn?: string }

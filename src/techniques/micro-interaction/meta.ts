@@ -7,12 +7,6 @@ export default {
   section: 'interaction',
   order: 20,
   param: '500 / 30',
-  motion: [
-    'whileTap + spring (키보드 Enter 도 동작)'
-  ],
-  gsap: [
-    'onClick → contextSafe(짧은 timeline)'
-  ],
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-gestures', gsap: 'https://gsap.com/docs/v3/GSAP/Timeline/' },
   params: [

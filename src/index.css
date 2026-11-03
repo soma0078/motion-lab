@@ -193,6 +193,14 @@ body {
   background-color: var(--paper);
 }
 
+/* Tailwind v4 는 버튼 커서가 기본(화살표)이라, 누를 수 있는 버튼은 손가락 커서로 되돌린다 */
+@layer base {
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 ::selection {
   background-color: var(--key-soft);
   color: var(--ink);

@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 30,
   param: 'offset 0',
-  rn: [
-    '<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />'
-  ],
   fit: 'rn',
   docs: { rn: 'https://reactnative.dev/docs/refreshcontrol' },
   params: [{ key: 'offset', label: '인디케이터 위치', min: 0, max: 30, step: 5, default: 0, unit: 'px', effect: '인디케이터가 나타나는 세로 위치예요. 클수록 목록 위쪽에서 더 아래로 내려와 보여요.' }],

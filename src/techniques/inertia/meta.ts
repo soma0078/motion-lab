@@ -7,12 +7,6 @@ export default {
   section: 'interaction',
   order: 80,
   param: 'power 0.8 · 350ms',
-  motion: [
-    'drag 기본 관성 (끄기 dragMomentum={false}) · dragTransition: { power, timeConstant }'
-  ],
-  gsap: [
-    'gsap.registerPlugin(Draggable, InertiaPlugin) → Draggable.create(el, { inertia: true, snap })'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-drag', gsap: 'https://gsap.com/docs/v3/Plugins/InertiaPlugin/' },
   params: [

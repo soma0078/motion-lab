@@ -7,12 +7,6 @@ export default {
   section: 'interaction',
   order: 30,
   param: '35%',
-  motion: [
-    'useMotionValue + useSpring(src, { stiffness, damping })'
-  ],
-  gsap: [
-    'const xTo = gsap.quickTo(el, \'x\', { duration: 0.4, ease: \'power3\' })'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-use-spring', gsap: 'https://gsap.com/docs/v3/GSAP/gsap.quickTo()' },
   params: [

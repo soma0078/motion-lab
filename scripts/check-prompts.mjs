@@ -2,7 +2,7 @@
 //   1. 기법 용어 "이름(원어)" 가 문장 안에 들어 있다 (원어의 괄호 보충은 빼도 된다. 예: 관성(inertia))
 //   2. 명령체: 문장마다 "~해." 로 끝난다
 //   3. 슬라이더 최소 · 기본 · 최대값 어디서도 undefined · NaN 이 나오지 않는다
-//   4. 둘째 줄은 라이브러리마다 "~으로/로 구현해." 한 문장
+//   4. 둘째 줄은 추천 라이브러리가 있는 기법에만 "~구현해." 한 문장. "둘 다 무난"(both)은 한 줄로 끝난다
 import { readdirSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -12,7 +12,6 @@ const dir = join(root, 'src/techniques')
 const load = async (path) => import(pathToFileURL(path).href)
 const { buildPrompt, defaultValues } = await load(join(dir, 'prompt.ts'))
 
-const LIBS = ['rn', 'motion', 'gsap', 'native']
 const failures = []
 let checked = 0
 
@@ -39,10 +38,9 @@ for (const slug of readdirSync(dir)) {
       if (!sentence.endsWith('해.')) fail(`명령체("~해.")로 끝나지 않음 → ${sentence}`)
     }
 
-    for (const lib of LIBS.filter((l) => technique[l])) {
-      const [, implement] = buildPrompt(technique, lib, values).split('\n')
-      if (!implement?.endsWith('구현해.')) fail(`${lib} 둘째 줄이 "~구현해." 가 아님 → ${implement}`)
-    }
+    const lines = buildPrompt(technique, values).split('\n')
+    if (technique.fit === 'both' && lines.length !== 1) fail(`둘 다 무난인데 구현 줄이 붙음 → ${lines[1]}`)
+    if (technique.fit !== 'both' && !lines[1]?.endsWith('구현해.')) fail(`추천(${technique.fit})인데 구현 줄이 없음`)
   }
   checked += 1
 }

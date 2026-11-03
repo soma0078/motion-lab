@@ -7,12 +7,6 @@ export default {
   section: 'transition',
   order: 30,
   param: '0.7s',
-  motion: [
-    '<AnimatePresence> 기본 mode=\'sync\' + absolute 겹치기'
-  ],
-  gsap: [
-    'tl.to(a, { autoAlpha: 0 }).to(b, { autoAlpha: 1 }, \'<\')'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animate-presence', gsap: 'https://gsap.com/docs/v3/Plugins/Flip/' },
   prompt: () => '크로스페이드(crossfade)로 앞 요소가 0.7s 동안 사라지는 사이 뒤 요소가 같은 자리에 겹쳐 나타나게 해.'

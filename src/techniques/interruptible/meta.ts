@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 40,
   param: '250 / 22',
-  rn: [
-    'x.value = withSpring(target, { damping: 22, stiffness: 250 })'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-reanimated/docs/animations/withSpring/' },
   params: [

@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 10,
   param: 'threshold 40',
-  rn: [
-    '<Swipeable renderRightActions={renderDelete} rightThreshold={40} />'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-gesture-handler/docs/2.x/components/reanimated_swipeable' },
   params: [{ key: 'threshold', label: '열림 기준', min: 20, max: 70, step: 5, default: 40, unit: 'px', effect: '놓았을 때 열린 채 멈추는 기준 거리예요. 이보다 덜 밀면 닫히고, 작을수록 조금만 밀어도 열려요.' }],

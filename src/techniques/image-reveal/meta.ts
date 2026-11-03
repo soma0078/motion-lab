@@ -7,12 +7,6 @@ export default {
   section: 'transition',
   order: 100,
   param: 'clip + scale 1.3',
-  motion: [
-    '틀 clipPath: \'inset(100% 0% 0% 0%)\' → \'inset(0% 0% 0% 0%)\''
-  ],
-  gsap: [
-    'tl.from(frame, { clipPath: \'inset(100% 0% 0% 0%)\' }).from(img, { scale: 1.3 }, \'<\')'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/' },
   params: [

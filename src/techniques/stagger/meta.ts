@@ -7,13 +7,6 @@ export default {
   section: 'timing',
   order: 50,
   param: '0.08s',
-  motion: [
-    '컴포넌트: 부모 variant transition: { delayChildren: stagger(0.08) }',
-    'staggerChildren 은 deprecated'
-  ],
-  gsap: [
-    'stagger: 0.08'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/stagger', gsap: 'https://gsap.com/resources/getting-started/Staggers' },
   params: [

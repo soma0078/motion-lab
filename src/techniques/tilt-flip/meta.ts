@@ -7,12 +7,6 @@ export default {
   section: 'interaction',
   order: 60,
   param: '±18° · perspective 500',
-  motion: [
-    'style={{ rotateX, rotateY, transformPerspective: 500 }}'
-  ],
-  gsap: [
-    'gsap.to(el, { rotationY: 180 }) (rotateY 별칭도 동작)'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/GSAP/CorePlugins/CSS/' },
   params: [

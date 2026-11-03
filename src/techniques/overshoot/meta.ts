@@ -7,12 +7,6 @@ export default {
   section: 'timing',
   order: 30,
   param: 'backOut',
-  motion: [
-    'ease: \'backOut\''
-  ],
-  gsap: [
-    'ease: \'back.out(1.7)\''
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-transitions', gsap: 'https://gsap.com/docs/v3/Eases' },
   params: [

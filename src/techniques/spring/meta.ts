@@ -7,13 +7,6 @@ export default {
   section: 'timing',
   order: 20,
   param: '220 / 8',
-  motion: [
-    'type: \'spring\', stiffness, damping, mass',
-    '또는 visualDuration: 0.4, bounce: 0.25 (stiffness 주면 무시)'
-  ],
-  gsap: [
-    '진짜 스프링 없음 → \'elastic.out(1, 0.3)\' 근사'
-  ],
   fit: 'motion',
   docs: { motion: 'https://motion.dev/docs/react-transitions', gsap: 'https://gsap.com/docs/v3/Eases/CustomBounce' },
   params: [

@@ -7,12 +7,6 @@ export default {
   section: 'transition',
   order: 40,
   param: '110% → 0',
-  motion: [
-    'overflow-hidden 틀 + y: \'110%\' → 0'
-  ],
-  gsap: [
-    'SplitText.create(el, { type: \'lines\', mask: \'lines\', autoSplit: true, onSplit })'
-  ],
   fit: 'both',
   docs: { motion: 'https://motion.dev/docs/react-animation', gsap: 'https://gsap.com/docs/v3/Plugins/SplitText/' },
   params: [

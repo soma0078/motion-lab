@@ -2,7 +2,7 @@ import { Suspense, useId, useState, type CSSProperties } from 'react'
 import { ArrowUpRight, Check, Copy, RotateCcw } from 'lucide-react'
 
 import type { Technique } from '../techniques/registry'
-import { buildPrompt, defaultValues, LIB_LABEL, type Lib } from '../techniques/prompt'
+import { buildPrompt, defaultValues } from '../techniques/prompt'
 import type { Fit, Param, ParamValues } from '../techniques/types'
 import { cn } from '../lib/utils'
 
@@ -13,9 +13,6 @@ const FIT_LABEL: Record<Fit, { text: string; dot: string }> = {
   native: { text: '브라우저 기본', dot: 'bg-ink-3' },
   rn: { text: 'React Native', dot: 'bg-sub' }
 }
-
-/** 카드에 보이는 라이브러리 순서. 앱 기법은 RN 이 먼저 */
-const LIB_ORDER = ['rn', 'motion', 'gsap', 'native'] as const
 
 /**
  * 기법 카드: 용어 · 데모 · 뜻 · 조절하는 값 · 지시문 미리보기와 복사 · 공식 문서.
@@ -37,10 +34,8 @@ export function TechniqueCard({
   className?: string
 }) {
   const fit = FIT_LABEL[technique.fit]
-  const libs = LIB_ORDER.filter((lib) => technique[lib])
   const [values, setValues] = useState(() => defaultValues(technique))
-  const [lib, setLib] = useState<Lib>(libs[0])
-  const prompt = buildPrompt(technique, lib, values)
+  const prompt = buildPrompt(technique, values)
 
   return (
     <li className={cn('border-line bg-surface shadow-raised rounded-card flex min-w-0 flex-col border p-4 sm:p-5', className)}>
@@ -86,12 +81,14 @@ export function TechniqueCard({
 
       {/* 아래 공식 문서 줄은 카드 바닥에 붙는다. 가장 긴 카드에서도 선과 붙지 않게 mb 를 둔다 */}
       <div className="mt-4 mb-4">
-        {libs.length > 1 && <LibToggle libs={libs} value={lib} onChange={setLib} />}
         <PromptPreview prompt={prompt} />
-        <CopyButton slug={technique.slug} prompt={prompt} onCopied={onCopied} />
-        <p className="text-ink-3 mt-2 text-right font-mono text-[11px] font-medium tabular-nums">
-          {copyCount === null ? '복사 —' : `복사 ${copyCount.toLocaleString()}회`}
-        </p>
+        {/* 복사는 보조 행동: 작은 버튼을 오른쪽에, 그 아래 횟수 */}
+        <div className="mt-2.5 flex flex-col items-end gap-1.5">
+          <CopyButton slug={technique.slug} prompt={prompt} onCopied={onCopied} />
+          <p data-copy-count className="text-ink-3 font-mono text-[11px] font-medium tabular-nums">
+            {copyCount === null ? '복사 —' : `복사 ${copyCount.toLocaleString()}회`}
+          </p>
+        </div>
       </div>
 
       <DocLinks docs={technique.docs} />
@@ -170,29 +167,7 @@ function ParamPanel({
   )
 }
 
-/** 지시문 2줄째에 넣을 구현 라이브러리. 눌린 홈 위에 고른 칸만 튀어나옴 */
-function LibToggle({ libs, value, onChange }: { libs: readonly Lib[]; value: Lib; onChange: (lib: Lib) => void }) {
-  return (
-    <div role="group" aria-label="구현 라이브러리" className="bg-well shadow-inset-sm mb-2.5 flex rounded-full p-1">
-      {libs.map((lib) => (
-        <button
-          key={lib}
-          type="button"
-          aria-pressed={value === lib}
-          onClick={() => onChange(lib)}
-          className={cn(
-            'flex-1 rounded-full px-2 py-1 text-xs font-semibold whitespace-nowrap transition-[color,box-shadow,background-color] duration-200',
-            value === lib ? 'bg-surface text-ink shadow-raised-sm' : 'text-ink-3 hover:text-ink'
-          )}
-        >
-          {LIB_LABEL[lib]}
-        </button>
-      ))}
-    </div>
-  )
-}
-
-/** 복사될 지시문을 그대로 보여 줌. 1줄 요청 · 2줄 구현 */
+/** 복사될 지시문을 그대로 보여 줌. 1줄 요청 · 2줄 추천 라이브러리 (있을 때만) */
 function PromptPreview({ prompt }: { prompt: string }) {
   const [request, ...rest] = prompt.split('\n')
 
@@ -243,10 +218,14 @@ function CopyButton({ slug, prompt, onCopied }: { slug: string; prompt: string; 
   return (
     <button
       type="button"
+      data-copy
       onClick={copy}
-      className="paint-key shadow-raised-sm hover:bg-key-hover mt-3 flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-[background-color,box-shadow,translate] duration-200 active:translate-y-px active:shadow-inset-sm"
+      className={cn(
+        'border-line bg-surface shadow-raised-sm active:shadow-inset-sm inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-[color,box-shadow] duration-200',
+        copied ? 'text-key-text' : 'text-ink-2 hover:text-ink'
+      )}
     >
-      {copied ? <Check className="size-4" strokeWidth={2.75} /> : <Copy className="size-4" strokeWidth={2.5} />}
+      {copied ? <Check className="size-3.5" strokeWidth={2.75} /> : <Copy className="size-3.5" strokeWidth={2.5} />}
       <span aria-live="polite">
         {copied ? '복사됨' : '지시문 복사'}
       </span>

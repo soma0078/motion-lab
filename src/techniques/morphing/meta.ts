@@ -7,12 +7,6 @@ export default {
   section: 'shape',
   order: 10,
   param: '50% → 8%',
-  motion: [
-    'd 네이티브 보간 (명령 수 · 종류 같을 때만)'
-  ],
-  gsap: [
-    'MorphSVGPlugin (점 개수 · 종류 달라도 됨)'
-  ],
   fit: 'gsap',
   docs: { motion: 'https://motion.dev/docs/react-svg-animation', gsap: 'https://gsap.com/docs/v3/Plugins/MorphSVGPlugin/' },
   prompt: () => '모핑(morphing)으로 원(border-radius 50%)이 둥근 사각형(8%)으로 모양 자체가 바뀌게 해.'

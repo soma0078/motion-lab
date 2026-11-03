@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 70,
   param: '550ms',
-  rn: [
-    '<Animated.View sharedTransitionTag="card-1" sharedTransitionStyle={SharedTransition.duration(550)} />'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-reanimated/docs/shared-element-transitions/overview/' },
   params: [{ key: 'duration', label: '시간', min: 300, max: 900, step: 50, default: 550, unit: 'ms', effect: '카드가 화면 크기로 늘어나는 시간이에요. 길수록 카드가 화면이 되는 과정이 또렷이 보이고, 짧을수록 즉각적이에요.' }],

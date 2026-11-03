@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 90,
   param: '90 / 210',
-  rn: [
-    '<Animated.View key={tab} entering={FadeIn.duration(210).delay(90)} exiting={FadeOut.duration(90)} />'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations/' },
   params: [

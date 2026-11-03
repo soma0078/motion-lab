@@ -7,9 +7,6 @@ export default {
   section: 'app',
   order: 60,
   param: 'minDuration 500',
-  rn: [
-    'Gesture.LongPress().minDuration(500).onStart(openMenu)'
-  ],
   fit: 'rn',
   docs: { rn: 'https://docs.swmansion.com/react-native-gesture-handler/docs/2.x/gestures/long-press-gesture' },
   params: [{ key: 'minDuration', label: '누르는 시간', min: 300, max: 800, step: 50, default: 500, unit: 'ms', effect: '메뉴가 열리기까지 눌러야 하는 시간이에요. 짧으면 실수로 열리기 쉽고, 길면 기다리는 느낌이 들어요.' }],
