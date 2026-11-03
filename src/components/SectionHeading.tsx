@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 /**
- * 섹션 제목. 도면 번호(§01) · 제목 · 개수 · 끝에 눈금이 있는 치수선.
+ * 섹션 제목. 도면 번호(§01) · 제목 · 개수.
  * 카드 제목(text-lg)보다 크게 해서 섹션이 바뀌는 지점이 보이게 한다
  */
 export function SectionHeading({
@@ -32,12 +32,7 @@ export function SectionHeading({
             {count}
           </span>
         )}
-        {/* 치수선: 가는 선 + 오른쪽 끝 눈금 */}
-        <span
-          aria-hidden="true"
-          className="bg-line-strong after:bg-line-strong relative ml-1 hidden h-px flex-1 after:absolute after:-top-1.5 after:right-0 after:h-3 after:w-px sm:block"
-        />
-        {aside && <div className="ml-auto flex shrink-0 items-center gap-2 sm:ml-0">{aside}</div>}
+        {aside && <div className="ml-auto flex shrink-0 items-center gap-2">{aside}</div>}
       </div>
       {lead && <p className="text-ink-2 mt-2 max-w-3xl text-sm break-keep">{lead}</p>}
     </header>

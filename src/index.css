@@ -206,9 +206,12 @@ body {
   color: var(--ink);
 }
 
-:focus-visible {
-  outline: 2px solid var(--key-text);
-  outline-offset: 2px;
+/* base 레이어에 둬야 요소에 준 outline-none 같은 유틸리티가 이긴다 (레이어 밖 규칙은 유틸리티보다 우선) */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--key-text);
+    outline-offset: 2px;
+  }
 }
 
 /*

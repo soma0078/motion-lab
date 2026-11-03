@@ -50,7 +50,7 @@ export function Header({
       <div className="mx-auto flex h-16 max-w-[1280px] items-center gap-3 px-4 sm:px-6 lg:px-10">
         <a href="#top" className="flex shrink-0 items-center gap-2 font-mono text-xs font-semibold tracking-[0.14em] uppercase">
           <span className="bg-key shadow-raised-sm size-2.5 rounded-full" />
-          <span className="hidden sm:inline">Motion Lab</span>
+          <span>Motion Lab</span>
         </a>
 
         <nav
@@ -77,8 +77,8 @@ export function Header({
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
-          <label className="bg-well shadow-inset-sm focus-within:outline-key-text flex h-9 w-44 items-center gap-2 rounded-full px-3 focus-within:outline-2 focus-within:outline-offset-2 sm:w-64">
+        <div className="ml-auto flex min-w-0 items-center gap-2">
+          <label className="bg-well shadow-inset-sm focus-within:outline-key-text flex h-9 w-44 min-w-0 items-center gap-2 rounded-full px-3 focus-within:outline-2 focus-within:outline-offset-2 sm:w-64">
             <Search className="text-ink-3 size-4 shrink-0" strokeWidth={2.25} />
             <span className="sr-only">기법 검색</span>
             <input
