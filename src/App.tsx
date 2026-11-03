@@ -4,9 +4,11 @@ import { SearchX } from 'lucide-react'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
+import { PopularSection } from './components/PopularSection'
 import { SectionHeading } from './components/SectionHeading'
 import { ApiRow, TechniqueCard } from './components/TechniqueCard'
 import { useTheme } from './components/theme'
+import { useCopyCounts } from './components/copyCounts'
 import { TECHNIQUE_SECTIONS, type Technique } from './techniques/registry'
 import { UI_ELEMENTS } from './techniques/ui-elements'
 
@@ -60,6 +62,7 @@ function useVisible(id: string) {
 
 export default function App() {
   const { theme, toggle } = useTheme()
+  const copies = useCopyCounts()
   const [query, setQuery] = useState('')
   const q = query.trim().toLowerCase()
 
@@ -75,6 +78,18 @@ export default function App() {
       })),
     []
   )
+  // 복사가 많은 순 5개. 같으면 원래 순서 (sort 는 안정 정렬). 순위는 페이지를 열 때 읽은 값으로 고정
+  const popular = useMemo(
+    () =>
+      copies.status === 'ready'
+        ? allSections
+            .flatMap((section) => section.items.map(({ technique }) => technique))
+            .sort((a, b) => (copies.ranking[b.slug] ?? 0) - (copies.ranking[a.slug] ?? 0))
+            .slice(0, 5)
+        : [],
+    [allSections, copies.status, copies.ranking]
+  )
+
   const sections = allSections
     .map((section) => ({ ...section, items: q ? section.items.filter(({ technique }) => matches(technique, q)) : section.items }))
     .filter((section) => section.items.length > 0)
@@ -117,13 +132,26 @@ export default function App() {
           onJump={jump}
         />
 
+        {/* 횟수를 읽지 못하면(로컬 vite dev 등) 순위를 정할 수 없어 보이지 않는다. 검색 중에는 결과만 보인다 */}
+        {!q && popular.length > 0 && (
+          <div className="mx-auto max-w-[1280px] px-4 pt-16 sm:px-6 lg:px-10">
+            <PopularSection techniques={popular} countOf={copies.countOf} onCopied={copies.record} />
+          </div>
+        )}
+
         <div id="techniques" className="mx-auto max-w-[1280px] space-y-20 px-4 pt-16 pb-24 sm:px-6 lg:px-10">
           {sections.map((section) => (
             <section key={section.id} id={section.id}>
               <SectionHeading index={section.number} title={section.heading} count={section.items.length} lead={section.lead} />
               <ol className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {section.items.map(({ technique, index }) => (
-                  <TechniqueCard key={technique.slug} technique={technique} index={index} />
+                  <TechniqueCard
+                    key={technique.slug}
+                    technique={technique}
+                    index={index}
+                    copyCount={copies.countOf(technique.slug)}
+                    onCopied={copies.record}
+                  />
                 ))}
               </ol>
             </section>

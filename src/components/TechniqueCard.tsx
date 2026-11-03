@@ -21,7 +21,21 @@ const LIB_ORDER = ['rn', 'motion', 'gsap', 'native'] as const
  * 기법 카드: 용어 · 데모 · 뜻 · 조절하는 값 · 지시문 미리보기와 복사 · 공식 문서.
  * 구현 코드 비교는 쓰는 도구와 AI 마다 달라서 보여 주지 않는다
  */
-export function TechniqueCard({ technique, index }: { technique: Technique; index: number }) {
+export function TechniqueCard({
+  technique,
+  index,
+  copyCount,
+  onCopied,
+  className
+}: {
+  technique: Technique
+  index: number
+  /** 지금까지 복사된 횟수. 모르면 null */
+  copyCount: number | null
+  /** 복사가 기록되면 서버가 돌려준 새 횟수 */
+  onCopied: (slug: string, count: number) => void
+  className?: string
+}) {
   const fit = FIT_LABEL[technique.fit]
   const libs = LIB_ORDER.filter((lib) => technique[lib])
   const [values, setValues] = useState(() => defaultValues(technique))
@@ -29,7 +43,7 @@ export function TechniqueCard({ technique, index }: { technique: Technique; inde
   const prompt = buildPrompt(technique, lib, values)
 
   return (
-    <li className="border-line bg-surface shadow-raised rounded-card flex min-w-0 flex-col border p-4 sm:p-5">
+    <li className={cn('border-line bg-surface shadow-raised rounded-card flex min-w-0 flex-col border p-4 sm:p-5', className)}>
       <div className="flex items-start gap-2.5">
         <span className="bg-well shadow-inset-sm text-ink-2 mt-0.5 rounded-md px-1.5 py-0.5 font-mono text-xs font-semibold tabular-nums">
           {String(index + 1).padStart(2, '0')}
@@ -45,7 +59,8 @@ export function TechniqueCard({ technique, index }: { technique: Technique; inde
       </div>
 
       {/* 데모: 눌린 화면 + 설계도 격자 */}
-      <div className="bg-well shadow-inset blueprint relative mt-3.5 h-40 overflow-hidden rounded-2xl">
+      {/* data-demo: 인기 기법 슬라이드에서 마우스 끌기를 시작하지 않는 곳 (데모 자체를 끄는 기법이 있다) */}
+      <div data-demo className="bg-well shadow-inset blueprint relative mt-3.5 h-40 cursor-auto overflow-hidden rounded-2xl">
         <Suspense fallback={null}>
           <technique.Demo params={values} />
         </Suspense>
@@ -73,7 +88,10 @@ export function TechniqueCard({ technique, index }: { technique: Technique; inde
       <div className="mt-4 mb-4">
         {libs.length > 1 && <LibToggle libs={libs} value={lib} onChange={setLib} />}
         <PromptPreview prompt={prompt} />
-        <CopyButton slug={technique.slug} prompt={prompt} />
+        <CopyButton slug={technique.slug} prompt={prompt} onCopied={onCopied} />
+        <p className="text-ink-3 mt-2 text-right font-mono text-[11px] font-medium tabular-nums">
+          {copyCount === null ? '복사 —' : `복사 ${copyCount.toLocaleString()}회`}
+        </p>
       </div>
 
       <DocLinks docs={technique.docs} />
@@ -194,9 +212,9 @@ function PromptPreview({ prompt }: { prompt: string }) {
   )
 }
 
-/** 지금 지시문을 클립보드에 복사하고, 기록되면 몇 번째 복사인지 덧붙임 */
-function CopyButton({ slug, prompt }: { slug: string; prompt: string }) {
-  const [copied, setCopied] = useState<{ count: number | null } | null>(null)
+/** 지금 지시문을 클립보드에 복사하고 횟수를 1 올린다. 새 횟수는 버튼 아래 줄에 보인다 */
+function CopyButton({ slug, prompt, onCopied }: { slug: string; prompt: string; onCopied: (slug: string, count: number) => void }) {
+  const [copied, setCopied] = useState(false)
 
   const copy = async () => {
     try {
@@ -205,10 +223,10 @@ function CopyButton({ slug, prompt }: { slug: string; prompt: string }) {
       // 클립보드 권한이 없으면 조용히 무시
       return
     }
-    setCopied({ count: null })
-    setTimeout(() => setCopied(null), 2000)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
 
-    // 횟수는 기록이 되는 대로 덧붙임. 서버가 없거나 실패해도 "복사됨"은 그대로
+    // 횟수는 기록이 되는 대로 반영. 서버가 없거나 실패해도 "복사됨"은 그대로
     try {
       const response = await fetch('/api/copy', {
         method: 'POST',
@@ -216,7 +234,7 @@ function CopyButton({ slug, prompt }: { slug: string; prompt: string }) {
         body: JSON.stringify({ slug })
       })
       const { count } = await response.json()
-      if (response.ok && typeof count === 'number') setCopied((prev) => (prev ? { count } : prev))
+      if (response.ok && typeof count === 'number') onCopied(slug, count)
     } catch {
       // 횟수 기록 실패는 사용자에게 알리지 않음
     }
@@ -230,7 +248,7 @@ function CopyButton({ slug, prompt }: { slug: string; prompt: string }) {
     >
       {copied ? <Check className="size-4" strokeWidth={2.75} /> : <Copy className="size-4" strokeWidth={2.5} />}
       <span aria-live="polite">
-        {copied ? (copied.count === null ? '복사됨' : `복사됨 · ${copied.count.toLocaleString()}번째`) : '지시문 복사'}
+        {copied ? '복사됨' : '지시문 복사'}
       </span>
     </button>
   )

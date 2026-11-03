@@ -15,6 +15,7 @@
 - **조절하는 값**: 슬라이더가 있는 기법은 값을 움직이면 데모가 그 값으로 다시 재생되고, 값마다 바꾸면 무엇이 달라지는지 설명이 붙어 있습니다.
 - **앱 · 제스처 (React Native)**: 스와이프 액션, 바텀시트 스냅, 당겨서 새로고침, 인터럽트 가능한 전환, 누르기 피드백, 롱프레스 메뉴, 컨테이너 트랜스폼, 공유 축, 페이드 스루, 푸시 · 팝, 햅틱 동기화, 스켈레톤 로딩 12개를 React Native(Reanimated · Gesture Handler 등) 기준으로 정리했습니다. 데모는 웹에서 같은 움직임을 비슷하게 보여 주고, 지시문은 React Native로 구현하라는 문장으로 끝납니다.
 - **지시문 미리보기와 복사**: 구현 라이브러리를 고르면 지금 슬라이더 값이 담긴 지시문이 카드 안에 바로 보이고, 버튼 하나로 복사합니다.
+- **복사 횟수 · 인기 기법**: 카드마다 지시문이 복사된 횟수를 보여 주고, 히어로 아래에 복사가 가장 많은 기법 5개를 슬라이드로 보여 줍니다 (Motion drag 로 마우스 · 터치로 끌거나, 버튼으로 한 장씩). 횟수는 배포된 사이트의 Netlify Functions · Blobs 에 기록됩니다. 로컬 `npm run dev` · `npm run preview` 에서는 `vite.config.ts` 의 가짜 `/api/copy` 가 예시 횟수로 답하고, 복사한 횟수는 서버를 끄면 사라집니다.
 - **공식 문서**: 기법마다 motion.dev · gsap.com · MDN · React Native 관련 문서로 이어지는 링크가 있습니다.
 - **검색 · 테마**: 기법 이름, 영문 이름, 뜻, 조절하는 값 이름(예: `damping`)으로 찾을 수 있고 (`/` 로 바로 검색), 라이트 · 다크 테마를 지원합니다.
 
@@ -55,7 +56,7 @@ React 19 · Vite · TypeScript · Tailwind CSS v4 · [motion](https://motion.dev
 ## Project Structure
 
 ```
-src/components/   헤더 · 히어로 · 기법 카드 · 섹션 제목 · 테마 훅
+src/components/   헤더 · 히어로 · 인기 기법 슬라이드 · 기법 카드 · 섹션 제목 · 테마 · 복사 횟수 훅
 src/index.css     디자인 토큰 (라이트 · 다크) · 뉴모피즘 그림자 · 설계도 격자
 src/techniques/
   <slug>/
@@ -67,6 +68,7 @@ src/techniques/
   sections.ts   섹션 순서 · 제목 · 설명
   prompt.ts     슬라이더 기본값 · 카드에서 복사할 지시문 만들기
 scripts/check-prompts.mjs       지시문 작성 규칙 검사
+netlify/functions/copy-count.mjs   복사 횟수 읽기(GET) · 올리기(POST)
 ```
 
 기법 하나가 폴더 하나입니다. 폴더를 추가하거나 삭제하면 홈 화면에 그대로 반영됩니다.
