@@ -1,5 +1,6 @@
-import { Moon, Sun } from 'lucide-react'
+import { Moon, Sun, Volume2, VolumeX } from 'lucide-react'
 
+import { playThemeSwitch, toggleSound, useSoundEnabled } from './sound'
 import type { Theme } from './theme'
 import { cn } from '../lib/utils'
 
@@ -10,7 +11,7 @@ export interface HeaderSection {
 
 /**
  * 고정 헤더. 히어로의 섹션 바로가기가 화면에서 사라지면 같은 칩을 여기에 띄우고, 지금 보는 섹션을 눌린 칩으로 표시.
- * 검색창은 기법 목록 맨 위(SearchBar)에 있다
+ * 검색창은 기법 목록 맨 위(SearchBar)에 있다. 오른쪽 끝은 효과음 · 테마 전환이고, 둘 다 누르면 효과음이 난다
  */
 export function Header({
   sections,
@@ -57,10 +58,14 @@ export function Header({
           ))}
         </nav>
 
-        <div className="ml-auto flex shrink-0 items-center">
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <SoundToggle />
           <button
             type="button"
-            onClick={onToggleTheme}
+            onClick={() => {
+              playThemeSwitch(theme === 'light')
+              onToggleTheme()
+            }}
             aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
             className="border-line bg-surface shadow-raised-sm active:shadow-inset-sm grid size-9 shrink-0 place-items-center rounded-full border transition-shadow duration-200"
           >
@@ -69,5 +74,22 @@ export function Header({
         </div>
       </div>
     </header>
+  )
+}
+
+/** 효과음 켜고 끄기. 켜고 끌 때마다 확인 소리가 난다 (sound.ts 의 toggleSound) */
+function SoundToggle() {
+  const enabled = useSoundEnabled()
+
+  return (
+    <button
+      type="button"
+      onClick={() => toggleSound(!enabled)}
+      aria-label={enabled ? '효과음 끄기' : '효과음 켜기'}
+      title={enabled ? '효과음 끄기' : '효과음 켜기'}
+      className="border-line bg-surface shadow-raised-sm active:shadow-inset-sm grid size-9 shrink-0 place-items-center rounded-full border transition-shadow duration-200"
+    >
+      {enabled ? <Volume2 className="size-4" strokeWidth={2.25} /> : <VolumeX className="size-4" strokeWidth={2.25} />}
+    </button>
   )
 }

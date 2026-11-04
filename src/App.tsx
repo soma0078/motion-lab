@@ -8,7 +8,7 @@ import { SearchBar } from './components/SearchBar'
 import { SectionHeading } from './components/SectionHeading'
 import { ApiRow, TechniqueCard } from './components/TechniqueCard'
 import { useTheme } from './components/theme'
-import { useCopyCounts } from './components/copyCounts'
+import { useLikes } from './components/likes'
 import { TECHNIQUE_SECTIONS, type Technique } from './techniques/registry'
 import { UI_ELEMENTS } from './techniques/ui-elements'
 
@@ -67,7 +67,7 @@ function useVisible(id: string) {
 
 export default function App() {
   const { theme, toggle } = useTheme()
-  const copies = useCopyCounts()
+  const likes = useLikes()
   const [query, setQuery] = useState('')
   // 카드에 보이는 대로 "#따라오는"을 쳐도 찾히게 앞의 # 은 뗀다
   const q = query.trim().replace(/^#/, '').toLowerCase()
@@ -148,8 +148,8 @@ export default function App() {
                       key={technique.slug}
                       technique={technique}
                       index={index}
-                      copyCount={copies.countOf(technique.slug)}
-                      onCopied={copies.record}
+                      likes={{ mine: likes.mineOf(technique.slug), total: likes.totalOf(technique.slug) }}
+                      onLike={(delta) => likes.change(technique.slug, delta)}
                       onTag={searchTag}
                     />
                   ))}
