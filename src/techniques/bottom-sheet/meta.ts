@@ -4,6 +4,7 @@ export default {
   name: '바텀시트 스냅',
   english: 'bottom sheet snap',
   meaning: '아래에서 올라온 시트를 끌다 놓으면 가장 가까운 높이(peek · half · full)로 붙음',
+  tags: ['아래에서 올라오는', '끌어 올리는', '딱 붙는'],
   section: 'app',
   order: 20,
   param: '80 / 500',

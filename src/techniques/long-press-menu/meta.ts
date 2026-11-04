@@ -4,6 +4,7 @@ export default {
   name: '롱프레스 메뉴',
   english: 'long press menu',
   meaning: '길게 누르면 요소가 떠오르고 옆에 메뉴가 열림. 누르는 시간이 기준을 넘어야 반응',
+  tags: ['꾹 누르는', '떠오르는', '펼쳐지는'],
   section: 'app',
   order: 60,
   param: 'minDuration 500',

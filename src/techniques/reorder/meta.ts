@@ -4,6 +4,7 @@ export default {
   name: '리스트 재정렬',
   english: 'reorder',
   meaning: '항목을 끌어 순서를 바꾸면 나머지가 자리를 비켜 줌',
+  tags: ['끌어서 옮기는', '자리를 비켜 주는'],
   section: 'interaction',
   order: 50,
   param: 'layout',

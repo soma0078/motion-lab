@@ -4,6 +4,7 @@ export default {
   name: '마그네틱',
   english: 'magnetic',
   meaning: '커서 쪽으로 끌려옴',
+  tags: ['따라오는', '끌려오는', '자석처럼'],
   section: 'interaction',
   order: 30,
   param: '35%',

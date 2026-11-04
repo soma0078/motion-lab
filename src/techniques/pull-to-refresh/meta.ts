@@ -4,6 +4,7 @@ export default {
   name: '당겨서 새로고침',
   english: 'pull to refresh',
   meaning: '목록 맨 위에서 아래로 당겼다 놓으면 인디케이터가 돌며 새로고침 시작. 끝나면 제자리로 돌아옴',
+  tags: ['아래로 당기는', '빙글 도는', '되돌아오는'],
   section: 'app',
   order: 30,
   param: 'offset 0',

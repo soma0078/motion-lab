@@ -4,6 +4,7 @@ export default {
   name: '관성',
   english: 'inertia (fling)',
   meaning: '던지면 속도를 이어받아 미끄러지다 감속해 멈춤',
+  tags: ['던지는', '미끄러지는', '점점 느려지는'],
   section: 'interaction',
   order: 80,
   param: 'power 0.8 · 350ms',

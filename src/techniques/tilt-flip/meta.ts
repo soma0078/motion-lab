@@ -4,6 +4,7 @@ export default {
   name: '3D 틸트 · 플립',
   english: '3D tilt · flip',
   meaning: 'perspective 로 카드가 커서 쪽으로 기울거나 뒤집힘',
+  tags: ['기울어지는', '뒤집히는', '입체적인'],
   section: 'interaction',
   order: 60,
   param: '±18° · perspective 500',

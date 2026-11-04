@@ -178,8 +178,8 @@ html {
   color: var(--ink);
   background-color: var(--paper);
   -webkit-font-smoothing: antialiased;
-  /* 고정 헤더에 섹션 제목이 가리지 않게 */
-  scroll-padding-top: 5rem;
+  /* 고정 헤더(4rem)와 그 아래 붙는 검색창(4.25rem)에 섹션 제목이 가리지 않게 */
+  scroll-padding-top: 9.25rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {

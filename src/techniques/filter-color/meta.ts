@@ -4,6 +4,7 @@ export default {
   name: '필터 · 색 전환',
   english: 'filter · color',
   meaning: '흐림 · 흑백 · 색이 서서히 바뀜',
+  tags: ['흐릿했다 또렷해지는', '색이 입혀지는'],
   section: 'transition',
   order: 110,
   param: 'blur 10 → 0',

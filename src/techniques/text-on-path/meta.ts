@@ -4,6 +4,7 @@ export default {
   name: '텍스트 경로',
   english: 'text on path',
   meaning: '글자가 곡선을 따라 흐름',
+  tags: ['곡선 위 글자', '글자가 흐르는', '둥글게 휘는'],
   section: 'shape',
   order: 40,
   param: 'startOffset',

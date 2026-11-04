@@ -4,6 +4,7 @@ export default {
   name: '키프레임',
   english: 'keyframe',
   meaning: '시간 위 지점별로 정한 값. 사이는 보간',
+  tags: ['여러 단계로 바뀌는', '중간 지점을 지나는'],
   section: 'timing',
   order: 40,
   param: '4 keys',

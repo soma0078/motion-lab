@@ -4,6 +4,7 @@ export default {
   name: '이미지 리빌',
   english: 'image reveal',
   meaning: '틀이 열리며 이미지가 드러나고, 안쪽 이미지는 확대에서 제자리로',
+  tags: ['열리며 드러나는', '커튼이 걷히는', '줄어드는'],
   section: 'transition',
   order: 100,
   param: 'clip + scale 1.3',

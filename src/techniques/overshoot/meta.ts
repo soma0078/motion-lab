@@ -4,6 +4,7 @@ export default {
   name: '오버슈트',
   english: 'overshoot',
   meaning: '목표 지점을 살짝 넘었다가 돌아옴',
+  tags: ['살짝 넘치는', '튕기는', '되돌아오는'],
   section: 'timing',
   order: 30,
   param: 'backOut',

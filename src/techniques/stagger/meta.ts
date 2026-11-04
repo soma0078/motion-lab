@@ -4,6 +4,7 @@ export default {
   name: '스태거',
   english: 'stagger',
   meaning: '여러 요소의 시작을 일정 간격으로 어긋나게',
+  tags: ['차례로 나오는', '하나씩', '물결처럼'],
   section: 'timing',
   order: 50,
   param: '0.08s',

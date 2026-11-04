@@ -4,6 +4,7 @@ export default {
   name: '컨테이너 트랜스폼',
   english: 'container transform',
   meaning: '카드가 그대로 늘어나 상세 화면이 됨. 목록과 상세가 같은 요소로 이어져 보임',
+  tags: ['커지며 펼쳐지는', '카드가 화면이 되는', '이어지는'],
   section: 'app',
   order: 70,
   param: '550ms',

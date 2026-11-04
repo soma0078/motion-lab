@@ -4,6 +4,7 @@ export default {
   name: '스와이프 액션',
   english: 'swipe action',
   meaning: '목록 행을 옆으로 밀면 삭제 · 보관 같은 버튼이 드러남. 기준을 넘겨 놓으면 열린 채 멈춤',
+  tags: ['옆으로 미는', '열린 채 멈추는'],
   section: 'app',
   order: 10,
   param: 'threshold 40',

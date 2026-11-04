@@ -4,6 +4,7 @@ export default {
   name: '진입 · 퇴장',
   english: 'enter · exit',
   meaning: '요소가 나타날 때 · 사라질 때의 모션',
+  tags: ['올라오며 나타나는', '빠지며 사라지는'],
   section: 'transition',
   order: 20,
   param: 'in 0.4 · out 0.25',

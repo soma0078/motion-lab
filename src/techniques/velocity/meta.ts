@@ -4,6 +4,7 @@ export default {
   name: '속도 반응',
   english: 'velocity-based',
   meaning: '스크롤 · 드래그 속도에 따라 기울기 · 흐림이 변함',
+  tags: ['빠를수록 기우는', '휘어지는', '속도에 반응하는'],
   section: 'scroll',
   order: 80,
   param: 'useVelocity',

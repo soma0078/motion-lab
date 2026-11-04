@@ -4,6 +4,7 @@ export default {
   name: '햅틱 동기화',
   english: 'haptic sync',
   meaning: '눈금 · 스냅 · 확정 같은 지점에서 움직임과 같은 순간에 진동을 줌. 보이는 것과 느껴지는 것이 맞아야 자연스러움',
+  tags: ['진동하는', '딸깍거리는', '눈금마다 튀는'],
   section: 'app',
   order: 110,
   param: '5 ticks',
