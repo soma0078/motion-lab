@@ -5,6 +5,7 @@ import type { Technique } from '../techniques/registry'
 import { buildPrompt, defaultValues } from '../techniques/prompt'
 import type { Fit, Param, ParamValues } from '../techniques/types'
 import { cn } from '../lib/utils'
+import { LikeButton } from './LikeButton'
 
 const FIT_LABEL: Record<Fit, { text: string; dot: string }> = {
   motion: { text: 'Motion 추천', dot: 'bg-key' },
@@ -15,22 +16,22 @@ const FIT_LABEL: Record<Fit, { text: string; dot: string }> = {
 }
 
 /**
- * 기법 카드: 용어 · 데모 · 뜻 · 움직임 태그 · 조절하는 값 · 지시문 미리보기와 복사 · 공식 문서.
+ * 기법 카드: 용어 · 데모 · 뜻 · 움직임 태그 · 조절하는 값 · 지시문 미리보기와 복사 · 좋아요 · 공식 문서.
  * 구현 코드 비교는 쓰는 도구와 AI 마다 달라서 보여 주지 않는다
  */
 export function TechniqueCard({
   technique,
   index,
-  copyCount,
-  onCopied,
+  likes,
+  onLike,
   onTag
 }: {
   technique: Technique
   index: number
-  /** 지금까지 복사된 횟수. 모르면 null */
-  copyCount: number | null
-  /** 복사가 기록되면 서버가 돌려준 새 횟수 */
-  onCopied: (slug: string, count: number) => void
+  /** 내가 준 좋아요(0 ~ MAX_LIKES)와 모든 사람의 합계(모르면 null) */
+  likes: { mine: number; total: number | null }
+  /** 바뀌었으면 true, 한도에 막혔으면 false */
+  onLike: (delta: 1 | -1) => boolean
   /** 태그를 누르면 그 태그로 검색 */
   onTag: (tag: string) => void
 }) {
@@ -83,12 +84,10 @@ export function TechniqueCard({
       {/* 아래 공식 문서 줄은 카드 바닥에 붙는다. 가장 긴 카드에서도 선과 붙지 않게 mb 를 둔다 */}
       <div className="mt-4 mb-4">
         <PromptPreview prompt={prompt} />
-        {/* 복사는 보조 행동: 작은 버튼을 오른쪽에, 그 아래 횟수 */}
-        <div className="mt-2.5 flex flex-col items-end gap-1.5">
-          <CopyButton slug={technique.slug} prompt={prompt} onCopied={onCopied} />
-          <p data-copy-count className="text-ink-3 font-mono text-[11px] font-medium tabular-nums">
-            {copyCount === null ? '복사 —' : `복사 ${copyCount.toLocaleString()}회`}
-          </p>
+        {/* 둘 다 보조 행동이라 작은 버튼으로: 좋아요는 왼쪽, 복사는 오른쪽 */}
+        <div className="mt-2.5 flex items-center justify-between gap-3">
+          <LikeButton mine={likes.mine} total={likes.total} onChange={onLike} />
+          <CopyButton prompt={prompt} />
         </div>
       </div>
 
@@ -211,8 +210,8 @@ function PromptPreview({ prompt }: { prompt: string }) {
   )
 }
 
-/** 지금 지시문을 클립보드에 복사하고 횟수를 1 올린다. 새 횟수는 버튼 아래 줄에 보인다 */
-function CopyButton({ slug, prompt, onCopied }: { slug: string; prompt: string; onCopied: (slug: string, count: number) => void }) {
+/** 지금 지시문을 클립보드에 복사 */
+function CopyButton({ prompt }: { prompt: string }) {
   const [copied, setCopied] = useState(false)
 
   const copy = async () => {
@@ -224,25 +223,11 @@ function CopyButton({ slug, prompt, onCopied }: { slug: string; prompt: string; 
     }
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
-
-    // 횟수는 기록이 되는 대로 반영. 서버가 없거나 실패해도 "복사됨"은 그대로
-    try {
-      const response = await fetch('/api/copy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug })
-      })
-      const { count } = await response.json()
-      if (response.ok && typeof count === 'number') onCopied(slug, count)
-    } catch {
-      // 횟수 기록 실패는 사용자에게 알리지 않음
-    }
   }
 
   return (
     <button
       type="button"
-      data-copy
       onClick={copy}
       className={cn(
         'border-line bg-surface shadow-raised-sm active:shadow-inset-sm inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-[color,box-shadow] duration-200',
