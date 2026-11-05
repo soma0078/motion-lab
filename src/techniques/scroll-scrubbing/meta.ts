@@ -4,6 +4,7 @@ export default {
   name: '스크롤 스크러빙',
   english: 'scroll scrubbing',
   meaning: '스크롤 진행도에 애니메이션을 직접 묶음',
+  tags: ['스크롤 따라 움직이는', '되감기는'],
   section: 'scroll',
   order: 20,
   param: 'scroll → 0~1',

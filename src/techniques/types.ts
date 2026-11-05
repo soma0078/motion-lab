@@ -32,6 +32,11 @@ export interface TechniqueMeta {
   name: string
   english: string
   meaning: string
+  /**
+   * 움직임을 보이는 대로 적은 말. 용어를 모르는 사람이 검색창에 칠 만한 말로 2~3개.
+   * '#' 없이 쓰고 카드에서 '#따라오는'처럼 보인다. 검색은 부분 일치라 '따라'로도 찾힌다
+   */
+  tags: string[]
   section: SectionKey
   /** 섹션 안 순서. 10 단위라 사이에 끼워 넣기 쉬움 */
   order: number

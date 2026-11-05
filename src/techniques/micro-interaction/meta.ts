@@ -4,6 +4,7 @@ export default {
   name: '마이크로 인터랙션',
   english: 'micro-interaction',
   meaning: '버튼 · 토글 같은 작은 조작에 붙는 짧은 피드백',
+  tags: ['톡 튀는', '눌리는', '토글이 넘어가는'],
   section: 'interaction',
   order: 20,
   param: '500 / 30',

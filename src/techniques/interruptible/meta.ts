@@ -4,6 +4,7 @@ export default {
   name: '인터럽트 가능한 전환',
   english: 'interruptible',
   meaning: '움직이는 도중에 다시 눌러도 멈췄다 처음부터 가지 않고, 지금 위치에서 방향을 바꿈',
+  tags: ['도중에 방향 바꾸는', '끊기지 않는'],
   section: 'app',
   order: 40,
   param: '250 / 22',

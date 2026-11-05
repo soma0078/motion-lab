@@ -4,6 +4,7 @@ export default {
   name: '호버',
   english: 'hover',
   meaning: '포인터가 올라가 있는 동안',
+  tags: ['살짝 떠오르는', '색이 바뀌는'],
   section: 'interaction',
   order: 10,
   param: '0.15s',

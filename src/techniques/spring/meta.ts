@@ -4,6 +4,7 @@ export default {
   name: '스프링',
   english: 'spring',
   meaning: '시간 대신 stiffness · damping 같은 물리값으로 움직임',
+  tags: ['출렁이는', '통통 튀는', '되돌아오는'],
   section: 'timing',
   order: 20,
   param: '220 / 8',

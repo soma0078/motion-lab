@@ -4,6 +4,7 @@ export default {
   name: '가로 스크롤',
   english: 'horizontal scroll',
   meaning: '세로로 스크롤하면 섹션이 옆으로 흘러감',
+  tags: ['옆으로 흐르는', '가로로 넘어가는'],
   section: 'scroll',
   order: 40,
   param: '0 → -75%',

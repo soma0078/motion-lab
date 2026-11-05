@@ -4,6 +4,7 @@ export default {
   name: 'View Transitions',
   english: 'view transitions API',
   meaning: '화면 상태가 바뀔 때 브라우저가 이전 · 다음 스냅샷을 이어 붙여 전환',
+  tags: ['이어지는', '스르륵 바뀌는'],
   section: 'transition',
   order: 120,
   param: 'old → new',

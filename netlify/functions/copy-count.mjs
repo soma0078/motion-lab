@@ -6,7 +6,7 @@ const STORE = 'copy-counts'
 
 /**
  * 기법별 지시문 복사 횟수.
- *   GET  /api/copy               → { counts: { [slug]: 횟수 } }  카드 표시 · 인기 기법 섹션
+ *   GET  /api/copy               → { counts: { [slug]: 횟수 } }  카드 표시
  *   POST /api/copy { slug }      → { count }                    복사할 때 1 올림
  */
 export default async (req) => {

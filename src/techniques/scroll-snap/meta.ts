@@ -4,6 +4,7 @@ export default {
   name: '스크롤 스냅',
   english: 'scroll snap',
   meaning: '스크롤이 정해진 지점에 맞춰 멈춤',
+  tags: ['딱 멈추는', '칸칸이 넘어가는'],
   section: 'scroll',
   order: 60,
   param: 'snap',

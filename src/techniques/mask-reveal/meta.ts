@@ -4,6 +4,7 @@ export default {
   name: '마스크 리빌',
   english: 'mask reveal',
   meaning: '틀 밖을 가린 채 열어 드러냄',
+  tags: ['스르륵 올라오는', '가려졌다 드러나는'],
   section: 'transition',
   order: 40,
   param: '110% → 0',

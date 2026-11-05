@@ -4,6 +4,7 @@ export default {
   name: '누르기 피드백',
   english: 'press feedback',
   meaning: '누르는 동안 살짝 줄어들었다가 놓으면 스프링으로 돌아와, 눌렸다는 걸 손끝으로 알려 줌',
+  tags: ['눌리는', '쫀득한', '줄었다 돌아오는'],
   section: 'app',
   order: 50,
   param: 'scale 0.96',

@@ -4,6 +4,7 @@ export default {
   name: '패럴랙스',
   english: 'parallax',
   meaning: '레이어마다 스크롤 속도를 달리해 깊이감을 줌',
+  tags: ['깊이감 있는', '겹겹이 움직이는', '따로 움직이는'],
   section: 'scroll',
   order: 50,
   param: '0.2× 0.5× 1×',

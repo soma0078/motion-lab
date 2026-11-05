@@ -4,6 +4,7 @@ export default {
   name: '스켈레톤 로딩',
   english: 'skeleton',
   meaning: '데이터가 오기 전에 들어갈 자리를 회색 블록으로 먼저 보여 주고, 천천히 깜빡여 로딩 중임을 알림',
+  tags: ['깜빡이는', '숨 쉬듯'],
   section: 'app',
   order: 120,
   param: '800ms',

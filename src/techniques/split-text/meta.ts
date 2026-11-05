@@ -4,6 +4,7 @@ export default {
   name: '텍스트 스플릿',
   english: 'split text',
   meaning: '글자 · 단어 · 줄 단위로 쪼개 하나씩 움직임',
+  tags: ['한 글자씩', '튀어 오르는', '차례로 나오는'],
   section: 'transition',
   order: 50,
   param: 'chars 0.06s',

@@ -4,6 +4,7 @@ export default {
   name: '커스텀 커서',
   english: 'custom cursor',
   meaning: '기본 커서 대신 따라다니는 원. 올린 요소에 따라 모양이 바뀜',
+  tags: ['따라다니는', '한 박자 늦게 따라오는', '커지는'],
   section: 'interaction',
   order: 70,
   param: '300 / 28',

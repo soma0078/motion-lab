@@ -4,6 +4,7 @@ export default {
   name: '스크램블 텍스트',
   english: 'scramble text',
   meaning: '글자가 무작위 문자로 뒤섞이다 원래 글자로 맞춰짐',
+  tags: ['글자가 뒤섞이는', '해킹하듯', '맞춰지는'],
   section: 'transition',
   order: 60,
   param: '1.4s linear',

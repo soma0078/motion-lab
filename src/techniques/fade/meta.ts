@@ -4,6 +4,7 @@ export default {
   name: '페이드 인 · 아웃',
   english: 'fade in · out',
   meaning: '투명도로 나타나고 사라짐',
+  tags: ['스르륵 나타나는', '서서히 사라지는'],
   section: 'transition',
   order: 10,
   param: '0.6s',

@@ -4,6 +4,7 @@ export default {
   name: '러버밴드',
   english: 'rubber band',
   meaning: '끝을 넘겨 끌면 저항하다 놓으면 되돌아옴',
+  tags: ['고무줄처럼', '버티다 돌아오는', '늘어나는'],
   section: 'interaction',
   order: 40,
   param: 'elastic 0.35',

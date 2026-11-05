@@ -4,6 +4,7 @@ export default {
   name: '마키',
   english: 'marquee',
   meaning: '글자 · 로고가 한 방향으로 끝없이 흐름',
+  tags: ['흐르는', '끝없이 도는', '전광판처럼'],
   section: 'loop',
   order: 10,
   param: 'loop',

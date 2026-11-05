@@ -4,6 +4,7 @@ export default {
   name: '모션 패스',
   english: 'motion path',
   meaning: '요소가 정해진 곡선 경로를 따라 이동',
+  tags: ['곡선을 따라가는', '날아가는', '궤도를 도는'],
   section: 'shape',
   order: 30,
   param: 'offset-path',

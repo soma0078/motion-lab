@@ -4,6 +4,7 @@ export default {
   name: '모핑',
   english: 'morphing',
   meaning: '모양 자체가 다른 모양으로 변함',
+  tags: ['모양이 바뀌는', '변신하는'],
   section: 'shape',
   order: 10,
   param: '50% → 8%',

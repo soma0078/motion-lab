@@ -4,6 +4,7 @@ export default {
   name: 'CSS 스크롤 타임라인',
   english: 'scroll-driven animations',
   meaning: 'JS 없이 CSS 만으로 스크롤 진행도에 애니메이션을 묶음',
+  tags: ['스크롤 따라 움직이는', '차오르는'],
   section: 'scroll',
   order: 90,
   param: 'animation-timeline',

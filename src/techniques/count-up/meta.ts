@@ -4,6 +4,7 @@ export default {
   name: '숫자 카운트업',
   english: 'count up',
   meaning: '숫자가 목표값까지 올라감',
+  tags: ['숫자가 올라가는', '차오르는'],
   section: 'transition',
   order: 70,
   param: '0 → 1284',

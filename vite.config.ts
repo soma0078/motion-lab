@@ -10,7 +10,7 @@ import { defineConfig, type Plugin } from 'vite'
  */
 function copyCountMock(): Plugin {
   const SLUG = /^[a-z0-9-]{1,40}$/
-  // 인기 기법 섹션이 보이도록 넣은 예시 값. 실제 횟수가 아님
+  // 카드에 복사 횟수가 보이도록 넣은 예시 값. 실제 횟수가 아님
   const counts: Record<string, number> = { stagger: 128, spring: 96, magnetic: 64, 'mask-reveal': 40, easing: 12 }
 
   const handle = (req: IncomingMessage, res: ServerResponse) => {

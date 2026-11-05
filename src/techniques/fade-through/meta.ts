@@ -4,6 +4,7 @@ export default {
   name: '페이드 스루',
   english: 'fade through',
   meaning: '서로 관련 없는 화면(탭 전환 등)을 겹치지 않게 전환. 나가는 쪽이 먼저 사라진 뒤 들어오는 쪽이 살짝 커지며 나타남',
+  tags: ['사라졌다 나타나는', '살짝 커지는'],
   section: 'app',
   order: 90,
   param: '90 / 210',

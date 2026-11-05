@@ -4,6 +4,7 @@ export default {
   name: '핀',
   english: 'pin (sticky)',
   meaning: '화면을 고정해 둔 채 스크롤로 진행',
+  tags: ['고정되는', '달라붙는', '멈춰 있는'],
   section: 'scroll',
   order: 30,
   param: 'sticky',

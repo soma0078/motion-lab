@@ -4,7 +4,7 @@ import { SearchX } from 'lucide-react'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
-import { PopularSection } from './components/PopularSection'
+import { SearchBar } from './components/SearchBar'
 import { SectionHeading } from './components/SectionHeading'
 import { ApiRow, TechniqueCard } from './components/TechniqueCard'
 import { useTheme } from './components/theme'
@@ -14,11 +14,16 @@ import { UI_ELEMENTS } from './techniques/ui-elements'
 
 const sectionId = (index: number) => `section-${index + 1}`
 
-/** 검색어가 이름 · 원어 · 뜻 · 폴더 이름 · 조절하는 값 이름 중 하나에 들어 있으면 */
+/** 검색어가 이름 · 원어 · 뜻 · 움직임 태그 · 폴더 이름 · 조절하는 값 이름 중 하나에 들어 있으면 */
 const matches = (technique: Technique, q: string) =>
-  [technique.name, technique.english, technique.meaning, technique.slug, ...(technique.params ?? []).map((param) => param.label)].some((text) =>
-    text.toLowerCase().includes(q)
-  )
+  [
+    technique.name,
+    technique.english,
+    technique.meaning,
+    ...technique.tags,
+    technique.slug,
+    ...(technique.params ?? []).map((param) => param.label)
+  ].some((text) => text.toLowerCase().includes(q))
 
 /** 화면 위쪽 25~30% 띠에 걸친 섹션을 "지금 보는 섹션"으로 */
 function useActiveSection(ids: string[]) {
@@ -64,7 +69,8 @@ export default function App() {
   const { theme, toggle } = useTheme()
   const copies = useCopyCounts()
   const [query, setQuery] = useState('')
-  const q = query.trim().toLowerCase()
+  // 카드에 보이는 대로 "#따라오는"을 쳐도 찾히게 앞의 # 은 뗀다
+  const q = query.trim().replace(/^#/, '').toLowerCase()
 
   // 카드 번호는 검색으로 걸러져도 원래 순서를 유지
   const allSections = useMemo(
@@ -78,19 +84,6 @@ export default function App() {
       })),
     []
   )
-  // 복사가 많은 순으로 최대 5개. 한 번도 복사되지 않은 기법은 "인기"가 아니라서 넣지 않는다.
-  // 같으면 원래 순서 (sort 는 안정 정렬). 순위는 페이지를 열 때 읽은 값으로 고정
-  const popular = useMemo(
-    () =>
-      copies.status === 'ready'
-        ? allSections
-            .flatMap((section) => section.items.map(({ technique }) => technique))
-            .filter((technique) => (copies.ranking[technique.slug] ?? 0) > 0)
-            .sort((a, b) => (copies.ranking[b.slug] ?? 0) - (copies.ranking[a.slug] ?? 0))
-            .slice(0, 5)
-        : [],
-    [allSections, copies.status, copies.ranking]
-  )
 
   const sections = allSections
     .map((section) => ({ ...section, items: q ? section.items.filter(({ technique }) => matches(technique, q)) : section.items }))
@@ -100,11 +93,11 @@ export default function App() {
   const activeId = useActiveSection(sections.map((section) => section.id))
   const heroIndexVisible = useVisible('hero-index')
 
-  // 검색을 시작하면 결과 목록 맨 위로
+  // 검색을 시작하면 결과 목록 맨 위로. 검색창은 그 위에 붙어 있다
   const wasSearching = useRef(false)
   useEffect(() => {
     const searching = q !== ''
-    if (searching && !wasSearching.current) document.getElementById('techniques')?.scrollIntoView({ block: 'start' })
+    if (searching && !wasSearching.current) document.getElementById('results')?.scrollIntoView({ block: 'start' })
     wasSearching.current = searching
   }, [q])
 
@@ -116,15 +109,18 @@ export default function App() {
     requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }))
   }
 
+  // 검색 중에 다른 태그를 눌러도 결과가 바뀐 목록의 맨 위에서 보이게
+  const searchTag = (tag: string) => {
+    setQuery(tag)
+    requestAnimationFrame(() => document.getElementById('results')?.scrollIntoView({ block: 'start' }))
+  }
+
   return (
     <>
       <Header
         sections={sections.map(({ id, heading }) => ({ id, heading }))}
         activeId={activeId}
         showChips={!heroIndexVisible}
-        query={query}
-        onQuery={setQuery}
-        resultCount={resultCount}
         theme={theme}
         onToggleTheme={toggle}
       />
@@ -134,41 +130,44 @@ export default function App() {
           onJump={jump}
         />
 
-        {/* 횟수를 읽지 못했거나 복사된 기법이 하나도 없으면 보이지 않는다. 검색 중에는 결과만 보인다 */}
-        {!q && popular.length > 0 && (
-          <div className="mx-auto max-w-[1280px] px-4 pt-16 sm:px-6 lg:px-10">
-            <PopularSection techniques={popular} countOf={copies.countOf} onCopied={copies.record} />
+        <div id="techniques" className="mx-auto max-w-[1280px] px-4 pt-16 pb-24 sm:px-6 lg:px-10">
+          {/* 제목은 함께 스크롤되어 사라지고, 검색창만 헤더 아래에 붙는다 */}
+          <SectionHeading
+            title="기법 찾기"
+            lead="이름을 몰라도 '따라오는', '스르륵'처럼 보이는 대로 검색해 보세요. 영문 이름이나 damping 같은 값 이름으로도 찾을 수 있어요."
+          />
+          <SearchBar query={query} onQuery={setQuery} resultCount={resultCount} />
+
+          <div id="results" className="mt-10 space-y-20">
+            {sections.map((section) => (
+              <section key={section.id} id={section.id}>
+                <SectionHeading index={section.number} title={section.heading} count={section.items.length} lead={section.lead} />
+                <ol className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  {section.items.map(({ technique, index }) => (
+                    <TechniqueCard
+                      key={technique.slug}
+                      technique={technique}
+                      index={index}
+                      copyCount={copies.countOf(technique.slug)}
+                      onCopied={copies.record}
+                      onTag={searchTag}
+                    />
+                  ))}
+                </ol>
+              </section>
+            ))}
+
+            {sections.length === 0 && <EmptyResult query={query} onClear={() => setQuery('')} />}
+
+            {!q && (
+              <>
+                <CommonRule />
+                <UiElements />
+              </>
+            )}
+
+            <Footer />
           </div>
-        )}
-
-        <div id="techniques" className="mx-auto max-w-[1280px] space-y-20 px-4 pt-16 pb-24 sm:px-6 lg:px-10">
-          {sections.map((section) => (
-            <section key={section.id} id={section.id}>
-              <SectionHeading index={section.number} title={section.heading} count={section.items.length} lead={section.lead} />
-              <ol className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {section.items.map(({ technique, index }) => (
-                  <TechniqueCard
-                    key={technique.slug}
-                    technique={technique}
-                    index={index}
-                    copyCount={copies.countOf(technique.slug)}
-                    onCopied={copies.record}
-                  />
-                ))}
-              </ol>
-            </section>
-          ))}
-
-          {sections.length === 0 && <EmptyResult query={query} onClear={() => setQuery('')} />}
-
-          {!q && (
-            <>
-              <CommonRule />
-              <UiElements />
-            </>
-          )}
-
-          <Footer />
         </div>
       </main>
     </>
@@ -220,7 +219,7 @@ function EmptyResult({ query, onClear }: { query: string; onClear: () => void })
     <div className="border-line-strong rounded-card flex flex-col items-center gap-3 border border-dashed px-6 py-16 text-center">
       <SearchX className="text-ink-3 size-6" strokeWidth={2} />
       <p className="font-semibold break-keep">"{query.trim()}"에 맞는 기법이 없어요</p>
-      <p className="text-ink-2 text-sm break-keep">이름, 영문 이름, 뜻, 조절하는 값 이름으로 찾을 수 있어요. 예: 스태거, spring, damping</p>
+      <p className="text-ink-2 text-sm break-keep">이름, 영문 이름, 뜻, 움직임 태그, 조절하는 값 이름으로 찾을 수 있어요. 예: 스태거, spring, 따라오는, damping</p>
       <button
         type="button"
         onClick={onClear}

@@ -15,7 +15,7 @@ const FIT_LABEL: Record<Fit, { text: string; dot: string }> = {
 }
 
 /**
- * 기법 카드: 용어 · 데모 · 뜻 · 조절하는 값 · 지시문 미리보기와 복사 · 공식 문서.
+ * 기법 카드: 용어 · 데모 · 뜻 · 움직임 태그 · 조절하는 값 · 지시문 미리보기와 복사 · 공식 문서.
  * 구현 코드 비교는 쓰는 도구와 AI 마다 달라서 보여 주지 않는다
  */
 export function TechniqueCard({
@@ -23,7 +23,7 @@ export function TechniqueCard({
   index,
   copyCount,
   onCopied,
-  className
+  onTag
 }: {
   technique: Technique
   index: number
@@ -31,14 +31,15 @@ export function TechniqueCard({
   copyCount: number | null
   /** 복사가 기록되면 서버가 돌려준 새 횟수 */
   onCopied: (slug: string, count: number) => void
-  className?: string
+  /** 태그를 누르면 그 태그로 검색 */
+  onTag: (tag: string) => void
 }) {
   const fit = FIT_LABEL[technique.fit]
   const [values, setValues] = useState(() => defaultValues(technique))
   const prompt = buildPrompt(technique, values)
 
   return (
-    <li className={cn('border-line bg-surface shadow-raised rounded-card flex min-w-0 flex-col border p-4 sm:p-5', className)}>
+    <li className="border-line bg-surface shadow-raised rounded-card flex min-w-0 flex-col border p-4 sm:p-5">
       <div className="flex items-start gap-2.5">
         <span className="bg-well shadow-inset-sm text-ink-2 mt-0.5 rounded-md px-1.5 py-0.5 font-mono text-xs font-semibold tabular-nums">
           {String(index + 1).padStart(2, '0')}
@@ -54,8 +55,7 @@ export function TechniqueCard({
       </div>
 
       {/* 데모: 눌린 화면 + 설계도 격자 */}
-      {/* data-demo: 인기 기법 슬라이드에서 마우스 끌기를 시작하지 않는 곳 (데모 자체를 끄는 기법이 있다) */}
-      <div data-demo className="bg-well shadow-inset blueprint relative mt-3.5 h-40 cursor-auto overflow-hidden rounded-2xl">
+      <div className="bg-well shadow-inset blueprint relative mt-3.5 h-40 cursor-auto overflow-hidden rounded-2xl">
         <Suspense fallback={null}>
           <technique.Demo params={values} />
         </Suspense>
@@ -69,6 +69,7 @@ export function TechniqueCard({
       </div>
 
       <p className="text-ink-2 mt-3 text-[13px] leading-relaxed break-keep">{technique.meaning}</p>
+      <TagList tags={technique.tags} onTag={onTag} />
 
       {technique.params && (
         <ParamPanel
@@ -93,6 +94,29 @@ export function TechniqueCard({
 
       <DocLinks docs={technique.docs} />
     </li>
+  )
+}
+
+/** 움직임을 보이는 대로 적은 태그. 누르면 같은 말이 붙은 기법을 모아 본다 */
+function TagList({ tags, onTag }: { tags: string[]; onTag: (tag: string) => void }) {
+  return (
+    <ul aria-label="움직임 태그" className="mt-2.5 flex flex-wrap gap-1.5">
+      {tags.map((tag) => (
+        <li key={tag}>
+          <button
+            type="button"
+            onClick={() => onTag(tag)}
+            title="이 태그로 검색"
+            className="border-line text-ink-2 hover:border-line-strong hover:text-ink rounded-full border px-2 py-0.5 text-[11px] font-semibold break-keep transition-colors duration-150"
+          >
+            <span aria-hidden="true" className="text-ink-3">
+              #
+            </span>
+            {tag}
+          </button>
+        </li>
+      ))}
+    </ul>
   )
 }
 

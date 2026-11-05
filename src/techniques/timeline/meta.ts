@@ -4,6 +4,7 @@ export default {
   name: '타임라인',
   english: 'timeline',
   meaning: '여러 모션을 한 줄에 놓고 겹침 · 순서를 정해 통째로 재생 · 되감기',
+  tags: ['순서대로 이어지는', '겹쳐 재생되는', '되감는'],
   section: 'timing',
   order: 60,
   param: 'at 0 · 0.35',

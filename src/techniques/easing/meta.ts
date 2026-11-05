@@ -4,6 +4,7 @@ export default {
   name: '이징',
   english: 'easing',
   meaning: '시작 · 끝의 가감속 곡선',
+  tags: ['점점 느려지는', '부드럽게 멈추는'],
   section: 'timing',
   order: 10,
   param: '0.25 1 0.5 1',

@@ -4,6 +4,7 @@ export default {
   name: '공유 축',
   english: 'shared axis',
   meaning: '나가는 화면은 한 방향으로 밀리며 사라지고, 들어오는 화면은 같은 축에서 나타남. 순서 있는 단계에 씀',
+  tags: ['옆으로 밀리는', '한 방향으로 넘어가는'],
   section: 'app',
   order: 80,
   param: '300ms',

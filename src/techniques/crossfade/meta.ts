@@ -4,6 +4,7 @@ export default {
   name: '크로스페이드',
   english: 'crossfade',
   meaning: '앞 요소가 사라지는 동안 뒤 요소가 겹쳐 나타남',
+  tags: ['겹치며 바뀌는', '스르륵 바뀌는'],
   section: 'transition',
   order: 30,
   param: '0.7s',

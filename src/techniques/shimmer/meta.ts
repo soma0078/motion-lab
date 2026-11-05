@@ -4,6 +4,7 @@ export default {
   name: '쉬머',
   english: 'shimmer',
   meaning: '빛줄기가 표면을 훑고 지나감. 주로 로딩 표시',
+  tags: ['반짝이는', '빛이 훑고 지나가는'],
   section: 'loop',
   order: 20,
   param: '1.3s',

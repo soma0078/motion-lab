@@ -4,6 +4,7 @@ export default {
   name: '푸시 · 팝',
   english: 'push / pop',
   meaning: '새 화면이 옆에서 밀려 들어오고(push) 이전 화면은 살짝 밀려남. 뒤로 가면(pop) 반대로 빠짐',
+  tags: ['옆에서 밀려오는', '밀려나는'],
   section: 'app',
   order: 100,
   param: '350ms',

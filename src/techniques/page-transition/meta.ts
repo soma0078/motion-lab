@@ -4,6 +4,7 @@ export default {
   name: '페이지 전환',
   english: 'page transition',
   meaning: '라우트가 바뀔 때 이전 화면이 나가고 새 화면이 들어옴',
+  tags: ['화면이 넘어가는', '나갔다 들어오는'],
   section: 'transition',
   order: 90,
   param: "mode='wait'",
